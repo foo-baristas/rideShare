@@ -11,6 +11,7 @@ exports.up = function(knex, Promise) {
     table.integer('num_seats');
     table.integer('trip_cost');
     table.integer('preferences_id');
+    table.integer('driver_id');
     table.string('car_description');
     table.string('car_img_url');
     table.dateTime('date_of');
