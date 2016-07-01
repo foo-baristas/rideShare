@@ -27,7 +27,7 @@ exports.up = function(knex, Promise) {
       preferences_id: 1,
       car_description: '2000 Honda Civic',
       car_img_url: 'http://placekitten.com/200/300',
-      date_of: new Date().now()
+      date_of: new Date()
     });
   });
 };
