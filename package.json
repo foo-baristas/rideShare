@@ -27,7 +27,7 @@
   "bugs": {
     "url": "https://github.com/foo-baristas/rideShare/issues"
   },
-  "homepage": "https://github.com/foo-baristas/rideShare#readme"
+  "homepage": "https://github.com/foo-baristas/rideShare#readme",
     "morgan": "^1.7.0",
     "path": "^0.12.7",
     "pg": "^6.0.1"
