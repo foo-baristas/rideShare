@@ -12,8 +12,12 @@ router.get('/', function(req, res, next) {
   .select().then(function(data) {
 
     console.log(data);
-    res.status(200).render('searchResults', {objects: data});
+    res.status(200).render('searchResults', {objects: data, queries: query});
   });
+});
+
+router.post('/reserve/:id', function(req, res, next) {
+  
 });
 
 module.exports = router;

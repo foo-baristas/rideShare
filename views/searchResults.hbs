@@ -14,7 +14,7 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
   <style>
   body {
-    background-color: #999999;
+    background-color: #ebebeb;
   }
 
   h1 {
@@ -25,6 +25,7 @@
 
     border-top: 1px solid black;
     border-bottom: 1px solid black;
+    padding-top: 5px;
     padding-bottom: 5px;
   }
 
@@ -52,7 +53,7 @@
   <!-- END HEADER -->
 
 
-  <span>{{start_location}}</span>&nbsp;&nbsp;<img src="https://cdn2.iconfinder.com/data/icons/navigation-set-arrows-part-two/32/Double_Arrow_Right-24.png">&nbsp;&nbsp;<span>{{end_location}}</span>
+  <h3>Trips From: <span>{{queries.origin}}</span>&nbsp;&nbsp;<img src="https://cdn2.iconfinder.com/data/icons/navigation-set-arrows-part-two/32/Double_Arrow_Right-24.png">&nbsp;&nbsp;<span>{{queries.destination}}</span></h3>
 
   <div class="row">
     <div class="col-sm-1"></div>
@@ -91,6 +92,7 @@
         <div class="col-md-1 cost_information">
           <h2 class="cost">${{trip_cost}}</h2>
           <h5>{{num_seats}} seats available.</h5>
+          <a href="./search/reserve/{{id}}">Reserve</a>
         </div>
       </div>
       {{/each}}
