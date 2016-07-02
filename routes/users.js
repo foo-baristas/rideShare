@@ -8,7 +8,7 @@ var express = require('express'),
 router.get('/', function(req, res) {
   knex('users').select().orderBy('id').then(function(data){
     console.log(data[0]);
-    res.status(200).render('showUser', {user:data});
+    res.status(200).render('showUser', data[0]);
   }).catch(function(err){
     console.error(err);
     res.sendStatus(500);
