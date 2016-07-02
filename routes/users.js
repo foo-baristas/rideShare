@@ -19,7 +19,7 @@ router.get('/', function(req, res) {
 //   res.render('users/new');
 // });
 
-router.get('/user/:id', function(req, res) {
+router.get('/:id', function(req, res) {
   knex('users').select().where({id: req.params.id}).then(function(data){
     res.status(200).render('showUser', {user:data[0]});
   }).catch(function(err){
@@ -29,7 +29,7 @@ router.get('/user/:id', function(req, res) {
 });
 
 
-router.get('/user/:id/edit', function(req, res) {
+router.get('/:id/edit', function(req, res) {
   knex('users').select().where({id: req.params.id}).then(function(data){
     res.status(200).render('editUser', {user:data[0]});
   }).catch(function(err){
@@ -39,7 +39,7 @@ router.get('/user/:id/edit', function(req, res) {
 });
 
 // IS FOLLOWING ROUTE CORRECT?
-router.post('/user', function(req, res) {
+router.post('/', function(req, res) {
 
   //  CONTINUE TO FILL IN INSERT OBJECT
 
@@ -51,7 +51,7 @@ router.post('/user', function(req, res) {
   });
 });
 
-router.put('/user/:id', function(req, res) {
+router.put('/:id', function(req, res) {
 
   // COPY INSERT OBJECT FROM ABOVE HERE
 
@@ -63,7 +63,7 @@ router.put('/user/:id', function(req, res) {
   });
 });
 
-router.delete('/user/:id', function(req, res){
+router.delete('/:id', function(req, res){
   knex('users').delete().where({id: req.params.id}).then(function(data){
     res.redirect('/');
   }).catch(function(err){

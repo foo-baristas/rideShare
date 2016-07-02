@@ -32,7 +32,7 @@ app.use('/user', user);
 //make the session cookie
 app.use(cookieSession({
   name: 'session',
-  keys: [process.env.KEY]
+  keys: [process.env['KEY']]
 }));
 
 // error handlers
