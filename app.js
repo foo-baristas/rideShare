@@ -26,7 +26,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 
 
-app.use('/user', user);
+app.use('/showUser', user);
 
 
 //make the session cookie
