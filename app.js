@@ -8,7 +8,10 @@ var logger = require('morgan');
 var cookieSession = require('cookie-session');
 var bodyParser = require('body-parser');
 var handlebars = require('express-handlebars');
+
+/* Require Routes */
 var user = require('./routes/users');
+var search = require('./routes/search');
 
 var app = express();
 
@@ -28,6 +31,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 
 app.use('/user', user);
+app.use('/search', search);
 
 
 //make the session cookie
