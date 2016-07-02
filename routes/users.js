@@ -5,6 +5,12 @@ var express = require('express'),
     knex = require('../db/knex');
 
 
+
+// MIGHT NOT NEED THIS ROUTE IF MODAL ON LANDING PAGE IS SUCCESSFUL
+router.get('/new', function(req, res) {
+  res.render('newUser');
+});
+
 router.get('/', function(req, res) {
   knex('users').select().orderBy('id').then(function(data){
     console.log(data[0]);
@@ -15,13 +21,11 @@ router.get('/', function(req, res) {
   });
 });
 
-// MIGHT NOT NEED THIS ROUTE IF MODAL ON LANDING PAGE IS SUCCESSFUL
-// router.get('/new', function(req, res) {
-//   res.render('users/new');
-// });
+
+// FIX: DATABASE QUERY TO INCLUDE REVIEWER DETAILS
 
 router.get('/:id', function(req, res) {
-  knex('users').select().where({id: req.params.id}).then(function(data){
+  knex.select('*').from('users').fullOuterJoin('reviews', 'users.id', 'reviews.reviewed_id').where('users.id', req.params.id).then(function(data){
     console.log(data);
     res.status(200).render('showUser', {user:data[0]});
   }).catch(function(err){
@@ -29,6 +33,8 @@ router.get('/:id', function(req, res) {
     res.sendStatus(500);
   });
 });
+
+
 //
 //
 // router.get('/:id/edit', function(req, res) {
