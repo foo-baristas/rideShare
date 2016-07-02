@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>RideShare</title>
+  <!-- jQuery 2.2.4 minified -->
+  <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+  <style>
+  body {
+    background-color: #999999;
+  }
+
+  h1 {
+    background-color: gold;
+  }
+
+  span {
+
+    font-size: 16px;
+    font-weight: bold;
+  }
+  </style>
+
+
+
+</head>
+
+<body class="container-fluid">
+  <!-- HEADER -->
+  <h1>HEADER</h1>
+  <!-- END HEADER -->
+
+
+  <div class="row">
+    <div class="col-sm-3"></div>
+    <div class="col-sm-6">
+      {{#each objects}}
+      <div class="row">
+        <span>{{start_location}}</span>&nbsp;&nbsp;<img src="https://cdn2.iconfinder.com/data/icons/navigation-set-arrows-part-two/32/Double_Arrow_Right-24.png">&nbsp;&nbsp;<span>{{end_location}}</span>
+      </div>
+      {{/each}}
+    </div>
+  </div>
+</body>
+</html>

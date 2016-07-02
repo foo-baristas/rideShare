@@ -5,9 +5,20 @@ var express = require('express'),
     knex = require('../db/knex');
 
 
+
 // MIGHT NOT NEED THIS ROUTE IF MODAL ON LANDING PAGE IS SUCCESSFUL
 router.get('/new', function(req, res) {
   res.render('newUser');
+});
+
+router.get('/', function(req, res) {
+  knex('users').select().orderBy('id').then(function(data){
+    console.log(data[0]);
+    res.status(200).render('showUser', data[0]);
+  }).catch(function(err){
+    console.error(err);
+    res.sendStatus(500);
+  });
 });
 
 
