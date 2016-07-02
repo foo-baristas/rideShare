@@ -14,7 +14,7 @@ var app = express();
 
 // view handlebars setup
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', handlebars);
+app.set('view engine', 'handlebars');
 app.use(express.static(path.join(__dirname, 'public')));
 
 
@@ -60,7 +60,7 @@ app.use(function(err, req, res, next) {
 });
 
 
-var port = process.env.PORT || 8080;
+var port = process.env.PORT || 3000;
 app.listen(port, function() {
   console.log("Listening on port " + port);
 });
