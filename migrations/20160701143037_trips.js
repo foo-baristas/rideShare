@@ -25,6 +25,7 @@ exports.up = function(knex, Promise) {
       num_seats: 2,
       trip_cost: 15,
       preferences_id: 1,
+      user_id: 1,
       car_description: '2000 Honda Civic',
       car_img_url: 'http://placekitten.com/200/300',
       date_of: new Date()

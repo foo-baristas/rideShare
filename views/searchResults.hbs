@@ -12,7 +12,6 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
   <!-- Latest compiled and minified JavaScript -->
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-
   <style>
   body {
     background-color: #999999;
@@ -22,15 +21,29 @@
     background-color: gold;
   }
 
-  span {
+  .trip {
 
-    font-size: 16px;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    padding-bottom: 5px;
+  }
+
+  .cost {
+
+      color: green;
+  }
+
+  .profile {
+
+    border-radius: 50px;
+  }
+
+  .name {
+
+    font-size: 20px;
     font-weight: bold;
   }
   </style>
-
-
-
 </head>
 
 <body class="container-fluid">
@@ -39,12 +52,37 @@
   <!-- END HEADER -->
 
 
+  <span>{{start_location}}</span>&nbsp;&nbsp;<img src="https://cdn2.iconfinder.com/data/icons/navigation-set-arrows-part-two/32/Double_Arrow_Right-24.png">&nbsp;&nbsp;<span>{{end_location}}</span>
+
   <div class="row">
-    <div class="col-sm-3"></div>
-    <div class="col-sm-6">
+    <div class="col-sm-1"></div>
+    <div class="col-sm-10">
       {{#each objects}}
-      <div class="row">
-        <span>{{start_location}}</span>&nbsp;&nbsp;<img src="https://cdn2.iconfinder.com/data/icons/navigation-set-arrows-part-two/32/Double_Arrow_Right-24.png">&nbsp;&nbsp;<span>{{end_location}}</span>
+      <div class="row trip">
+        <!-- DRIVER PROFILE -->
+        <div class="col-md-5 driver_profile">
+          <img class="profile" width="125" height="125" src="{{profile_pic_url}}">
+          <span class="name">{{name_first}}</span>&nbsp;<span class="name">{{name_last}}</span>
+
+        </div>
+
+        <!-- TRIP DETAILS -->
+        <div class="col-md-6 trip_details">
+          <div class="row">
+            <h5>{{date_of}}</h5>
+            <span>{{details}}</span>
+          </div>
+          <div class="row">
+            <img width="50" height="50" src="{{car_img_url}}">
+            <span><strong>{{car_description}}</strong></span>
+          </div>
+        </div>
+
+        <!-- COST INFORMATION -->
+        <div class="col-md-1 cost_information">
+          <h2 class="cost">${{trip_cost}}</h2>
+          <h5>{{num_seats}} seats available.</h5>
+        </div>
       </div>
       {{/each}}
     </div>

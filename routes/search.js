@@ -7,9 +7,11 @@ router.get('/', function(req, res, next) {
 
   var query = req.query;
   console.log(query);
-  knex('trips').select().then(function(data) {
+  knex('trips')
+  .join('users', 'users.id', '=', 'trips.user_id')
+  .select().then(function(data) {
 
-    //console.log(data);
+    console.log(data);
     res.status(200).render('searchResults', {objects: data});
   });
 });
