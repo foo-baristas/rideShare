@@ -30,7 +30,7 @@
 
   .cost {
 
-      color: green;
+    color: green;
   }
 
   .profile {
@@ -60,10 +60,19 @@
       {{#each objects}}
       <div class="row trip">
         <!-- DRIVER PROFILE -->
-        <div class="col-md-5 driver_profile">
-          <img class="profile" width="125" height="125" src="{{profile_pic_url}}">
-          <span class="name">{{name_first}}</span>&nbsp;<span class="name">{{name_last}}</span>
-
+        <div class="col-md-4 driver_profile">
+          <div class="row">
+            <div class="col-md-5">
+              <img class="profile" width="125" height="125" src="{{profile_pic_url}}">
+            </div>
+            <div class="col-md-4">
+              <span class="name">{{name_first}}</span>&nbsp;<span class="name">{{name_last}}</span>
+              <span>Age: {{age}}</span><br />
+              {{#if isFB_verified}}
+              <img src="https://cdn3.iconfinder.com/data/icons/social-media-chamfered-corner/154/facebook-24.png">&nbsp;<span>Verified</span>
+              {{/if}}
+            </div>
+          </div>
         </div>
 
         <!-- TRIP DETAILS -->
