@@ -9,6 +9,7 @@ var cookieSession = require('cookie-session');
 var bodyParser = require('body-parser');
 var handlebars = require('handlebars');
 var user = require('./routes/users');
+var index = require('./routes/index');
 
 var app = express();
 
@@ -25,8 +26,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 
-
 app.use('/showUser', user);
+app.use('/index', index);
 
 
 //make the session cookie
