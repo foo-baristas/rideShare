@@ -8,6 +8,7 @@ var logger = require('morgan');
 var cookieSession = require('cookie-session');
 var bodyParser = require('body-parser');
 var handlebars = require('handlebars');
+var user = require('./routes/users');
 
 var app = express();
 
@@ -22,6 +23,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+
+
+app.get('/', function(req, res) {
+  res.redirect('/user');
+});
+app.use('/user', user);
+
 
 //make the session cookie
 app.use(cookieSession({
