@@ -8,12 +8,13 @@ var logger = require('morgan');
 var cookieSession = require('cookie-session');
 var bodyParser = require('body-parser');
 var handlebars = require('handlebars');
+var user = require('./routes/users');
 
 var app = express();
 
 // view handlebars setup
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'handlebars');
+app.set('view engine', handlebars);
 app.use(express.static(path.join(__dirname, 'public')));
 
 
@@ -23,10 +24,15 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
+
+
+app.use('/user', user);
+
+
 //make the session cookie
 app.use(cookieSession({
   name: 'session',
-  keys: [process.env.KEY]
+  keys: [process.env['KEY']]
 }));
 
 // error handlers
@@ -53,5 +59,10 @@ app.use(function(err, req, res, next) {
   });
 });
 
+
+var port = process.env.PORT || 8080;
+app.listen(port, function() {
+  console.log("Listening on port " + port);
+});
 
 module.exports = app;
