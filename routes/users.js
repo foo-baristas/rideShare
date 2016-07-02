@@ -7,7 +7,8 @@ var express = require('express'),
 
 router.get('/', function(req, res) {
   knex('users').select().orderBy('id').then(function(data){
-    res.status(200).render('showUser', {users:data});
+    console.log(data[0]);
+    res.status(200).render('showUser', {user:data});
   }).catch(function(err){
     console.error(err);
     res.sendStatus(500);
@@ -21,6 +22,7 @@ router.get('/', function(req, res) {
 
 router.get('/:id', function(req, res) {
   knex('users').select().where({id: req.params.id}).then(function(data){
+    console.log(data);
     res.status(200).render('showUser', {user:data[0]});
   }).catch(function(err){
     console.error(err);
