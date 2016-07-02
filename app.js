@@ -7,14 +7,15 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieSession = require('cookie-session');
 var bodyParser = require('body-parser');
-var handlebars = require('handlebars');
+var handlebars = require('express-handlebars');
 var user = require('./routes/users');
 
 var app = express();
 
 // view handlebars setup
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', handlebars);
+app.engine('.hbs', handlebars({defaultLayout: 'single', extname: '.hbs'}));
+app.set('view engine', '.hbs');
 app.use(express.static(path.join(__dirname, 'public')));
 
 
