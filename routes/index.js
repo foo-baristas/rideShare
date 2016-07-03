@@ -30,7 +30,8 @@ router.post('/', function(req, res) {
     if (!info.hasError) {
         console.log(info);
         // If there arent any validation errors, TODO:redirect to '/searchResults'
-        res.send('form sent correctly');
+        //res.send('form sent correctly');
+        res.redirect('/trip/search?origin=' + req.body.origin + '&destination=' + req.body.destination + '&date=' + req.body.date);
     } else {
         console.log(info);
         // If there are validation errors, re-render the signup page, injecting the users previous inputs.

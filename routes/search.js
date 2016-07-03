@@ -4,7 +4,7 @@ router = express.Router(),
 knex = require('../db/knex');
 
 //search?destination=denver&origin=fortcollins
-router.get('/', function(req, res, next) {
+router.get('/search', function(req, res, next) {
 
   var query = req.query;
   if (Object.keys(query).length === 0) {

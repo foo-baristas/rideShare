@@ -31,7 +31,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use('/index', index);
 app.use('/user', user);
-app.use('/search', search);
+app.use('/trip', search);
 
 //make the session cookie
 app.use(cookieSession({
