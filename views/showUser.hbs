@@ -17,7 +17,6 @@
         body {
             width: 100%;
         }
-
         h1 {
             background-color: gold;
         }
@@ -51,7 +50,6 @@
             list-style-type: none;
             margin-top: 20px;
         }
-
         li {
             display: inline;
         }
@@ -123,10 +121,10 @@
 
                 <div class='col-sm-3'> <img src='{{ user.profile_pic_url }}' style='width:100%'></div>
                 <div class='col-sm-9' id='review-text'>
-                    <div class='row'> FIX THIS: {{user.name_first}} {{ user.name_last }} </div>
-                    <div class='row'> Rating: {{ user.rating }}/5</div>
-                    <div class='row'> FIX THIS: {{ user.creation_date }} </div>
-                    <div class='row'> {{ user.comment }}</div>
+                    <h3> FIX THIS: {{user.name_first}} {{ user.name_last }} </h3>
+                    <h4> Rating: {{ user.rating }}/5</h4>
+                    <h4> {{ creation_date }} </h4>
+                    <p> {{ user.comment }} </p>
                 </div>
             </div>
 
