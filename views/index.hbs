@@ -12,58 +12,67 @@
 
 <body>
     <div class="container-fluid">
-
-
-      <div class="row header">
-        <div class="col-md-3">
-          <h1>rideShare</h1>
-        </div>
-          <div class="col-md-offset-9">
-            <a href="#">How it works</a>
-            <a href="/index/login">Login</a>
-            <a href="#">Register</a>
-          </div>
-      </div>
+        <!-- <div class="row header">
+            <div class="col-md-3">
+                <h1>rideShare</h1>
+            </div>
+            <div class="col-md-offset-9">
+                <a href="#">How it works</a>
+                <a href="/index/login">Login</a>
+                <a href="#">Register</a>
+            </div>
+        </div> -->
         <div class="row">
             <form class="landing-search" action="/index" method="post">
                 <fieldset class="form-group">
                     <div class="col-md-3">
                         <label for="origin">Origin</label>
-                        <input type="text" name="origin" value="">
+                        <input type="text" name="origin" value="{{info.origin}}">
+                        {{#if info.error.origin}}
+                        <small class="text-muted"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>{{info.error.origin}}</small>
+                        {{/if}}
                     </div>
                     <div class="col-md-4">
                         <label for="destination">Destination</label>
-                        <input type="text" name="destination" value="">
+                        <input type="text" name="destination" value="{{info.destination}}">
+                        {{#if info.error.destination}}
+                        <small class="text-muted"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>{{info.error.destination}}</small>
+                        {{/if}}
                     </div>
                     <div class="col-md-3">
                         <label for="date">Date</label>
-                        <input type="date" name="date" value="">
+                        <input type="date" name="date" value="{{info.date}}">
+                        {{#if info.error.date}}
+                        <small class="text-muted"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>{{info.error.date}}</small>
+                        {{/if}}
                     </div>
                     <div class="col-md-2">
                         <button type="submit" class="btn btn-primary">Find my ride</button>
                     </div>
                 </fieldset>
             </form>
-        <div class="row articles">
-          <div class="col-md-4">
-            <h3> <span class="glyphicon glyphicon-road" aria-hidden="true"></span> Need a lift?</h3>
-            <p>
-              Find a ride and get in touch with a driver with a similar itinerary to yours.
-            </p>
-          </div>
-          <div class="col-md-4">
-            <h3> <span class="glyphicon glyphicon-piggy-bank" aria-hidden="true"></span> Save big</h3>
-            <p>
-              Take advantage of extra room in your car and split the cost of gas.
-            </p>
-          </div>
-          <div class="col-md-4">
-            <h3> <span class="glyphicon glyphicon-leaf" aria-hidden="true"></span> Go green</h3>
-            <p>
-              Reduce CO2 emissions and share a ride with someone today.
-            </p>
-          </div>
-        </div>
+
+
+            <div class="row articles">
+                <div class="col-md-4">
+                    <h3> <span class="glyphicon glyphicon-road" aria-hidden="true"></span> Need a lift?</h3>
+                    <p>
+                        Find a ride and get in touch with a driver with a similar itinerary to yours.
+                    </p>
+                </div>
+                <div class="col-md-4">
+                    <h3> <span class="glyphicon glyphicon-piggy-bank" aria-hidden="true"></span> Save big</h3>
+                    <p>
+                        Take advantage of extra room in your car and split the cost of gas.
+                    </p>
+                </div>
+                <div class="col-md-4">
+                    <h3> <span class="glyphicon glyphicon-leaf" aria-hidden="true"></span> Go green</h3>
+                    <p>
+                        Reduce CO2 emissions and share a ride with someone today.
+                    </p>
+                </div>
+            </div>
 
 
 
