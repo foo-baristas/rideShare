@@ -11,11 +11,8 @@ var handlebars = require('express-handlebars');
 
 /* Require Routes */
 var user = require('./routes/users');
-<<<<<<< HEAD
 var index = require('./routes/index');
-=======
 var search = require('./routes/search');
->>>>>>> df459c8b2ce44be00b37996ec20d5d6c92fa2ab9
 
 var app = express();
 
@@ -32,7 +29,6 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.use('/showUser', user);
 app.use('/index', index);
 app.use('/user', user);
 app.use('/search', search);

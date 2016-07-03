@@ -11,21 +11,6 @@ router.get('/new', function(req, res) {
   res.render('newUser');
 });
 
-router.get('/', function(req, res) {
-  knex('users').select().orderBy('id').then(function(data){
-<<<<<<< HEAD
-    res.status(200).render('showUser', {users:data});
-   }).catch(function(err){
-=======
-    console.log(data[0]);
-    res.status(200).render('showUser', data[0]);
-  }).catch(function(err){
->>>>>>> df459c8b2ce44be00b37996ec20d5d6c92fa2ab9
-    console.error(err);
-    res.sendStatus(500);
-  });
-});
-
 
 // FIX: DATABASE QUERY TO INCLUDE REVIEWER DETAILS
 
