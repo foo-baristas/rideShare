@@ -32,11 +32,10 @@ router.post('/', function(req, res) {
         // If there arent any validation errors, TODO:redirect to '/searchResults'
         res.send('form sent correctly');
     } else {
-        console.log(info);
+        console.log(info.error.origin);
         // If there are validation errors, re-render the signup page, injecting the users previous inputs.
-        //TODO: set values on index.hbs when templating is figured out so users' input shows up when re-rendering
         //TODO: show error messages and render data from error obj on index.hbs
-        res.render('index', info);
+        res.render('index', {info: info});
     }
 });
 
@@ -51,9 +50,9 @@ function checkRequired(req, info) {
                 info.error[item] = [];
             }
             info.hasError = true;
-            info.error[item].push({
-                message: item + " is required."
-            });
+            info.error[item].push(
+                item + " is required."
+            );
         }
     }
 }
