@@ -70,24 +70,27 @@ router.post('/auth', function(req, res, next) {
   }).then(function(data) {
     // this if works
     if (data.length === 1) {
-      bcrypt.compare(req.body.password, data[0].password, function(err, result) {
-        if (err) next(err);
-        else {
-          if (result) {
-
-            req.session.id = data[0].id;
-            req.session.user_name = data[0].user_name;
-            res.render('index');
-          }
-        }
-        // if (req.body.password === data[0].password) {
-        //     //TODO: change to render landing page with greeting + user's name (dynamically update in header partial)
-        //     res.render('index');
-        // } else {
-        //     //TODO: output on same page with same message in error format
-        //     res.send('Sorry, username and password don\'t match.');
-        // }
-      });
+      /* TODO: Uncomment once registration is complete */
+      // bcrypt.compare(req.body.password, data[0].password, function(err, result) {
+      //   if (err) next(err);
+      //   else {
+      //     if (result) {
+      //
+      //       req.session.user_id = data[0].id;
+      //       req.session.user_name = data[0].user_name;
+      //       res.render('index');
+      //     }
+      //   }
+      // });
+      if (req.body.password === data[0].password) {
+          //TODO: change to render landing page with greeting + user's name (dynamically update in header partial)
+          req.session.user_id = data[0].id;
+          req.session.user_name = data[0].user_name;
+          res.render('index');
+      } else {
+          //TODO: output on same page with same message in error format
+          res.send('Sorry, username and password don\'t match.');
+      }
     } //TODO: output on same page with same message in error format
     else {
       res.send('Sorry, username not found.');
