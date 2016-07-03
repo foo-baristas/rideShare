@@ -6,6 +6,8 @@ var knex = require('../db/knex');
 var bcrypt = require('bcrypt');
 
 router.get('/', function(req, res) {
+
+  console.log(req.session);
   res.render('index', {
     hasError: false,
     origin: '',
@@ -86,7 +88,8 @@ router.post('/auth', function(req, res, next) {
           req.session = {};
           req.session.user_id = data[0].id;
           req.session.user_name = data[0].username;
-          res.render('index');
+          console.log(req.session);
+          res.redirect('/index');
       } else {
           //TODO: output on same page with same message in error format
           res.send('Sorry, username and password don\'t match.');
