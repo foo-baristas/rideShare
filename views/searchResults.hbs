@@ -92,7 +92,9 @@
         <div class="col-md-1 cost_information">
           <h2 class="cost">${{trip_cost}}</h2>
           <h5>{{num_seats}} seats available.</h5>
-          <a href="./search/reserve/{{id}}">Reserve</a>
+          <form method="POST" action="/search/reserve/{{id}}">
+            <button type="submit">Reserve</button>
+          </form>
         </div>
       </div>
       {{/each}}
