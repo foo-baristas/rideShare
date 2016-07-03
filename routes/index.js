@@ -65,27 +65,29 @@ router.get('/login', function(req, res) {
 
 //TODO: seed new data with hashed pw to use compare with bcrypt here
 router.post('/auth', function(req, res, next) {
-  knex('users').select('username', 'password').where({
+  knex('users').select('username', 'password', 'id').where({
     username: req.body.username
   }).then(function(data) {
     // this if works
+    console.log(data);
     if (data.length === 1) {
       /* TODO: Uncomment once registration is complete */
       // bcrypt.compare(req.body.password, data[0].password, function(err, result) {
       //   if (err) next(err);
       //   else {
       //     if (result) {
-      //
+      //       req.session = {};
       //       req.session.user_id = data[0].id;
-      //       req.session.user_name = data[0].user_name;
+      //       req.session.user_name = data[0].username;
       //       res.render('index');
       //     }
       //   }
       // });
       if (req.body.password === data[0].password) {
           //TODO: change to render landing page with greeting + user's name (dynamically update in header partial)
+          req.session = {};
           req.session.user_id = data[0].id;
-          req.session.user_name = data[0].user_name;
+          req.session.user_name = data[0].username;
           res.render('index');
       } else {
           //TODO: output on same page with same message in error format
