@@ -7,14 +7,41 @@ knex = require('../db/knex');
 router.get('/', function(req, res, next) {
 
   var query = req.query;
-  console.log(query);
-  knex('trips')
-  .join('users', 'users.id', '=', 'trips.user_id')
-  .join('preferences', 'preferences.id', '=', 'trips.preferences_id')
-  .select().then(function(data) {
+  if (Object.keys(query).length === 0) {
+    knex('trips')
+    .join('users', 'users.id', '=', 'trips.user_id')
+    .join('preferences', 'preferences.id', '=', 'trips.preferences_id')
+    .select()
+    .then(function(data) {
 
-    console.log(data);
-    res.status(200).render('searchResults', {objects: data, queries: query});
+      console.log(data);
+      res.status(200).render('searchResults', {objects: data, queries: query});
+    });
+  } else { //search?origin=Denver&destination=Fort%20Collins
+    knex('trips')
+    .join('users', 'users.id', '=', 'trips.user_id')
+    .join('preferences', 'preferences.id', '=', 'trips.preferences_id')
+    .select()
+    .where({
+      start_location: query.origin,
+      end_location: query.destination
+    })
+    .then(function(data) {
+
+      console.log(data);
+      res.status(200).render('searchResults', {objects: data, queries: query});
+    });
+  }
+});
+
+router.get('/:id', function(req, res, next) {
+
+  knex('trips')
+  .select()
+  .where('id', '=', req.params.id)
+  .then(function(data) {
+
+    res.render('showRide', { tripInfo: data });
   });
 });
 
