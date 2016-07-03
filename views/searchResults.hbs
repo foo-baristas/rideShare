@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>RideShare</title>
+  <!-- jQuery 2.2.4 minified -->
+  <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <style>
+  body {
+    background-color: #ebebeb;
+  }
+
+  h1 {
+    background-color: gold;
+  }
+
+  .trip {
+
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin-bottom: 25px;
+  }
+
+  .trip:hover {
+
+    background-color: #d6d6d6;
+  }
+
+  .cost {
+
+    color: green;
+  }
+
+  .profile {
+
+    border-radius: 50px;
+  }
+
+  .name {
+
+    font-size: 20px;
+    font-weight: bold;
+  }
+
+  .vertInfo {
+
+    position: inherit;
+    top: 50%;
+    transform: translateY(50%);
+  }
+
+  .vertPic {
+
+    position: inherit;
+    top: 50%;
+    transform: translateY(10%);
+  }
+
+  a:link {
+
+    color: black;
+    text-decoration: none;
+  }
+
+  a:visited {
+
+    color: black;
+    text-decoration: none;
+  }
+  </style>
+</head>
+
+<body class="container-fluid">
+  <!-- HEADER -->
+  <h1>HEADER</h1>
+  <!-- END HEADER -->
+
+
+  {{#if queries.origin}}
+  <h3>Trips From: <span>{{queries.origin}}</span>&nbsp;&nbsp;<img src="https://cdn2.iconfinder.com/data/icons/navigation-set-arrows-part-two/32/Double_Arrow_Right-24.png">&nbsp;&nbsp;<span>{{queries.destination}}</span></h3>
+  {{else}}
+  <h3>Showing all available trips.</h3>
+  {{/if}}
+
+  <div class="row">
+    <div class="col-sm-1"></div>
+    <div class="col-sm-10">
+      {{#each objects}}
+      <div class="row trip">
+        <a href="/search/{{id}}">
+          <!-- DRIVER PROFILE -->
+          <div class="col-md-4 driver_profile">
+            <div class="row">
+              <div class="col-md-5 vertPic">
+                <img class="profile" width="125" height="125" src="{{profile_pic_url}}">
+              </div>
+              <div class="col-md-4 vertInfo">
+                <span class="name">{{name_first}}</span>&nbsp;<span class="name">{{name_last}}</span>
+                <span>Age: {{age}}</span><br />
+                {{#if isFB_verified}}
+                <img src="https://cdn3.iconfinder.com/data/icons/social-media-chamfered-corner/154/facebook-24.png">&nbsp;<span>Verified</span>
+                {{/if}}
+              </div>
+            </div>
+          </div>
+
+          <!-- TRIP DETAILS -->
+          <div class="col-md-6 trip_details">
+            <div class="row">
+              <h4>{{start_location}} to {{end_location}}</h4>
+              <h5>{{date_of}}</h5>
+              <span>{{details}}</span>
+            </div>
+            <div class="row">
+              <img width="50" height="50" src="{{car_img_url}}">
+              <span><strong>{{car_description}}</strong></span>
+            </div>
+          </div>
+        </a>
+        <!-- COST INFORMATION -->
+        <div class="col-md-1 cost_information">
+          <h2 class="cost">${{trip_cost}}</h2>
+          <h5>{{num_seats}} seats available.</h5>
+          <form method="POST" action="/search/reserve/{{id}}">
+            <button type="submit">Reserve</button>
+          </form>
+        </div>
+      </div>
+      {{/each}}
+    </div>
+  </div>
+</body>
+</html>

@@ -1,1 +1,91 @@
-<h1>Hello world</h1>
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <title>RideShare</title>
+    <!-- jQuery 2.2.4 minified -->
+    <script src='https://code.jquery.com/jquery-2.2.4.min.js' integrity='sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=' crossorigin='anonymous'></script>
+    <!-- Latest compiled and minified CSS -->
+    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css'>
+    <!-- Optional theme -->
+    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css'>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js'></script>
+
+    <style>
+        h1 {
+            background-color: gold;
+        }
+        img {
+          width: 15%;
+        }
+        ul {
+          list-style-type: none;
+        }
+        li {
+          display: inline;
+        }
+    </style>
+
+
+
+</head>
+
+<body class='container-fluid'>
+    <!-- HEADER PARTIAL -->
+    <h1>HEADER</h1>
+    <!-- END HEADER -->
+
+
+    <div class='row'>
+        <div class='col-sm-3'></div>
+        <div class='col-sm-6'>
+
+            <!-- PHOTO, NAME, AGE, DESCRIPTION -->
+            <div class='row'>
+              <div class='col-sm-4'> <img src='{{ user.profile_pic_url }}' style='width:100%'></div>
+              <div class='col-sm-8'>
+                <div class='row'> {{user.name_first}} {{ user.name_last }} </div>
+                <div class='row'> {{ user.age }} yrs old</div>
+                <div class='row'> {{ user.description }}</div>
+            </div>
+
+
+            <!-- PREFERENCES -->
+            <div class='row'>
+              <h3>Preferences</h3>
+              <ul>
+                <li><img src='http://www.freeiconspng.com/uploads/restaurant-menu-icon-png-28.png'></li>
+                <li><img src='http://www.clipartbest.com/cliparts/9cz/Eob/9czEobbki.jpeg'></li>
+                <li><img src='https://image.freepik.com/free-icon/pets-hotel-symbol-with-a-dog-and-a-cat-in-a-circle-with-one-star_318-51110.png'></li>
+                <li><img src='http://www.freeiconspng.com/uploads/restaurant-menu-icon-png-28.png'></li>
+                <li><img src='http://www.clipartbest.com/cliparts/9cz/Eob/9czEobbki.jpeg'></li>
+                <li><img src='https://image.freepik.com/free-icon/pets-hotel-symbol-with-a-dog-and-a-cat-in-a-circle-with-one-star_318-51110.png'></li>
+              </ul>
+            </div>
+
+
+            <!-- REVIEWS -->
+            <div class='row'>
+
+<!-- FIX: DATABASE QUERY TO INCLUDE REVIEWER DETAILS -->
+
+              <div class='col-sm-3'> <img src='{{ user.profile_pic_url }}' style='width:100%'></div>
+              <div class='col-sm-9'>
+                <div class='row'> FIX THIS: {{user.name_first}} {{ user.name_last }} </div>
+                <div class='row'> Rating: {{ user.rating }}/5</div>
+                <div class='row'> FIX THIS: {{ user.creation_date }} </div>
+                <div class='row'> {{ user.comment }}</div>
+              </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+
+</body>
+
+</html>

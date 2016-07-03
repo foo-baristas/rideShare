@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <title>RideShare</title>
+    <!-- jQuery 2.2.4 minified -->
+    <script src='https://code.jquery.com/jquery-2.2.4.min.js' integrity='sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=' crossorigin='anonymous'></script>
+    <!-- Latest compiled and minified CSS -->
+    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css'>
+    <!-- Optional theme -->
+    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css'>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js'></script>
+
+    <style>
+        h2 {
+            text-align: center;
+        }
+    </style>
+
+</head>
+
+<body class="container-fluid">
+    <!-- HEADER PARTIAL -->
+    <h1>HEADER</h1>
+    <!-- END HEADER -->
+
+
+    <div class='row'>
+        <div class='col-sm-3'></div>
+        <div class='col-sm-6'>
+
+            <h2>Sign Up</h2>
+
+            <form method='POST' action='/user'>
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <label> First name:
+                            <input name='user[name_first]' type='text' required>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <label> Last name:
+                            <input name='user[name_last]' type='text' required>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <label> Profile Pic (url):
+                            <input name='user[profile_pic_url]' type='url' required>
+                        </label>
+                    </div>
+                </div>
+                <div>
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <label> Age:
+                                <input name='user[age]' type='number' required>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <label> Email:
+                                <input name='user[email]' type='text' required>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <label> Description:
+                                <input name='user[description]' type='text' required>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <label> Username:
+                                <input name='user[username]' type='text' required>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <label> Password:
+                                <input name='user[password]' type='text' required>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- RADIO BUTTONS -->
+                    <h2>I'm cool with the following in my car:</h2>
+                    <input type="checkbox" name="user[smoking]" value="smoking"> smoking
+                    <input type="checkbox" name="user[food]" value="food"> eating
+
+                    <input type="checkbox" name="user[music]" value="music"> music
+                    <input type="checkbox" name="user[talking]" value="talking"> talking
+
+                    <input type="checkbox" name="user[pets]" value="pets"> pets<br>
+
+                    <button class="btn btn-success" type="submit">Sign Up</button>
+
+
+
+
+
+                </div>
+            </form>
+
+
+        </div>
+    </div>
+
+
+</body>
+
+
+
+</html>
