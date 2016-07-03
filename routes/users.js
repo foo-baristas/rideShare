@@ -16,15 +16,14 @@ router.get('/new', function(req, res) {
 
 router.get('/:id', function(req, res) {
   knex.select('*').from('users').fullOuterJoin('reviews', 'users.id', 'reviews.reviewed_id').where('users.id', req.params.id).then(function(data){
-    console.log(JSON.stringify(data[0].creation_date));
-    res.status(200).render('showUser', {user:data[0], creation_date: getDate(JSON.stringify(data[0].creation_date))});
+    res.status(200).render('showUser', {user:data[0], creation_date: cleanDate(JSON.stringify(data[0].creation_date))});
   }).catch(function(err){
     console.error(err);
     res.sendStatus(500);
   });
 });
 
-function getDate(date) {
+function cleanDate(date) {
   var dateClean = date.slice(1, 11);
   return dateClean;
 }
