@@ -59,7 +59,14 @@ function checkRequired(req, info) {
 }
 
 router.get('/login', function(req, res) {
-  res.render('login');
+  if (req.session && req.session.user_id) res.redirect('/index');
+  else res.render('login');
+});
+
+router.post('/logout', function(req, res, next) {
+
+  req.session = null;
+  res.redirect('/index');
 });
 
 //TODO: seed new data with hashed pw to use compare with bcrypt here
