@@ -30,15 +30,15 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.use('/index', index);
-app.use('/user', user);
-app.use('/trip', search);
-
 //make the session cookie
 app.use(cookieSession({
   name: 'session',
-  keys: [process.env['KEY']]
+  keys: [process.env.KEY]
 }));
+
+app.use('/index', index);
+app.use('/user', user);
+app.use('/trip', search);
 
 app.use(cookieParser());
 // error handlers
