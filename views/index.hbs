@@ -8,6 +8,11 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
     <link rel="stylesheet" type="text/css" href="/styles.css" />
+    <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap-combined.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" media="screen"
+     href="http://tarruda.github.com/bootstrap-datetimepicker/assets/css/bootstrap-datetimepicker.min.css">
+  </head>
+
 </head>
 
 <body>
@@ -32,25 +37,64 @@
                         <small class="text-muted"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>{{info.error.origin}}</small>
                         {{/if}}
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <label for="destination">Destination</label>
                         <input type="text" name="destination" value="{{info.destination}}">
                         {{#if info.error.destination}}
                         <small class="text-muted"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>{{info.error.destination}}</small>
                         {{/if}}
                     </div>
-                    <div class="col-md-3">
+
+                <!-- VY'S ORIGINAL DATE-PICKER CODE -->
+                    <!-- <div class="col-md-3">
                         <label for="date">Date</label>
                         <input type="date" name="date" value="{{info.date}}">
                         {{#if info.error.date}}
                         <small class="text-muted"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>{{info.error.date}}</small>
                         {{/if}}
+                    </div> -->
+
+
+                <!-- START BOOTSTRAP DATE-TIME-PICKER -->
+                    <div class="col-md-4" id="datetimepicker4" class="input-append">
+                      <label for="destination">Date</label>
+                      <input type="text" name="date" value="{{info.date}}"></input>
+                      {{#if info.error.date}}
+                      <small class="text-muted"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>{{info.error.date}}</small>
+                      {{/if}}
+                      <span class="add-on">
+                        <i data-time-icon="icon-time" data-date-icon="icon-calendar">
+                        </i>
+                      </span>
                     </div>
+                    <script type="text/javascript"
+                     src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js">
+                    </script>
+                    <script type="text/javascript"
+                     src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/js/bootstrap.min.js">
+                    </script>
+                    <script type="text/javascript"
+                     src="http://tarruda.github.com/bootstrap-datetimepicker/assets/js/bootstrap-datetimepicker.min.js">
+                    </script>
+                    <script type="text/javascript"
+                     src="http://tarruda.github.com/bootstrap-datetimepicker/assets/js/bootstrap-datetimepicker.pt-BR.js">
+                    </script>
+                    <script type="text/javascript">
+                      $(function() {
+                        $('#datetimepicker4').datetimepicker({
+                          pickTime: false
+                        });
+                      });
+                    </script>
+              <!-- END BOOTSTRAP DATE-TIME-PICKER -->
+
+
                     <div class="col-md-2">
                         <button type="submit" class="btn btn-primary">Find my ride</button>
                     </div>
                 </fieldset>
             </form>
+          </div>
 
 
             <div class="row articles">
