@@ -39,6 +39,17 @@ router.get('/search', function(req, res, next) {
   }
 });
 
+//render form to create new trip
+router.get('/newRide', function(req, res, next) {
+   res.render('newRide');
+ });
+
+//TODO users can create a trip (only users who are fb authenticated & isdriver: yes)
+// router.post('/', function(req, res, next) {
+//
+// })
+
+
 router.get('/:id', function(req, res, next) {
 
   knex('trips')
@@ -68,5 +79,10 @@ router.post('/reserve/:id', function(req, res, next) {
     });
   });
 });
+
+
+
+
+
 
 module.exports = router;

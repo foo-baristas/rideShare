@@ -75,7 +75,7 @@ router.post('/', function(req, res) {
         talking: post.talking,
         is_driver: post.is_driver,
         isFB_verified: post.isFB_verified
-    }).then(function(data) {
+    }).then(function() {
         res.redirect('/trip/search');
     }).catch(function(err) {
         console.error(err);
