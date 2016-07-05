@@ -29,36 +29,11 @@ router.get('/new', function(req, res) {
 router.get('/:id', function(req, res) {
   knex.select('*').from('users').fullOuterJoin('reviews', 'users.id', 'reviews.reviewed_id').where('users.id', req.params.id).then(function(data){
     res.status(200).render('showUser', {user:data[0], creation_date: cleanDate(JSON.stringify(data[0].creation_date))
-
-      // , helpers: {
-      //
-      //
-      //   smoking: function () {
-      //     if(data[0].smoking === true) {
-      //       console.log('smoking is allowed');
-      //       //display smoking.png
-      //       return <img src='https://cdn4.iconfinder.com/data/icons/dot/256/smoking_allowed.png'>;
-      //     } else {
-      //       console.log('smoking is prohibited');
-      //       return '<img src=\'https://cdn4.iconfinder.com/data/icons/dot/256/smoking_allowed.png\'>';
-      //     }
-      //   }
-    //}
-
   });
   }).catch(function(err){
     console.error(err);
     res.sendStatus(500);
   });
-    knex.select('*').from('users').fullOuterJoin('reviews', 'users.id', 'reviews.reviewed_id').where('users.id', req.params.id).then(function(data) {
-        res.status(200).render('showUser', {
-            user: data[0],
-            creation_date: cleanDate(JSON.stringify(data[0].creation_date))
-        });
-    }).catch(function(err) {
-        console.error(err);
-        res.sendStatus(500);
-    });
 });
 
 //use date object
