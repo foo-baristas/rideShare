@@ -4,7 +4,7 @@
       <div class="col-md-offset-10">
 
           {{#if session.user_id}}
-          <span>Welcome {{session.user_name}} | </span>
+          <span>Welcome <a href="/user/{{session.user_id}}">{{session.user_name}}</a> | </span>
           <a href="./index/logout">Logout</a>
           {{else}}
           <a href="#">How it works</a> |
