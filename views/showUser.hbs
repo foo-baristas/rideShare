@@ -76,12 +76,19 @@
             <div class='row content' id="preferences">
                 <h2>Preferences</h2>
                 <ul>
-                    <li><img src='http://www.freeiconspng.com/uploads/restaurant-menu-icon-png-28.png'></li>
-                    <li><img src='http://www.clipartbest.com/cliparts/9cz/Eob/9czEobbki.jpeg'></li>
-                    <li><img src='https://image.freepik.com/free-icon/pets-hotel-symbol-with-a-dog-and-a-cat-in-a-circle-with-one-star_318-51110.png'></li>
-                    <li><img src='http://www.freeiconspng.com/uploads/restaurant-menu-icon-png-28.png'></li>
-                    <li><img src='http://www.clipartbest.com/cliparts/9cz/Eob/9czEobbki.jpeg'></li>
-                    <li><img src='https://image.freepik.com/free-icon/pets-hotel-symbol-with-a-dog-and-a-cat-in-a-circle-with-one-star_318-51110.png'></li>
+                  <div class="entry">
+                    <!-- if the condition is false -->
+                    {{#if user.smoking }}
+                      <li> false </li>
+                    {{else}}
+                      <li><img src="http://www.designofsignage.com/application/symbol/hands/image/600x600/hand-smoking.jpg"> </li>
+                    {{/if}}
+                  </div>
+
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
                 </ul>
             </div>
             <hr>
