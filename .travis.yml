@@ -3,7 +3,7 @@
 language: node_js
 
 env:
-  - NODE_ENV=test
+  - NODE_ENV=test CXX=g++-4.8
 
 node_js:
   - "5.3.0"
