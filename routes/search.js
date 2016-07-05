@@ -28,8 +28,8 @@ router.get('/search', function(req, res, next) {
     .join('preferences', 'preferences.id', '=', 'trips.preferences_id')
     .select()
     .where({
-      start_location: query.origin,
-      end_location: query.destination,
+      start_location: query.origin.split(',')[0],
+      end_location: query.destination.split(',')[0],
     })
     .whereRaw('CAST(date_of AS DATE) = ?', [query.date])
     .then(function(data) {
