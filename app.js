@@ -36,6 +36,14 @@ app.use(cookieSession({
   keys: [process.env.KEY]
 }));
 
+
+app.use(function(req, res, next) {
+  
+  res.locals.session = req.session;
+  console.log(res.locals.session);
+  next();
+});
+
 app.use('/index', index);
 app.use('/user', user);
 app.use('/trip', search);

@@ -3,8 +3,12 @@
     <body>
       <div class="col-md-offset-10">
           <a href="#">How it works</a>
+          {{#if session.user_id}}
+          <span>Welcome {{session.user_name}}</span>
+          {{else}}
           <a href="/index/login">Login</a> <!-- TODO: only display if user is not logged in -->
           <a href="#">Register</a>
+          {{/if}}
       </div>
     <div class="container">
     <div class="row header">

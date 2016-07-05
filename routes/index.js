@@ -1,12 +1,14 @@
 'use strict';
 
 var express = require('express');
+var app = express();
 var router = express.Router();
 var knex = require('../db/knex');
 var bcrypt = require('bcrypt');
 
 router.get('/', function(req, res) {
 
+  console.log('LOCALLY: ', app.locals.user_id);
   console.log(req.session);
   res.render('index', {
     hasError: false,
@@ -63,7 +65,7 @@ router.get('/login', function(req, res) {
   else res.render('login');
 });
 
-router.post('/logout', function(req, res, next) {
+router.get('/logout', function(req, res, next) {
 
   req.session = null;
   res.redirect('/index');
