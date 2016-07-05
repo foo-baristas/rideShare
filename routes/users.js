@@ -76,7 +76,7 @@ router.post('/', function(req, res) {
         is_driver: post.is_driver,
         isFB_verified: post.isFB_verified
     }).then(function(data) {
-        res.redirect('/user');
+        res.redirect('/trip/search');
     }).catch(function(err) {
         console.error(err);
         res.sendStatus(500);
