@@ -72,7 +72,11 @@
       <div class="row bordered">
         <center>
         <form id="book" method="post" action="/trip/reserve/{{id}}">
+          {{#if num_seats}}
           <a href="#" onclick="document.forms['book'].submit(); return false;"><h4>Book Now!</h4></a>
+          {{else}}
+          <h4>Full!</h4>
+          {{/if}}
         </form>
       </center>
       </div>
