@@ -40,7 +40,7 @@ app.use('/index', index);
 app.use('/user', user);
 app.use('/trip', search);
 
-app.use(cookieParser());
+// app.use(cookieParser());
 
 // error handlers
 
