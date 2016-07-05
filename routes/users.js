@@ -11,17 +11,17 @@ router.get('/new', function(req, res) {
   res.render('newUser');
 });
 
-router.get('/', function(req, res) {
-  knex('users').select().orderBy('id').then(function(data){
-    res.status(200).render('showUser', {users:data});
-   }).catch(function(err){
-    console.log(data[0]);
-    res.status(200).render('showUser', data[0]);
-  }).catch(function(err){
-    console.error(err);
-    res.sendStatus(500);
-  });
-});
+// router.get('/', function(req, res) {
+//   knex('users').select().orderBy('id').then(function(data){
+//     res.status(200).render('showUser', {users:data});
+//    }).catch(function(err){
+//     console.log(data[0]);
+//     res.status(200).render('#######', data[0]);
+//   }).catch(function(err){
+//     console.error(err);
+//     res.sendStatus(500);
+//   });
+// });
 
 // FIX: DATABASE QUERY TO INCLUDE REVIEWER DETAILS
 
@@ -34,6 +34,8 @@ router.get('/:id', function(req, res) {
   });
 });
 
+
+//use date object
 function cleanDate(date) {
   var dateClean = date.slice(1, 11);
   return dateClean;
