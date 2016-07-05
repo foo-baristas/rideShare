@@ -81,7 +81,7 @@ router.post('/reserve/:id', function(req, res, next) {
     .where('id', '=', req.params.id)
     .decrement('num_seats', 1)
     .then(function(data) {
-      res.redirect('/search');
+      res.redirect('/trip/' + req.params.id);
     });
   });
 });

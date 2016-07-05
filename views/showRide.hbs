@@ -27,6 +27,21 @@
     filter: FlipH;
     -ms-filter: "FlipH";
   }
+
+
+  .bordered {
+
+    border: 2px solid #dedede;
+    border-radius: 20px;
+    padding: 10px;
+    color: white;
+    background-color: #c9c9c9;
+  }
+
+  .profile {
+
+    border-radius: 50px;
+  }
   </style>
 </head>
 
@@ -45,15 +60,21 @@
         <p>{{details}}</p>
       </div>
     </div>
-    <div class="col-md-1">
-      <div class="row">
-        <h4>{{num_seats}} left</h4>
+    <div class="col-md-2">
+      <div class="row bordered">
+        <center><h4>{{num_seats}} seats left</h4></center>
       </div>
-      <div class="row">
-        <h4>${{trip_cost}} per passenger</h4>
+      <br />
+      <div class="row bordered">
+        <center><h4>${{trip_cost}} per passenger</h4></center>
       </div>
-      <div class="row">
-        <button type="submit" class="btn btn-primary">Book Now!</button>
+      <br />
+      <div class="row bordered">
+        <center>
+        <form id="book" method="post" action="/trip/reserve/{{id}}">
+          <a href="#" onclick="document.forms['book'].submit(); return false;"><h4>Book Now!</h4></a>
+        </form>
+      </center>
       </div>
     </div>
   </div>
@@ -103,14 +124,15 @@
       <br />
       <br />
       <div class="col-md-3">
-        <img width="125" src="{{profile_pic_url}}">
+        <img class="profile" width="125" src="{{profile_pic_url}}">
       </div>
       <div class="col-md-3">
-        {{name_first}} {{name_last}}<br />
+        <h4>{{name_first}} {{name_last}}</h4>
         <a href="/user/{{user_id}}">View Profile</a>
       </div>
-      <div class="col-md-3">
+      <div class="col-md-5">
         <img width="50" src="{{car_img_url}}">
+        <span>{{car_description}}</span>
       </div>
     </div>
   </div>

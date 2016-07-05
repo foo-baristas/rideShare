@@ -8,31 +8,21 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
     <link rel="stylesheet" type="text/css" href="/styles.css" />
+
     <script type="text/javascript" src="http://www.google.com/jsapi"></script>
-
     <script type="text/javascript">
-        google.load("maps", "3.x", {
-            callback: initialize,
-            other_params: 'sensor=false&libraries=places'
-        });
+    google.load("maps", "3.x", {callback: initialize, other_params:'sensor=false&libraries=places'});
+    function initialize() {
 
-        function initialize() {
+      var input = document.getElementById('start');
+      var autocomplete = new google.maps.places.Autocomplete(input, { types: ['(cities)'], region:'US' });
 
-            var input = document.getElementById('origin');
-            var autocomplete = new google.maps.places.Autocomplete(input, {
-                types: ['(cities)'],
-                region: 'US'
-            });
+      var inputDest = document.getElementById('end');
+      var autocomplete2 = new google.maps.places.Autocomplete(inputDest, { types: ['(cities)'], region:'US' });
+    }
 
-            var inputDest = document.getElementById('destination');
-            var autocomplete = new google.maps.places.Autocomplete(inputDest, {
-                types: ['(cities)'],
-                region: 'US'
-            });
-        }
-        google.maps.event.addDomListener(window, 'load', initialize);
+    google.maps.event.addDomListener(window, 'load', initialize);
     </script>
-
 </head>
 
 <body>
@@ -47,11 +37,11 @@
                 <!-- <fieldset class="form-group"> -->
                 <div class="col-md-3">
                     <label for="origin">Origin</label>
-                    <input id="origin" type="text" name="origin" value="">
+                    <input type="text" name="origin" id="start" value="">
                 </div>
                 <div class="col-md-3">
                     <label for="destination">Destination</label>
-                    <input id="destination" type="text" name="destination" value="">
+                    <input type="text" name="destination" id="end" value="">
                 </div>
                 <div class="col-md-3">
                     <label for="details">Trip Details</label>
@@ -78,7 +68,6 @@
                     <h4>PULL DATA FROM USER ACCOUNT FOR FIELDS BELOW WHEN AUTHENTICATION IS FINISHED</h4>
                     <label for="trip_cost">Price per Seat</label>
                     </br>
-                    $
                     <input type="text" name="trip_cost" value="">
                 </div>
                 <div class="col-md-3">
@@ -126,11 +115,11 @@
                         </div>
                     </div>
                 </div>
-                <script type="text/javascript">
+                <!-- <script type="text/javascript">
                     $(function() {
                         $('#datetimepicker1').datetimepicker();
                     });
-                </script>
+                </script> -->
             </div>
             <!-- </div> -->
             <!-- </fieldset> -->
