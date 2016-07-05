@@ -2,9 +2,16 @@
     <!-- {{>header}} -->
     <body>
       <div class="col-md-offset-10">
-          <a href="#">How it works</a>
-          <a href="/index/login">Login</a> <!-- TODO: only display if user is not logged in -->
-          <a href="/user/new">Register</a>
+
+          {{#if session.user_id}}
+          <span>Welcome {{session.user_name}} | </span>
+          <a href="./index/logout">Logout</a>
+          {{else}}
+          <a href="#">How it works</a> |
+          <a href="/index/login">Login</a> |
+          <a href="#">Register</a>
+          {{/if}}
+
       </div>
     <div class="container">
     <div class="row header">

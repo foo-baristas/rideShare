@@ -1,12 +1,14 @@
 'use strict';
 
 var express = require('express');
+var app = express();
 var router = express.Router();
 var knex = require('../db/knex');
 var bcrypt = require('bcrypt');
 
 router.get('/', function(req, res) {
 
+  console.log('LOCALLY: ', app.locals.user_id);
   console.log(req.session);
   res.render('index', {
     hasError: false,
@@ -61,6 +63,11 @@ function checkRequired(req, info) {
 
 router.get('/login', function(req, res) {
   res.render('login');
+});
+
+router.get('/logout', function(req, res, next) {
+  req.session = null;
+  res.redirect('/index');
 });
 
 //TODO: seed new data with hashed pw to use compare with bcrypt here
