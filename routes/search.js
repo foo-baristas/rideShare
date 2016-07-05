@@ -43,8 +43,9 @@ router.get('/search', function(req, res, next) {
 router.get('/:id', function(req, res, next) {
 
   knex('trips')
+  .join('users', 'users.id', '=', 'trips.user_id')
   .select()
-  .where('id', '=', req.params.id)
+  .where('trips.id', '=', req.params.id)
   .then(function(data) {
 
     console.log(data);
