@@ -2,6 +2,7 @@
     <!-- {{>header}} -->
     <body>
       <div class="col-md-offset-10">
+
           {{#if session.user_id}}
           <span>Welcome {{session.user_name}} | </span>
           <a href="./index/logout">Logout</a>
@@ -10,6 +11,7 @@
           <a href="/index/login">Login</a> |
           <a href="#">Register</a>
           {{/if}}
+
       </div>
     <div class="container">
     <div class="row header">

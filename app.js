@@ -5,7 +5,6 @@ var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
-var cookieParser = require('cookie-parser');
 var cookieSession = require('cookie-session');
 var bodyParser = require('body-parser');
 var handlebars = require('express-handlebars');
@@ -38,17 +37,19 @@ app.use(cookieSession({
 
 
 app.use(function(req, res, next) {
-  
+
   res.locals.session = req.session;
   console.log(res.locals.session);
   next();
 });
 
+
 app.use('/index', index);
 app.use('/user', user);
 app.use('/trip', search);
 
-app.use(cookieParser());
+// app.use(cookieParser());
+
 // error handlers
 
 // development error handler

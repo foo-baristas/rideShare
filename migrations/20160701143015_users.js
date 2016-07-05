@@ -12,14 +12,14 @@ exports.up = function(knex, Promise) {
     table.string('username');
     table.string('password');
 
-    table.boolean('smoking');
-    table.boolean('eating');
-    table.boolean('pets');
-    table.boolean('music');
-    table.boolean('talking');
+    table.text('smoking');
+    table.text('eating');
+    table.text('pets');
+    table.text('music');
+    table.text('talking');
 
     table.boolean('is_driver');
-    table.boolean('isFB_verified').notNullable();
+    table.boolean('isFB_verified');
   });
 };
 
