@@ -51,6 +51,10 @@ router.get('/:id', function(req, res, next) {
   });
 });
 
+router.post('/new', function(req, res, next) {
+  
+});
+
 router.post('/reserve/:id', function(req, res, next) {
 
   knex('passengers')
