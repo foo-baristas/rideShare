@@ -17,9 +17,6 @@
         body {
             width: 100%;
         }
-        h1 {
-            background-color: gold;
-        }
         img {
           width: 100%;
           border-radius: 50%;
@@ -37,7 +34,10 @@
           padding: 20px;
         }
         .navbar {
-            position: relative;
+            position: absolute;
+        }
+        main {
+          margin-top: 50px;
         }
         #preferences h2, #reviews h2 {
           text-align: center;
@@ -54,37 +54,9 @@
             display: inline;
         }
     </style>
-
-
-
 </head>
 
 <body>
-    <!-- ADD HEADER PARTIAL -->
-    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="#">RideShare</a>
-            </div>
-            <div class="navbar-collapse collapse">
-                <form class="navbar-form navbar-right">
-                    <button type="submit" class="btn btn-success">How it Works</button>
-                    <button type="submit" class="btn btn-success">Login</button>
-                    <button type="submit" class="btn btn-success">Register</button>
-                </form>
-            </div>
-            <!--/.navbar-collapse -->
-        </div>
-    </div>
-    <!-- END HEADER -->
-
-
     <main class='row'>
         <div class='col-sm-2'></div>
         <div class='col-sm-8 main'>

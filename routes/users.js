@@ -27,15 +27,14 @@ router.get('/', function(req, res) {
 
 router.get('/:id', function(req, res) {
   knex.select('*').from('users').fullOuterJoin('reviews', 'users.id', 'reviews.reviewed_id').where('users.id', req.params.id).then(function(data){
-    console.log(JSON.stringify(data[0].creation_date));
-    res.status(200).render('showUser', {user:data[0], creation_date: getDate(JSON.stringify(data[0].creation_date))});
+    res.status(200).render('showUser', {user:data[0], creation_date: cleanDate(JSON.stringify(data[0].creation_date))});
   }).catch(function(err){
     console.error(err);
     res.sendStatus(500);
   });
 });
 
-function getDate(date) {
+function cleanDate(date) {
   var dateClean = date.slice(1, 11);
   return dateClean;
 }
@@ -52,17 +51,16 @@ function getDate(date) {
 // });
 //
 // // IS FOLLOWING ROUTE CORRECT?
-// router.post('/', function(req, res) {
-//
-//   //  CONTINUE TO FILL IN INSERT OBJECT
-//
-//   knex('users').insert({name_first: req.body.user.name_first, name_last: req.body.user.name_last, profile_pic_url: req.body.user.profile_pic_url, age: req.body.user.age, description: req.body.user.description, email: req.body.user.email, username: req.body.user.username, password: req.body.user.password, preferences_id: req.body.user.preferences_id, is_driver: req.body.user.is_driver, isFB_verified: req.body.user.isFB_verified}).then(function(data){
-//     res.redirect('/user/' + req.params.id);
-//   }).catch(function(err){
-//     console.error(err);
-//     res.sendStatus(500);
-//   });
-// });
+router.post('/', function(req, res) {
+
+  knex('users').insert({name_first: req.body.user.name_first, name_last: req.body.user.name_last, profile_pic_url: req.body.user.profile_pic_url, age: req.body.user.age, description: req.body.user.description, email: req.body.user.email, username: req.body.user.username, password: req.body.user.password, preferences_id: req.body.user.preferences_id, is_driver: req.body.user.is_driver, isFB_verified: req.body.user.isFB_verified}).then(function(data){
+    res.redirect('/user/' + req.params.id);
+  }).catch(function(err){
+    console.error(err);
+    res.sendStatus(500);
+  });
+});
+
 //
 // router.put('/:id', function(req, res) {
 //

@@ -3,15 +3,21 @@
 exports.up = function(knex, Promise) {
   return knex.schema.createTable('users', function (table) {
     table.increments();
-    table.string('name_first').notNullable();
-    table.string('name_last').notNullable();
+    table.string('name_first');
+    table.string('name_last');
     table.string('profile_pic_url');
-    table.integer('age').notNullable();
-    table.text('description').notNullable();
-    table.string('email').notNullable();
-    table.string('username').notNullable();
-    table.string('password').notNullable();
-    table.integer('preferences_id').notNullable();
+    table.integer('age');
+    table.text('description');
+    table.string('email');
+    table.string('username');
+    table.string('password');
+
+    table.boolean('smoking');
+    table.boolean('eating');
+    table.boolean('pets');
+    table.boolean('music');
+    table.boolean('talking');
+
     table.boolean('is_driver');
     table.boolean('isFB_verified').notNullable();
   });

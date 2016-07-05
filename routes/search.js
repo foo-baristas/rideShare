@@ -41,7 +41,8 @@ router.get('/:id', function(req, res, next) {
   .where('id', '=', req.params.id)
   .then(function(data) {
 
-    res.render('showRide', { tripInfo: data });
+    console.log(data);
+    res.render('showRide', data[0]);
   });
 });
 

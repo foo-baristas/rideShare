@@ -20,7 +20,7 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.engine('.hbs', handlebars({defaultLayout: 'single', extname: '.hbs'}));
 app.set('view engine', '.hbs');
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, '/public/')));
 
 
 // uncomment after placing your favicon in /public
@@ -29,15 +29,18 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
+//make the session cookie
+app.use(cookieSession({
+  name: 'session',
+  keys: [process.env.KEY]
+}));
+
+
 app.use('/index', index);
 app.use('/user', user);
 app.use('/trip', search);
 
-//make the session cookie
-app.use(cookieSession({
-  name: 'session',
-  keys: [process.env['KEY']]
-}));
+app.use(cookieParser());
 
 // error handlers
 
