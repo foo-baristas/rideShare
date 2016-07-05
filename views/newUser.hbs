@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <title>RideShare</title>
+    <!-- jQuery 2.2.4 minified -->
+    <script src='https://code.jquery.com/jquery-2.2.4.min.js' integrity='sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=' crossorigin='anonymous'></script>
+    <!-- Latest compiled and minified CSS -->
+    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css'>
+    <!-- Optional theme -->
+    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css'>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js'></script>
+
+    <style>
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .navbar {
+            position: absolute;
+        }
+        main {
+          margin-top: 50px;
+        }
+        .form-inline .form-group {
+          margin-bottom: 10px;
+        }
+    </style>
+
+</head>
+
+<body class="container-fluid">
+
+    <main class='row'>
+        <div class='col-sm-2'></div>
+        <div class='col-sm-8'>
+
+            <h2>Sign Up</h2>
+
+            <form class="form-inline" method='POST' action='/user'>
+
+              <div class="form-group row">
+                <label for="name_first" class="col-sm-4 form-control-label">First Name</label>
+                <div class="col-sm-8">
+                    <input name='user[name_first]' type="text" class="form-control" id="first_name" placeholder="first name">
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label for="last_first" class="col-sm-4 form-control-label">Last Name</label>
+                <div class="col-sm-8">
+                  <input name='user[name_last]' type="text" class="form-control" id="last_name" placeholder="last name">
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label for="profile_pic_url" class="col-sm-4 form-control-label">Profile Pic</label>
+                <div class="col-sm-8">
+                  <input name='user[profile_pic_url]' type="url" class="form-control" id="profile_pic_url" placeholder="insert URL">
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label for="age" class="col-sm-4 form-control-label">Age</label>
+                <div class="col-sm-8">
+                  <input name='user[age]' type="text" class="form-control" id="age" placeholder="age">
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label for="email" class="col-sm-4 form-control-label">Email</label>
+                <div class="col-sm-8">
+                  <input name='user[email]' type="text" class="form-control" id="email" placeholder="email">
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label for="description" class="col-sm-4 form-control-label">Description</label>
+                <div class="col-sm-8">
+                  <input name='user[description]' type="text" class="form-control" id="description" placeholder="description">
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label for="username" class="col-sm-4 form-control-label">Username</label>
+                <div class="col-sm-8">
+                  <input name='user[username]' type="text" class="form-control" id="username" placeholder="username">
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label for="password" class="col-sm-4 form-control-label">Password</label>
+                <div class="col-sm-8">
+                  <input name='user[password]' type="text" class="form-control" id="password" placeholder="password">
+                </div>
+              </div>
+
+
+                    <!-- RADIO BUTTONS -->
+                    <h3>I'm cool with the following in my car:</h3>
+                    <label class="checkbox-inline">
+                      <input type="checkbox" name="user[smoking]" value="smoking"> smoking
+                    </label>
+                    <label class="checkbox-inline">
+                      <input type="checkbox" name="user[food]" value="food"> eating
+                    </label>
+                    <label class="checkbox-inline">
+                      <input type="checkbox" name="user[music]" value="music"> music
+                    </label>
+                    <label class="checkbox-inline">
+                      <input type="checkbox" name="user[talking]" value="talking"> talking
+                    </label>
+                    <label class="checkbox-inline">
+                      <input type="checkbox" name="user[pets]" value="pets"> pets<br>
+                    </label>
+                    <br>
+                    <button class="btn btn-success" type="submit">Sign Up</button>
+                </div>
+            </form>
+
+
+        </div>
+    </main>
+
+
+</body>
+
+
+
+</html>

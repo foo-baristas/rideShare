@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <title>RideShare</title>
+    <!-- jQuery 2.2.4 minified -->
+    <script src='https://code.jquery.com/jquery-2.2.4.min.js' integrity='sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=' crossorigin='anonymous'></script>
+    <!-- Latest compiled and minified CSS -->
+    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css'>
+    <!-- Optional theme -->
+    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css'>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js'></script>
+
+    <style>
+        body {
+            width: 100%;
+        }
+        img {
+          width: 100%;
+          border-radius: 50%;
+        }
+        h2, h3, p {
+          margin-top: 10px;
+        }
+        h3 {
+          font-size: 1.2em;
+        }
+        #preferences img {
+          width: 15%;
+        }
+        .main {
+          padding: 20px;
+        }
+        .navbar {
+            position: absolute;
+        }
+        main {
+          margin-top: 50px;
+        }
+        #preferences h2, #reviews h2 {
+          text-align: center;
+          margin-top: 0;
+        }
+        #review-text {
+          margin-top: 15px;
+        }
+        ul {
+            list-style-type: none;
+            margin-top: 20px;
+        }
+        li {
+            display: inline;
+        }
+    </style>
+</head>
+
+<body>
+    <main class='row'>
+        <div class='col-sm-2'></div>
+        <div class='col-sm-8 main'>
+
+            <!-- PHOTO, NAME, AGE, DESCRIPTION -->
+            <div class='row content' id="profile">
+                <div class='col-sm-5'> <img src='{{ user.profile_pic_url }}'></div>
+                <div class='col-sm-7'>
+                    <div class='row'> <h2>{{user.name_first}} {{ user.name_last }}</h2> </div>
+                    <div class='row'> <h3>{{ user.age }} yrs old</h3></div>
+                    <div class='row'> <p>{{ user.description }}</p></div>
+                </div>
+            </div>
+            <hr>
+
+                <!-- PREFERENCES -->
+            <div class='row content' id="preferences">
+                <h2>Preferences</h2>
+                <ul>
+                    <li><img src='http://www.freeiconspng.com/uploads/restaurant-menu-icon-png-28.png'></li>
+                    <li><img src='http://www.clipartbest.com/cliparts/9cz/Eob/9czEobbki.jpeg'></li>
+                    <li><img src='https://image.freepik.com/free-icon/pets-hotel-symbol-with-a-dog-and-a-cat-in-a-circle-with-one-star_318-51110.png'></li>
+                    <li><img src='http://www.freeiconspng.com/uploads/restaurant-menu-icon-png-28.png'></li>
+                    <li><img src='http://www.clipartbest.com/cliparts/9cz/Eob/9czEobbki.jpeg'></li>
+                    <li><img src='https://image.freepik.com/free-icon/pets-hotel-symbol-with-a-dog-and-a-cat-in-a-circle-with-one-star_318-51110.png'></li>
+                </ul>
+            </div>
+            <hr>
+
+                <!-- REVIEWS -->
+            <div class='row content' id="reviews">
+              <h2>Reviews for {{ user.name_first}}</h2>
+                <!-- FIX: DATABASE QUERY TO INCLUDE REVIEWER DETAILS -->
+
+                <div class='col-sm-3'> <img src='{{ user.profile_pic_url }}' style='width:100%'></div>
+                <div class='col-sm-9' id='review-text'>
+                    <h3> FIX THIS: {{user.name_first}} {{ user.name_last }} </h3>
+                    <h4> Rating: {{ user.rating }}/5</h4>
+                    <h4> {{ creation_date }} </h4>
+                    <p> {{ user.comment }} </p>
+                </div>
+            </div>
+
+            </div>
+        </div>
+      </main>
+</body>
+
+</html>

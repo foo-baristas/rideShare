@@ -5,16 +5,23 @@ var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
+var cookieParser = require('cookie-parser');
 var cookieSession = require('cookie-session');
 var bodyParser = require('body-parser');
-var handlebars = require('handlebars');
+var handlebars = require('express-handlebars');
+
+/* Require Routes */
+var user = require('./routes/users');
+var index = require('./routes/index');
+var search = require('./routes/search');
 
 var app = express();
 
 // view handlebars setup
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'handlebars');
-app.use(express.static(path.join(__dirname, 'public')));
+app.engine('.hbs', handlebars({defaultLayout: 'single', extname: '.hbs'}));
+app.set('view engine', '.hbs');
+app.use(express.static(path.join(__dirname, '/public/')));
 
 
 // uncomment after placing your favicon in /public
@@ -29,6 +36,19 @@ app.use(cookieSession({
   keys: [process.env.KEY]
 }));
 
+
+app.use(function(req, res, next) {
+  
+  res.locals.session = req.session;
+  console.log(res.locals.session);
+  next();
+});
+
+app.use('/index', index);
+app.use('/user', user);
+app.use('/trip', search);
+
+app.use(cookieParser());
 // error handlers
 
 // development error handler
@@ -53,5 +73,10 @@ app.use(function(err, req, res, next) {
   });
 });
 
+
+var port = process.env.PORT || 3000;
+app.listen(port, function() {
+  console.log("Listening on port " + port);
+});
 
 module.exports = app;

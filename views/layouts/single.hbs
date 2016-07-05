@@ -1,0 +1,33 @@
+<html>
+    <!-- {{>header}} -->
+    <body>
+      <div class="col-md-offset-10">
+          {{#if session.user_id}}
+          <span>Welcome {{session.user_name}} | </span>
+          <a href="./index/logout">Logout</a>
+          {{else}}
+          <a href="#">How it works</a> |
+          <a href="/index/login">Login</a> |
+          <a href="#">Register</a>
+          {{/if}}
+      </div>
+    <div class="container">
+    <div class="row header">
+        <div class="col-md-3">
+            <h1>rideShare</h1>
+        </div>
+    </div>
+        <div class="container">
+            {{{ body }}}
+        </div>
+     </div>
+     <div class="row footer">
+        <div class="col-md-4">
+          <a href="#">About Us</a>
+        </div>
+        <div class="col-md-offset-11">
+          <p>rideShare©</p>
+        </div>
+     </div>
+    </body>
+</html>
