@@ -20,7 +20,7 @@ services:
   - postgresql
 
 before_script:
-  - psql -c 'create database ride-share;' -U postgres
+  - psql -c 'create database ride_share;' -U postgres
   - npm install -g node-gyp
 
 install:
