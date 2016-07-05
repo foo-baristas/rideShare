@@ -1,0 +1,42 @@
+
+
+language: node_js
+
+env:
+  - NODE_ENV=test CXX=g++-4.8
+
+node_js:
+  - "5.3.0"
+
+addons:
+  apt:
+    sources:
+    - ubuntu-toolchain-r-test
+    packages:
+    - gcc-4.8
+    - g++-4.8
+
+services:
+  - postgresql
+
+before_script:
+  - psql -c 'create database ride_share;' -U postgres
+  - npm install -g node-gyp
+
+install:
+  - npm install
+
+script:
+  - npm run knex migrate:latest
+  - npm run knex seed:run
+  - npm test
+
+deploy:
+  provider: heroku
+  api_key:
+    secure: $HEROKU_API_KEY
+  on:
+    branch: master
+  app: gschool-rideshare
+  run:
+    - "npm run knex migrate:latest"
