@@ -2,83 +2,139 @@
 <html>
 
 <head>
-    <meta charset="utf-8">
-    <title>rideShare</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
-    <link rel="stylesheet" type="text/css" href="/styles.css" />
+  <meta charset="utf-8">
+  <title>rideShare</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" type="text/css" href="/styles.css" />
+  <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap-combined.min.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" media="screen"
+  href="http://tarruda.github.com/bootstrap-datetimepicker/assets/css/bootstrap-datetimepicker.min.css">
+  <!-- GOOGLE AUTOCOMPLETE -->
+  <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+  <script type="text/javascript">
+  google.load("maps", "3.x", {callback: initialize, other_params:'sensor=false&libraries=places'});
+  function initialize() {
+
+    var input = document.getElementById('origin');
+    var autocomplete = new google.maps.places.Autocomplete(input, { types: ['(cities)'], region:'US' });
+
+    var inputDest = document.getElementById('destination');
+    var autocomplete = new google.maps.places.Autocomplete(inputDest, { types: ['(cities)'], region:'US' });
+  }
+
+  google.maps.event.addDomListener(window, 'load', initialize);
+  </script>
 </head>
 
 <body>
-    <div class="container-fluid">
-        <!-- <div class="row header">
-            <div class="col-md-3">
-                <h1>rideShare</h1>
-            </div>
-            <div class="col-md-offset-9">
-                <a href="#">How it works</a>
-                <a href="/index/login">Login</a>
-                <a href="#">Register</a>
-            </div>
-        </div> -->
-        <div class="row">
-            <form class="landing-search" action="/index" method="post">
-                <fieldset class="form-group">
-                    <div class="col-md-3">
-                        <label for="origin">Origin</label>
-                        <input type="text" name="origin" value="{{info.origin}}">
-                        {{#if info.error.origin}}
-                        <small class="text-muted"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>{{info.error.origin}}</small>
-                        {{/if}}
-                    </div>
-                    <div class="col-md-4">
-                        <label for="destination">Destination</label>
-                        <input type="text" name="destination" value="{{info.destination}}">
-                        {{#if info.error.destination}}
-                        <small class="text-muted"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>{{info.error.destination}}</small>
-                        {{/if}}
-                    </div>
-                    <div class="col-md-3">
-                        <label for="date">Date</label>
-                        <input type="date" name="date" value="{{info.date}}">
-                        {{#if info.error.date}}
-                        <small class="text-muted"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>{{info.error.date}}</small>
-                        {{/if}}
-                    </div>
-                    <div class="col-md-2">
-                        <button type="submit" class="btn btn-primary">Find my ride</button>
-                    </div>
-                </fieldset>
-            </form>
+  <div class="container-fluid">
+    <!-- <div class="row header">
+    <div class="col-md-3">
+    <h1>rideShare</h1>
+  </div>
+  <div class="col-md-offset-9">
+  <a href="#">How it works</a>
+  <a href="/index/login">Login</a>
+  <a href="#">Register</a>
+</div>
+</div> -->
+<div class="row">
+  <form class="landing-search" action="/index" method="post">
+    <fieldset class="form-group">
+      <div class="col-md-3">
+        <label for="origin">Origin</label>
+        <input type="text" name="origin" id="origin" value="{{info.origin}}">
+        {{#if info.error.origin}}
+        <small class="text-muted"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>{{info.error.origin}}</small>
+        {{/if}}
+      </div>
+      <div class="col-md-3">
+        <label for="destination">Destination</label>
+        <input type="text" name="destination" id="destination" value="{{info.destination}}">
+        {{#if info.error.destination}}
+        <small class="text-muted"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>{{info.error.destination}}</small>
+        {{/if}}
+      </div>
+
+      <!-- VY'S ORIGINAL DATE-PICKER CODE -->
+      <!-- <div class="col-md-3">
+      <label for="date">Date</label>
+      <input type="date" name="date" value="{{info.date}}">
+      {{#if info.error.date}}
+      <small class="text-muted"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>{{info.error.date}}</small>
+      {{/if}}
+    </div> -->
 
 
-            <div class="row articles">
-                <div class="col-md-4">
-                    <h3> <span class="glyphicon glyphicon-road" aria-hidden="true"></span> Need a lift?</h3>
-                    <p>
-                        Find a ride and get in touch with a driver with a similar itinerary to yours.
-                    </p>
-                </div>
-                <div class="col-md-4">
-                    <h3> <span class="glyphicon glyphicon-piggy-bank" aria-hidden="true"></span> Save big</h3>
-                    <p>
-                        Take advantage of extra room in your car and split the cost of gas.
-                    </p>
-                </div>
-                <div class="col-md-4">
-                    <h3> <span class="glyphicon glyphicon-leaf" aria-hidden="true"></span> Go green</h3>
-                    <p>
-                        Reduce CO2 emissions and share a ride with someone today.
-                    </p>
-                </div>
-            </div>
-
-
-
-
-        </div>
+    <!-- START BOOTSTRAP DATE-TIME-PICKER -->
+    <div class="col-md-4" id="datetimepicker4" class="input-append">
+      <label for="destination">Date</label>
+      <input type="text" name="date" value="{{info.date}}"></input>
+      {{#if info.error.date}}
+      <small class="text-muted"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>{{info.error.date}}</small>
+      {{/if}}
+      <span class="add-on">
+        <i data-time-icon="icon-time" data-date-icon="icon-calendar">
+        </i>
+      </span>
     </div>
+    <script type="text/javascript"
+    src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js">
+    </script>
+    <script type="text/javascript"
+    src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/js/bootstrap.min.js">
+    </script>
+    <script type="text/javascript"
+    src="http://tarruda.github.com/bootstrap-datetimepicker/assets/js/bootstrap-datetimepicker.min.js">
+    </script>
+    <script type="text/javascript"
+    src="http://tarruda.github.com/bootstrap-datetimepicker/assets/js/bootstrap-datetimepicker.pt-BR.js">
+    </script>
+    <script type="text/javascript">
+    $(function() {
+      $('#datetimepicker4').datetimepicker({
+        pickTime: false
+      });
+    });
+    </script>
+    <!-- END BOOTSTRAP DATE-TIME-PICKER -->
+
+
+    <div class="col-md-2">
+      <button type="submit" class="btn btn-primary">Find my ride</button>
+    </div>
+  </fieldset>
+</form>
+</div>
+
+<div class="row articles">
+  <div class="col-md-4">
+    <h3> <span class="glyphicon glyphicon-road" aria-hidden="true"></span> Need a lift?</h3>
+    <p>
+      Find a ride and get in touch with a driver with a similar itinerary to yours.
+    </p>
+  </div>
+  <div class="col-md-4">
+    <h3> <span class="glyphicon glyphicon-piggy-bank" aria-hidden="true"></span> Save big</h3>
+    <p>
+      Take advantage of extra room in your car and split the cost of gas.
+    </p>
+  </div>
+  <div class="col-md-4">
+    <h3> <span class="glyphicon glyphicon-leaf" aria-hidden="true"></span> Go green</h3>
+    <p>
+      Reduce CO2 emissions and share a ride with someone today.
+    </p>
+  </div>
+</div>
+
+
+
+
+</div>
+</div>
 </body>
 
 </html>

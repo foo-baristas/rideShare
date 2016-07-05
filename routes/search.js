@@ -28,12 +28,13 @@ router.get('/search', function(req, res, next) {
     .join('preferences', 'preferences.id', '=', 'trips.preferences_id')
     .select()
     .where({
-      start_location: query.origin,
-      end_location: query.destination
+      start_location: query.origin.split(',')[0],
+      end_location: query.destination.split(',')[0],
     })
+    .whereRaw('CAST(date_of AS DATE) = ?', [query.date])
     .then(function(data) {
 
-      console.log(data);
+      //console.log((new Date(data[0].date_of)).toISOString().split('T')[0]);
       res.status(200).render('searchResults', {objects: data, queries: query});
     });
   }
@@ -60,6 +61,10 @@ router.get('/:id', function(req, res, next) {
     console.log(data);
     res.render('showRide', data[0]);
   });
+});
+
+router.post('/new', function(req, res, next) {
+
 });
 
 router.post('/reserve/:id', function(req, res, next) {
