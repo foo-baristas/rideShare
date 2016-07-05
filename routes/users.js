@@ -27,17 +27,14 @@ router.get('/new', function(req, res) {
 // FIX: DATABASE QUERY TO INCLUDE REVIEWER DETAILS
 
 router.get('/:id', function(req, res) {
-    knex.select('*').from('users').fullOuterJoin('reviews', 'users.id', 'reviews.reviewed_id').where('users.id', req.params.id).then(function(data) {
-        res.status(200).render('showUser', {
-            user: data[0],
-            creation_date: cleanDate(JSON.stringify(data[0].creation_date))
-        });
-    }).catch(function(err) {
-        console.error(err);
-        res.sendStatus(500);
-    });
+  knex.select('*').from('users').fullOuterJoin('reviews', 'users.id', 'reviews.reviewed_id').where('users.id', req.params.id).then(function(data){
+    res.status(200).render('showUser', {user:data[0], creation_date: cleanDate(JSON.stringify(data[0].creation_date))
+  });
+  }).catch(function(err){
+    console.error(err);
+    res.sendStatus(500);
+  });
 });
-
 
 //use date object
 function cleanDate(date) {
