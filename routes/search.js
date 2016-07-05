@@ -3,6 +3,11 @@ var express = require('express'),
 router = express.Router(),
 knex = require('../db/knex');
 
+router.get('/advanced', function(req, res, next) {
+
+  res.render('advancedSearch');
+});
+
 //search?destination=denver&origin=fortcollins
 router.get('/search', function(req, res, next) {
 
