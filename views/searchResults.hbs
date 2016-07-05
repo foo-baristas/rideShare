@@ -195,8 +195,12 @@
         <div class="col-md-1 cost_information">
           <h2 class="cost">${{trip_cost}}</h2>
           <h5>{{num_seats}} seats available.</h5>
-          <form method="POST" action="/search/reserve/{{id}}">
+          <form method="POST" action="/trip/reserve/{{id}}">
+            {{#if num_seats}}
             <button class="btn btn-primary" type="submit">Reserve</button>
+            {{else}}
+            <button class="btn btn-primary" type="submit" disabled="true">Reserve</button>
+            {{/if}}
           </form>
         </div>
       </div>
