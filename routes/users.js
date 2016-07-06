@@ -28,7 +28,12 @@ router.get('/new', function(req, res) {
 
 router.get('/:id', function(req, res) {
   knex.select('*').from('users').fullOuterJoin('reviews', 'users.id', 'reviews.reviewed_id').where('users.id', req.params.id).then(function(data){
-    res.status(200).render('showUser', {user:data[0], creation_date: cleanDate(JSON.stringify(data[0].creation_date))
+    res.status(200).render('showUser', {user:data[0], creation_date: cleanDate(JSON.stringify(data[0].creation_date)),
+
+// WRITE FUNCTION ALLOWING USER TO EDIT OWN PROFILE
+      helpers: {
+            editProfile: function () { console.log("hello"); }
+        }
   });
   }).catch(function(err){
     console.error(err);
