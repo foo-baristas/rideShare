@@ -6,10 +6,13 @@ var router = express.Router();
 var knex = require('../db/knex');
 var bcrypt = require('bcrypt');
 
-router.get('/', function(req, res) {
 
-  console.log('LOCALLY: ', app.locals.user_id);
-  console.log(req.session);
+
+router.get('/', function(req, res) {
+  //console.log(req.session);
+  // Check if FB-logged-in-user exists in database
+  fbUserExistsInOurDatabase(req.session, res);
+
   res.render('index', {
     hasError: false,
     origin: '',
@@ -17,6 +20,57 @@ router.get('/', function(req, res) {
     date: ''
   });
 });
+
+function fbUserExistsInOurDatabase(data, res) {
+  console.log("1. Checking for facebook login...");
+  if (data.passport) {
+    console.log("2. User is logged in with FB");
+    var name = data.passport.user.displayName;
+    if(exists(name) === true) {
+      console.log("FB user in confirmed as a user in our database");
+    } else {
+      console.log("4. FB user needs to be added to our databse");
+      //res.redirect("/user/new");
+      //return false;
+    }
+  } else {
+    console.log("2. User not logged in via facebook");
+  }
+  // If (session.passport.displayName && session.passport.displayName !== any user names in our database) {
+  //
+  // direct user to page to fill out remaining information EXCLUDING:
+  // 		--password
+  // 		--name_first
+  // 		--name_last
+  //  2. Insert a new user with that information
+  // 	3. set isFB_verified to true
+  // }
+
+}
+
+//turn into promise
+//create firstName, lastName variables
+function exists(name) {
+  var nameArray = name.split(' ');
+  //console.log(nameArray);
+  knex.select('*').from('users').where({name_first: nameArray[0], name_last: nameArray[1]}).then(function(result) {
+        //console.log(result.length);
+        if(result.length === 1) {
+          return true;
+        } else {
+          console.log("3. User does not exist in our database");
+          return false;
+        }
+    });
+}
+
+// router.get('/user/new#_=_', function(req, res) {
+//   res.redirect('/user/new');
+// });
+
+
+
+
 
 router.post('/', function(req, res) {
   console.log(req.body);
