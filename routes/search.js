@@ -74,7 +74,8 @@ router.post('/', function(req, res, next) {
     car_description: post.car_description,
     car_img_url: post.car_img_url,
     date_of: post.date,
-    user_id: req.session.user_id
+    user_id: req.session.user_id,
+    trip_cost: post.trip_cost
   }).returning('id')
   .then(function(id) {
     res.redirect('/trip/' + id[0]);
