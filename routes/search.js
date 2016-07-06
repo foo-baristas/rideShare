@@ -7,12 +7,14 @@ knex = require('../db/knex');
 router.get('/search', function(req, res, next) {
 
   var query = req.query;
+  console.log(query);
   if (Object.keys(query).length === 0) {
     knex('trips')
     .join('users', 'users.id', '=', 'trips.user_id')
     .join('preferences', 'preferences.id', '=', 'trips.preferences_id')
     .select('trips.id AS id', 'profile_pic_url', 'name_first', 'name_last', 'age', 'user_id', 'isFB_verified',
-    'start_location', 'end_location', 'date_of', 'details', 'car_img_url', 'car_description', 'trip_cost', 'num_seats')
+    'start_location', 'end_location', 'date_of', 'details', 'car_img_url', 'car_description', 'trip_cost', 'num_seats',
+    'isSmoking', 'isPets', 'isTalking', 'isFood', 'isMusic')
     .then(function(data) {
 
       console.log(data);
@@ -23,14 +25,23 @@ router.get('/search', function(req, res, next) {
     .join('users', 'users.id', '=', 'trips.user_id')
     .join('preferences', 'preferences.id', '=', 'trips.preferences_id')
     .select('trips.id AS id', 'profile_pic_url', 'name_first', 'name_last', 'age', 'user_id', 'isFB_verified',
-    'start_location', 'end_location', 'date_of', 'details', 'car_img_url', 'car_description', 'trip_cost', 'num_seats')
+    'start_location', 'end_location', 'date_of', 'details', 'car_img_url', 'car_description', 'trip_cost', 'num_seats',
+    'isSmoking', 'isPets', 'isTalking', 'isFood', 'isMusic')
     .where({
       start_location: query.origin.split(',')[0],
       end_location: query.destination.split(',')[0],
+      isSmoking: (query.smoking ? true : false) | false,
+      isPets: (query.pets ? true : false) | false,
+      isTalking: (query.talking ? true : false) | false,
+      isFood: (query.eating ? true : false) | false,
+      isMusic: (query.music ? true : false) | false,
     })
     .whereRaw('CAST(date_of AS DATE) = ?', [query.date])
+    .where('trip_cost', '<=', query.maxprice || 9999)
+    .where('num_seats', '>=', query.seats || 1)
     .then(function(data) {
 
+      console.log(data);
       //console.log((new Date(data[0].date_of)).toISOString().split('T')[0]);
       res.status(200).render('searchResults', {objects: data, queries: query});
     });
