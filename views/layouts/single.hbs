@@ -1,7 +1,7 @@
 <html>
     <!-- {{>header}} -->
     <body>
-      <div class="col-md-offset-10">
+      <div class="col-md-offset-8">
 
           {{#if session.user_id}}
           <span>Welcome <a href="/user/{{session.user_id}}">{{session.user_name}}</a> | </span>
@@ -9,6 +9,7 @@
           {{else}}
           <a href="#">How it works</a> |
           <a href="/index/login">Login</a> |
+          <a href="/login/facebook">Login with Facebook</a>  |
           <a href="/user/new">Register</a>
           {{/if}}
 
