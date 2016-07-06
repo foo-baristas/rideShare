@@ -10,23 +10,21 @@ router.get('/search', function(req, res, next) {
   console.log(query);
   if (Object.keys(query).length === 0) {
     knex('trips')
-    .join('users', 'users.id', '=', 'trips.user_id')
-    .join('preferences', 'preferences.id', '=', 'trips.preferences_id')
+    .join('users', 'trips.user_id', '=', 'users.id')
     .select('trips.id AS id', 'profile_pic_url', 'name_first', 'name_last', 'age', 'user_id', 'isFB_verified',
-    'start_location', 'end_location', 'date_of', 'details', 'car_img_url', 'car_description', 'trip_cost', 'num_seats',
-    'isSmoking', 'isPets', 'isTalking', 'isFood', 'isMusic')
+    'start_location', 'end_location', 'date_of', 'details', 'car_img_url', 'car_description', 'trip_cost', 'num_seats')
     .then(function(data) {
 
-      console.log(data);
+      console.log('QUERY', data);
       res.status(200).render('searchResults', {objects: data, queries: query});
     });
   } else { //search?origin=Denver&destination=Fort%20Collins
     knex('trips')
     .join('users', 'users.id', '=', 'trips.user_id')
-    .join('preferences', 'preferences.id', '=', 'trips.preferences_id')
+    .select('*')
+    //.join('preferences', 'preferences.id', '=', 'trips.preferences_id')
     .select('trips.id AS id', 'profile_pic_url', 'name_first', 'name_last', 'age', 'user_id', 'isFB_verified',
-    'start_location', 'end_location', 'date_of', 'details', 'car_img_url', 'car_description', 'trip_cost', 'num_seats',
-    'isSmoking', 'isPets', 'isTalking', 'isFood', 'isMusic')
+    'start_location', 'end_location', 'date_of', 'details', 'car_img_url', 'car_description', 'trip_cost', 'num_seats')
     .where({
       start_location: query.origin.split(',')[0],
       end_location: query.destination.split(',')[0],
@@ -62,10 +60,10 @@ router.post('/', function(req, res, next) {
   var post = req.body;
   console.log(post);
 
-//TODO: add user_id: req.session.user_id when session is created
+  //TODO: add user_id: req.session.user_id when session is created
   knex('trips').insert({
-    start_location: post.origin,
-    end_location: post.destination,
+    start_location: post.origin.split(',')[0],
+    end_location: post.destination.split(',')[0],
     details: post.trip_details,
     num_seats: post.num_seats,
     smoking: post.smoking,
@@ -75,7 +73,8 @@ router.post('/', function(req, res, next) {
     talking: post.talking,
     car_description: post.car_description,
     car_img_url: post.car_img_url,
-    date_of: post.date
+    date_of: post.date,
+    user_id: req.session.user_id
   }).returning('id')
   .then(function(id) {
     res.redirect('/trip/' + id[0]);
@@ -93,7 +92,7 @@ router.get('/:id', function(req, res, next) {
   .where('trips.id', '=', req.params.id)
   .then(function(data) {
 
-    console.log(data);
+    console.log('QUERY', data);
     res.render('showRide', data[0]);
   });
 });
