@@ -2,8 +2,8 @@
 
 var express = require('express'),
     router = express.Router(),
-    knex = require('../db/knex');
-
+    knex = require('../db/knex'),
+    bcrypt = require('bcrypt');
 
 
 // MIGHT NOT NEED THIS ROUTE IF MODAL ON LANDING PAGE IS SUCCESSFUL
@@ -59,34 +59,53 @@ function cleanDate(date) {
 //   });
 // });
 //
-// // IS FOLLOWING ROUTE CORRECT?
+
+// router.post('/', function(req, res, next) {
+//     //hash pw here before posting it
+//     bcrypt.genSalt(Number(req.body.saltRounds), function(err, salt) {
+//         bcrypt.hash(req.body.password, salt, function(err, hash) {
+//             //insert here
+//             knex('users').insert({
+//                 username: req.body.username,
+//                 password: hash
+//             }).then(function(data) {
+//                 res.redirect('/user');
+//             }).catch(next);
+//         });
+//     });
+// });
+
 router.post('/', function(req, res) {
   console.log(req.body);
   var post = req.body
 
-
-    knex('users').insert({
-        name_first: post.name_first,
-        name_last: post.name_last,
-        profile_pic_url: post.profile_pic_url,
-        age: post.age,
-        description: post.description,
-        email: post.email,
-        username: post.username,
-        password: post.password,
-        smoking: post.smoking,
-        eating: post.eating,
-        pets: post.pets,
-        music: post.music,
-        talking: post.talking,
-        is_driver: post.is_driver,
-        isFB_verified: post.isFB_verified
-    }).then(function() {
-        res.redirect('/trip/search');
-    }).catch(function(err) {
-        console.error(err);
-        res.sendStatus(500);
+  bcrypt.genSalt(Number(post.saltRounds), function(err, salt) {
+    bcrypt.hash(post.password, salt, function(err, hash) {
+      knex('users').insert({
+          username: post.username,
+          password: hash,
+          name_first: post.name_first,
+          name_last: post.name_last,
+          profile_pic_url: post.profile_pic_url,
+          age: post.age,
+          description: post.description,
+          email: post.email,
+          smoking: post.smoking,
+          eating: post.eating,
+          pets: post.pets,
+          music: post.music,
+          talking: post.talking,
+          is_driver: post.is_driver,
+          isFB_verified: post.isFB_verified
+      }).then(function() {
+          //TODO: change redirect later to: res.redirect('/trip/search');
+          res.redirect('/index');
+      }).catch(function(next) {
+          console.error(err);
+          res.sendStatus(500);
+      });
     });
+  });
 });
 
 //
