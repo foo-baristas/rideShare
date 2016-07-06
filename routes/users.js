@@ -27,19 +27,24 @@ router.get('/new', function(req, res) {
 // FIX: DATABASE QUERY TO INCLUDE REVIEWER DETAILS
 
 router.get('/:id', function(req, res) {
-    knex.select('*').from('users').fullOuterJoin('reviews', 'users.id', 'reviews.reviewed_id').where('users.id', req.params.id).then(function(data) {
-        res.status(200).render('showUser', {
-            user: data[0],
-            creation_date: cleanDate(JSON.stringify(data[0].creation_date))
-        });
-    }).catch(function(err) {
-        console.error(err);
-        res.sendStatus(500);
-    });
+  knex.select('*').from('users').fullOuterJoin('reviews', 'users.id', 'reviews.reviewed_id').where('users.id', req.params.id).then(function(data){
+    res.status(200).render('showUser', {user:data[0], canEditProfile: canEditProfile(data, req), creation_date: cleanDate(JSON.stringify(data[0].creation_date))});
+  }).catch(function(err){
+    console.error(err);
+    res.sendStatus(500);
+  });
 });
 
 
-//use date object
+function canEditProfile(data, req){
+  if(data[0].username == req.session.user_name) {
+    console.log('This user is authorized to edit this profile');
+    return true;
+  } else {
+    return false;
+  }
+}
+
 function cleanDate(date) {
     var dateClean = date.slice(1, 11);
     return dateClean;
@@ -78,8 +83,8 @@ router.post('/', function(req, res) {
         talking: post.talking,
         is_driver: post.is_driver,
         isFB_verified: post.isFB_verified
-    }).then(function(data) {
-        res.redirect('/user');
+    }).then(function() {
+        res.redirect('/trip/search');
     }).catch(function(err) {
         console.error(err);
         res.sendStatus(500);
