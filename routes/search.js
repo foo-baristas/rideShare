@@ -66,6 +66,8 @@ router.get('/:id', function(req, res, next) {
 });
 
 router.post('/new', function(req, res, next) {
+  var post = req.body;
+  console.log(post);
 
 });
 
