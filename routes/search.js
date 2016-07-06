@@ -86,6 +86,9 @@ router.post('/', function(req, res, next) {
 
 router.get('/:id', function(req, res, next) {
 
+  // console.log('How: ' + req.params.id);
+  if (isNaN(req.params.id)) return;
+
   knex('trips')
   .join('users', 'users.id', '=', 'trips.user_id')
   .select()
