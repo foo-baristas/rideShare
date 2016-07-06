@@ -1,3 +1,9 @@
+<script src="//cdn.jsdelivr.net/webshim/1.14.5/polyfiller.js"></script>
+<script>
+webshims.setOptions('forms-ext', {types: 'date'});
+webshims.polyfill('forms forms-ext');
+</script>
+
 <form method="get" action="/trip/search">
   <label name="origin"> Origin:
     <input type="text" name="origin" id="origin">
@@ -6,7 +12,7 @@
     <input type="text" name="destination" id="destination">
   </label>
   <label name="date"> Date:
-    <input type="text" name="date" id="date">
+    <input type="date" name="date" id="date">
   </label>
   <br />
   <label name="seats"> Number of Seats:
