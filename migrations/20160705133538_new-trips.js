@@ -12,6 +12,7 @@ exports.up = function(knex, Promise) {
           num_seats: 2,
           trip_cost: 15,
           user_id: 7,
+          preferences_id: 1,
           car_description: '2000 Honda Civic',
           car_img_url: 'http://placekitten.com/200/300',
           date_of: new Date()
@@ -24,6 +25,7 @@ exports.up = function(knex, Promise) {
           num_seats: 1,
           trip_cost: 10,
           user_id: 9,
+          preferences_id: 2,
           car_description: '2000 Toyota Corolla',
           car_img_url: 'http://placekitten.com/200/300',
           date_of: new Date()
