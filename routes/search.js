@@ -16,7 +16,8 @@ router.get('/search', function(req, res, next) {
     knex('trips')
     .join('users', 'users.id', '=', 'trips.user_id')
     .join('preferences', 'preferences.id', '=', 'trips.preferences_id')
-    .select()
+    .select('trips.id AS id', 'profile_pic_url', 'name_first', 'name_last', 'age', 'user_id', 'isFB_verified',
+    'start_location', 'end_location', 'date_of', 'details', 'car_img_url', 'car_description', 'trip_cost', 'num_seats')
     .then(function(data) {
 
       console.log(data);
@@ -26,7 +27,8 @@ router.get('/search', function(req, res, next) {
     knex('trips')
     .join('users', 'users.id', '=', 'trips.user_id')
     .join('preferences', 'preferences.id', '=', 'trips.preferences_id')
-    .select()
+    .select('trips.id AS id', 'profile_pic_url', 'name_first', 'name_last', 'age', 'user_id', 'isFB_verified',
+    'start_location', 'end_location', 'date_of', 'details', 'car_img_url', 'car_description', 'trip_cost', 'num_seats')
     .where({
       start_location: query.origin.split(',')[0],
       end_location: query.destination.split(',')[0],
