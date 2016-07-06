@@ -33,7 +33,7 @@ function fbUserExistsInOurDatabase(data, res) {
     if(exists(name) === true) {
       console.log("FB user in confirmed as a user in our database");
     } else {
-      console.log("4. FB user needs to be added to our databse");
+      console.log("4. FB user needs to be added to our database");
       //res.redirect("/user/new");
       //return false;
     }
