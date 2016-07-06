@@ -1,0 +1,35 @@
+<form method="get" action="/trip/search">
+  <label name="origin"> Origin:
+    <input type="text" name="origin" id="origin">
+  </label>
+  <label name="destination"> Destination:
+    <input type="text" name="destination" id="destination">
+  </label>
+  <label name="date"> Date:
+    <input type="text" name="date" id="date">
+  </label>
+  <br />
+  <label name="seats"> Number of Seats:
+    <input type="number" name="seats" id="seats" value="1">
+  </label>
+  <label name="maxprice"> Max Price:
+    $<input type="number" name="maxprice" id="maxprice" value="15">
+  </label>
+  <h3>Preferences</h3>
+  <label name="smoking"> Smoking:
+    <input type="checkbox" name="smoking" id="smoking" value="smoking">
+  </label>
+  <label name="eating"> Eating:
+    <input type="checkbox" name="eating" id="eating" value="eating">
+  </label>
+  <label name="music"> Music:
+    <input type="checkbox" name="music" id="music" value="music">
+  </label>
+  <label name="talking"> Talking:
+    <input type="checkbox" name="talking" id="talking" value="talking">
+  </label>
+  <label name="pets"> Pets:
+    <input type="checkbox" name="pets" id="pets" value="pets">
+  </label><br />
+  <button type="submit" class="btn btn-primary">Search</button>
+</form>

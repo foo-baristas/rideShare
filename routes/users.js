@@ -50,8 +50,6 @@ function cleanDate(date) {
     return dateClean;
 }
 
-//
-//
 // router.get('/:id/edit', function(req, res) {
 //   knex('users').select().where({id: req.params.id}).then(function(data){
 //     res.status(200).render('editUser', {user:data[0]});
