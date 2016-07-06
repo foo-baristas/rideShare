@@ -48,10 +48,32 @@ router.get('/newRide', function(req, res, next) {
  });
 
 //TODO users can create a trip (only users who are fb authenticated & isdriver: yes)
-// router.post('/', function(req, res, next) {
-//
-// })
+router.post('/', function(req, res, next) {
+  var post = req.body;
+  console.log(post);
 
+//TODO: add user_id: req.session.user_id when session is created
+  knex('trips').insert({
+    start_location: post.origin,
+    end_location: post.destination,
+    details: post.trip_details,
+    num_seats: post.num_seats,
+    smoking: post.smoking,
+    eating: post.eating,
+    pets: post.pets,
+    music: post.music,
+    talking: post.talking,
+    car_description: post.car_description,
+    car_img_url: post.car_img_url,
+    date_of: post.date
+  }).returning('id')
+  .then(function(id) {
+    res.redirect('/trip/' + id[0]);
+  }).catch(function(err) {
+    console.log(err);
+    res.sendStatus(500);
+  });
+});
 
 router.get('/:id', function(req, res, next) {
 
@@ -64,12 +86,6 @@ router.get('/:id', function(req, res, next) {
     console.log(data);
     res.render('showRide', data[0]);
   });
-});
-
-router.post('/new', function(req, res, next) {
-  var post = req.body;
-  console.log(post);
-
 });
 
 router.post('/reserve/:id', function(req, res, next) {
