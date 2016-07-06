@@ -13,6 +13,10 @@ router.get('/', function(req, res) {
   // Check if FB-logged-in-user exists in database
   fbUserExistsInOurDatabase(req.session, res);
 
+
+  //console.log('LOCALLY: ', res.locals.user_id);
+  //console.log(req.session);
+
   res.render('index', {
     hasError: false,
     origin: '',

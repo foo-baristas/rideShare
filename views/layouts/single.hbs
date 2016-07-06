@@ -1,42 +1,47 @@
 <html>
-    <!-- {{>header}} -->
-    <body>
-      <div class="col-md-offset-8">
-
-          {{#if session.user_id}}
-          <span>Welcome <a href="/user/{{session.user_id}}">{{session.user_name}}</a> | </span>
-          <a href="./index/logout">Logout</a>
-
-          <!-- ADD ADDITIONAL CONDITION FOR FACEBOOK LOGIN -->
-          {{else if session.passport}}
-          <span>Welcome <a href="/user/{{session.passport.user.id}}">{{session.passport.user.displayName}}</a> | </span>
-          <a href="./index/logout">Logout</a>
-
-          {{else}}
-          <a href="#">How it works</a> |
-          <a href="/index/login">Login</a> |
-          <a href="/login/facebook">Login with Facebook</a>  |
-          <a href="/user/new">Register</a>
-          {{/if}}
-
+<header>
+  <title>Welcome to RideShare!</title>
+  {{>header}}
+</header>
+<body>
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="/index">
+          Ride-Share
+        </a>
       </div>
-    <div class="container">
-    <div class="row header">
-        <div class="col-md-3">
-            <a href="/index"><h1>rideShare</h1></a>
-        </div>
+      <ul class="nav navbar-nav navbar-right">
+        {{#if session.user_id}}
+        <li><p class="navbar-text">Welcome <a class="navbar-link" href="/user/{{session.user_id}}">{{session.user_name}}</a></p></li>
+        <li><a href="/index/logout">Logout</a></li>
+
+        <!-- ADD ADDITIONAL CONDITION FOR FACEBOOK LOGIN -->
+        {{else if session.passport}}
+        <li><p class="navbar-text">Welcome <a class="navbar-link" href="/user/{{session.passport.user.id}}">{{session.passport.user.displayName}}</a></p></li>
+        <li><a href="/index/logout">Logout</a></li>
+
+        {{else}}
+        <li><a href="#">How it works</a></li>
+        <li><a href="/index/login">Login</a></li>
+        <li><a href="/login/facebook">Login with Facebook</a></li>
+        <li><a href="/user/new">Register</a></li>
+        {{/if}}
+      </ul>
     </div>
-        <div class="container">
-            {{{ body }}}
-        </div>
-     </div>
-     <div class="row footer">
-        <div class="col-md-4">
-          <a href="#">About Us</a>
-        </div>
-        <div class="col-md-offset-11">
-          <p>rideShare©</p>
-        </div>
-     </div>
-    </body>
+  </nav>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-2">
+      </div>
+      <div class="col-md-8">
+        {{{ body }}}
+      </div>
+    </div>
+  </div>
+  {{>footer}}
+</body>
+<footer>
+  <a href="#">About  Us</a>
+</footer>
 </html>
