@@ -3,11 +3,6 @@ var express = require('express'),
 router = express.Router(),
 knex = require('../db/knex');
 
-router.get('/advanced', function(req, res, next) {
-
-  res.render('advancedSearch');
-});
-
 //search?destination=denver&origin=fortcollins
 router.get('/search', function(req, res, next) {
 
@@ -44,8 +39,12 @@ router.get('/search', function(req, res, next) {
 
 //render form to create new trip
 router.get('/newRide', function(req, res, next) {
-   res.render('newRide');
- });
+  res.render('newRide');
+});
+
+router.get('/advanced', function(req, res, next) {
+  res.render('advancedSearch');
+});
 
 //TODO users can create a trip (only users who are fb authenticated & isdriver: yes)
 // router.post('/', function(req, res, next) {

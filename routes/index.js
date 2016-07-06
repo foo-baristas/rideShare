@@ -8,7 +8,7 @@ var bcrypt = require('bcrypt');
 
 router.get('/', function(req, res) {
 
-  console.log('LOCALLY: ', app.locals.user_id);
+  console.log('LOCALLY: ', res.locals.user_id);
   console.log(req.session);
   res.render('index', {
     hasError: false,
