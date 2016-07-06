@@ -99,7 +99,7 @@ router.post('/', function(req, res) {
           isFB_verified: post.isFB_verified
       }).then(function() {
           //TODO: change redirect later to: res.redirect('/trip/search');
-          res.redirect('/index');
+          res.redirect('/index/auth');
       }).catch(function(next) {
           console.error(err);
           res.sendStatus(500);
