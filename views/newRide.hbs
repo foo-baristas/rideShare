@@ -5,12 +5,11 @@
   <meta charset="utf-8">
   <title></title>
   <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="http://www.google.com/jsapi"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.css" rel="stylesheet">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
   <link rel="stylesheet" type="text/css" href="/styles.css" />
-
-  <script type="text/javascript" src="http://www.google.com/jsapi"></script>
 </head>
 
 <body>
@@ -55,7 +54,7 @@
         <div class="col-md-3">
           <h4>PULL DATA FROM USER ACCOUNT FOR FIELDS BELOW WHEN AUTHENTICATION IS FINISHED</h4>
           <label for="trip_cost">Price per Seat</label>
-        </br>
+        <br />
         <input type="text" name="trip_cost" value="">
       </div>
       <div class="col-md-3">
@@ -116,7 +115,7 @@
 </div>
 
 <script type="text/javascript">
-google.load("maps", "3.x", {callback: initialize, other_params:'libraries=places&key=AIzaSyD2gxzAGO1he66elVkh6TLdYXhCYVc3o8E'});
+google.load("maps", "3.x", {callback: initialize, other_params:'v=3.exp&libraries=places&key=AIzaSyD2gxzAGO1he66elVkh6TLdYXhCYVc3o8E'});
 function initialize() {
 
   var input = document.getElementById('origin');
