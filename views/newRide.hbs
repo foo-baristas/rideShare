@@ -11,31 +11,19 @@
     <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap-combined.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" media="screen" href="http://tarruda.github.com/bootstrap-datetimepicker/assets/css/bootstrap-datetimepicker.min.css">
     <!-- GOOGLE AUTOCOMPLETE -->
-    <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+    <!-- <script type="text/javascript" src="http://www.google.com/jsapi"></script>
     <script type="text/javascript">
-        google.load("maps", "3.x", {
-            callback: initialize,
-            other_params: 'sensor=false&libraries=places'
-        });
+    google.load("maps", "3.x", {callback: initialize, other_params:'sensor=false&libraries=places'});
+    function initialize() {
 
-        function initialize() {
+      var input = document.getElementById('start');
+      var autocomplete = new google.maps.places.Autocomplete(input, { types: ['(cities)'], region:'US' });
 
-            var input = document.getElementById('origin');
-            var autocomplete = new google.maps.places.Autocomplete(input, {
-                types: ['(cities)'],
-                region: 'US'
-            });
-
-            var inputDest = document.getElementById('destination');
-            var autocomplete = new google.maps.places.Autocomplete(inputDest, {
-                types: ['(cities)'],
-                region: 'US'
-            });
-        }
-
-        google.maps.event.addDomListener(window, 'load', initialize);
-    </script>
-
+      var inputDest = document.getElementById('end');
+      var autocomplete2 = new google.maps.places.Autocomplete(inputDest, { types: ['(cities)'], region:'US' });
+    }
+    google.maps.event.addDomListener(window, 'load', initialize);
+    </script> -->
 </head>
 
 <body>
@@ -47,21 +35,52 @@
         </div>
         <form class="newRide" action="/trip" method="post">
             <div class="row">
-                <!-- <fieldset class="form-group"> -->
                 <div class="col-md-3">
                     <label for="origin">Origin</label>
-                    <input id="origin" type="text" name="origin" value="">
+                    <input type="text" name="origin" id="start" value="">
                 </div>
                 <div class="col-md-3">
                     <label for="destination">Destination</label>
-                    <input id="destination" type="text" name="destination" value="">
+                    <input type="text" name="destination" id="end" value="">
                 </div>
+
+                <!-- START BOOTSTRAP DATE-TIME-PICKER -->
+                <div class="col-md-4" id="datetimepicker4" class="input-append">
+                  <label for="destination">Date & Time of Departure</label>
+                  <input type="text" name="date" value="{{info.date}}"></input>
+                  {{#if info.error.date}}
+                  <small class="text-muted"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>{{info.error.date}}</small>
+                  {{/if}}
+                  <span class="add-on"><i data-time-icon="icon-time" data-date-icon="icon-calendar">
+                  </i></span>
+                </div>
+                <script type="text/javascript"
+                src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js">
+                </script>
+                <script type="text/javascript"
+                src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/js/bootstrap.min.js">
+                </script>
+                <script type="text/javascript"
+                src="http://tarruda.github.com/bootstrap-datetimepicker/assets/js/bootstrap-datetimepicker.min.js">
+                </script>
+                <script type="text/javascript"
+                src="http://tarruda.github.com/bootstrap-datetimepicker/assets/js/bootstrap-datetimepicker.pt-BR.js">
+                </script>
+                <script type="text/javascript">
+                $(function() {
+                  $('#datetimepicker4').datetimepicker({
+                    format: 'dd/MM/yyyy hh:mm:ss'
+                  });
+                });
+                </script>
+                <!-- END BOOTSTRAP DATE-TIME-PICKER -->
+            </div>
+            <div class="row">
                 <div class="col-md-3">
                     <label for="details">Trip Details</label>
                     <textarea class="form-control" rows="3"></textarea>
                 </div>
-
-                <div class="col-md-2">
+                <div class="col-md-4">
                     <label for="num_seats">Number of Seats Available</label>
                     <select class="form-control" id="num_seats">
                         <option>1</option>
@@ -73,19 +92,17 @@
                         <option>7</option>
                         <option>8</option>
                     </select>
+                    <label for="car_img_url">Car Image URL</label>
+                    <input type="text" name="car_img_url" value="">
+                </div>
+                <div class="col-md-4">
+                    <label for="car_description">Car Description</label>
+                    <textarea name="car_description" class="form-control" id="car_description" rows="3"></textarea>
                 </div>
             </div>
             <div class="row">
-
-                <div class="col-md-3">
-                    <h4>PULL DATA FROM USER ACCOUNT FOR FIELDS BELOW WHEN AUTHENTICATION IS FINISHED</h4>
-                    <label for="trip_cost">Price per Seat</label>
-                    </br>
-                    $
-                    <input type="text" name="trip_cost" value="">
-                </div>
-                <div class="col-md-3">
-                    <h3>I'm cool with the following in my car:</h3>
+                <div class="col-md-6">
+                    <h4>I'm cool with the following in my car:</h4>
                     <label class="checkbox-inline">
                         <input type="checkbox" name="smoking" value="smoking"> smoking
                     </label>
@@ -104,56 +121,16 @@
                     </label>
                     <br>
                 </div>
-                <label for="user_id">User ID</label>
-                <input type="number" name="user_id" value="">
-                <div class="row">
-                    <div class="col-md-4">
-                        <label for="car_description">Car Description</label>
-                        <textarea name="car_description" class="form-control" id="car_description" rows="3"></textarea>
-                    </div>
+                <div class="col-md-3">
+                    <!-- <h4>PULL DATA FROM USER ACCOUNT FOR FIELDS BELOW WHEN AUTHENTICATION IS FINISHED</h4> -->
+                    <label for="trip_cost">Price per Seat</label>
+                    <input type="text" name="trip_cost" value="" placeholder="$">
                 </div>
-                <div class="col-md-4">
-                    <label for="car_img_url">Car Image URL</label>
-                    <input type="text" name="car_img_url" value="">
+                <div class="col-md-3">
+                    <button type="submit" class="btn btn-primary">Submit</button>
                 </div>
             </div>
-            <!-- START BOOTSTRAP DATE-TIME-PICKER -->
-            <div class="col-md-4" id="datetimepicker4" class="input-append">
-              <label for="destination">Date</label>
-              <input type="text" name="date" value="{{info.date}}"></input>
-              {{#if info.error.date}}
-              <small class="text-muted"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>{{info.error.date}}</small>
-              {{/if}}
-              <span class="add-on">
-                <i data-time-icon="icon-time" data-date-icon="icon-calendar">
-                </i>
-              </span>
-            </div>
-            <script type="text/javascript"
-            src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js">
-            </script>
-            <script type="text/javascript"
-            src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/js/bootstrap.min.js">
-            </script>
-            <script type="text/javascript"
-            src="http://tarruda.github.com/bootstrap-datetimepicker/assets/js/bootstrap-datetimepicker.min.js">
-            </script>
-            <script type="text/javascript"
-            src="http://tarruda.github.com/bootstrap-datetimepicker/assets/js/bootstrap-datetimepicker.pt-BR.js">
-            </script>
-            <script type="text/javascript">
-            $(function() {
-              $('#datetimepicker4').datetimepicker({
-                pickTime: true
-              });
-            });
-            </script>
-    <!-- END BOOTSTRAP DATE-TIME-PICKER -->
-    <!-- </div> -->
-    <!-- </fieldset> -->
-    <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
-    <!-- </div> -->
+        </form>
     </div>
 </body>
 

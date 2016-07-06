@@ -27,13 +27,27 @@
     filter: FlipH;
     -ms-filter: "FlipH";
   }
+
+
+  .bordered {
+
+    border: 2px solid #dedede;
+    border-radius: 20px;
+    padding: 10px;
+    color: white;
+    background-color: #c9c9c9;
+  }
+
+  .profile {
+
+    border-radius: 50px;
+  }
   </style>
 </head>
 
 <body class="container-fluid">
   <div class="row">
     <div class="col-md-3">
-      &nbsp;
     </div>
     <div class="col-md-5">
       <div class="row">
@@ -46,60 +60,83 @@
         <p>{{details}}</p>
       </div>
     </div>
-    <div class="col-md-1">
-      <div class="row">
-        <h4>{{num_seats}} left</h4>
+    <div class="col-md-2">
+      <div class="row bordered">
+        <center><h4>{{num_seats}} seats left</h4></center>
       </div>
-      <div class="row">
-        <h4>${{trip_cost}} per passenger</h4>
+      <br />
+      <div class="row bordered">
+        <center><h4>${{trip_cost}} per passenger</h4></center>
       </div>
-      <div class="row">
-        <button type="submit" class="btn btn-primary">Book Now!</button>
+      <br />
+      <div class="row bordered">
+        <center>
+        <form id="book" method="post" action="/trip/reserve/{{id}}">
+          {{#if num_seats}}
+          <a href="#" onclick="document.forms['book'].submit(); return false;"><h4>Book Now!</h4></a>
+          {{else}}
+          <h4>Full!</h4>
+          {{/if}}
+        </form>
+      </center>
       </div>
     </div>
   </div>
   <br />
   <div class="row">
     <div class="col-md-3">
-      &nbsp;
     </div>
     <div class="col-md-6">
-      <center><h4>Trip Preferences</h4></center>
-      <div class='row content' id="preferences">
-        <!-- if the condition is false -->
-        {{#if smoking }}
-        <img width="50" src="https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSHpMOdjrWhTLqIGWzTHCbylToB_7ywe1n-hTiFHWbgOobDGxHUBg">
-        {{else}}
-        <img width="50" src="http://www.designofsignage.com/application/symbol/hands/image/600x600/hand-smoking.jpg">
-        {{/if}}
+      <center><h4>Trip Preferences</h4>
+        <div class='row content' id="preferences">
+          <!-- if the condition is false -->
+          {{#if smoking }}
+          <img width="50" src="https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSHpMOdjrWhTLqIGWzTHCbylToB_7ywe1n-hTiFHWbgOobDGxHUBg">
+          {{else}}
+          <img width="50" src="http://www.designofsignage.com/application/symbol/hands/image/600x600/hand-smoking.jpg">
+          {{/if}}
 
-        <!-- if the condition is false -->
-        {{#if eating }}
-        <img width="50" src="http://www.clipartbest.com/cliparts/LiK/kqb/LiKkqbyaT.jpeg">
-        {{else}}
-        <img width="50" src="https://image.freepik.com/free-icon/restaurant-eating-tools-set-of-three-pieces_318-61020.png">
-        {{/if}}
+          <!-- if the condition is false -->
+          {{#if eating }}
+          <img width="50" src="http://www.clipartbest.com/cliparts/LiK/kqb/LiKkqbyaT.jpeg">
+          {{else}}
+          <img width="50" src="https://image.freepik.com/free-icon/restaurant-eating-tools-set-of-three-pieces_318-61020.png">
+          {{/if}}
 
-        <!-- if the condition is false -->
-        {{#if pets }}
-        <img width="50" src="http://free-icon-download.com/modules/PDdownloads/images/screenshots/free-image-download-no-pets-allowed-sign.png">
-        {{else}}
-        <img width="50" src="https://image.freepik.com/free-icon/pet-hotel-sign-with-a-dog-and-a-cat-under-a-roof-line_318-51335.png">
-        {{/if}}
+          <!-- if the condition is false -->
+          {{#if pets }}
+          <img width="50" src="http://free-icon-download.com/modules/PDdownloads/images/screenshots/free-image-download-no-pets-allowed-sign.png">
+          {{else}}
+          <img width="50" src="https://image.freepik.com/free-icon/pet-hotel-sign-with-a-dog-and-a-cat-under-a-roof-line_318-51335.png">
+          {{/if}}
 
-        <!-- if the condition is false -->
-        {{#if music }}
-        <img width="50" src="http://previews.123rf.com/images/shadowalice/shadowalice1502/shadowalice150200216/36857840-No-music-icon-great-for-any-use-Vector-EPS10--Stock-Vector.jpg">
-        {{else}}
-        <img width="50" src="http://downloadicons.net/sites/default/files/music-icon-61648.png">
-        {{/if}}
+          <!-- if the condition is false -->
+          {{#if music }}
+          <img width="50" src="http://previews.123rf.com/images/shadowalice/shadowalice1502/shadowalice150200216/36857840-No-music-icon-great-for-any-use-Vector-EPS10--Stock-Vector.jpg">
+          {{else}}
+          <img width="50" src="http://downloadicons.net/sites/default/files/music-icon-61648.png">
+          {{/if}}
 
-        <!-- if the condition is false -->
-        {{#if talking }}
-        <img width="50" src="https://smalltalkbigresults.files.wordpress.com/2011/03/no_talking1.gif">
-        {{else}}
-        <img width="50" src="http://martalozanomolano.com/wordpress/wp-content/uploads/2014/03/iconmonstr-speech-bubble-15-icon.png">
-        {{/if}}
+          <!-- if the condition is false -->
+          {{#if talking }}
+          <img width="50" src="https://smalltalkbigresults.files.wordpress.com/2011/03/no_talking1.gif">
+          {{else}}
+          <img width="50" src="http://martalozanomolano.com/wordpress/wp-content/uploads/2014/03/iconmonstr-speech-bubble-15-icon.png">
+          {{/if}}
+        </div>
+      </center>
+      <br />
+      <br />
+      <div class="col-md-3">
+        <img class="profile" width="125" src="{{profile_pic_url}}">
+      </div>
+      <div class="col-md-3">
+        <h4>{{name_first}} {{name_last}}</h4>
+        <a href="/user/{{user_id}}">View Profile</a>
+      </div>
+      <div class="col-md-5">
+        <img width="50" src="{{car_img_url}}">
+        <span>{{car_description}}</span>
       </div>
     </div>
   </div>

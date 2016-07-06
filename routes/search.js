@@ -54,8 +54,9 @@ router.get('/newRide', function(req, res, next) {
 router.get('/:id', function(req, res, next) {
 
   knex('trips')
+  .join('users', 'users.id', '=', 'trips.user_id')
   .select()
-  .where('id', '=', req.params.id)
+  .where('trips.id', '=', req.params.id)
   .then(function(data) {
 
     console.log(data);
@@ -64,6 +65,8 @@ router.get('/:id', function(req, res, next) {
 });
 
 router.post('/new', function(req, res, next) {
+  var post = req.body;
+  console.log(post);
 
 });
 
@@ -80,7 +83,7 @@ router.post('/reserve/:id', function(req, res, next) {
     .where('id', '=', req.params.id)
     .decrement('num_seats', 1)
     .then(function(data) {
-      res.redirect('/search');
+      res.redirect('/trip/' + req.params.id);
     });
   });
 });
