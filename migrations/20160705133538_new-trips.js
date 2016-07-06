@@ -18,7 +18,7 @@ exports.up = function(knex, Promise) {
           date_of: new Date()
         }),
         knex('trips').insert({
-
+//
           start_location: 'Fort Collins',
           end_location: 'Denver',
           details: 'I\'m driving back up after dropping after a friend in Denver. Keep me company?',
