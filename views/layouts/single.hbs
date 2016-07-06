@@ -1,5 +1,6 @@
 <html>
 <header>
+  <title>Welcome to RideShare!</title>
   {{>header}}
 </header>
 <body>
@@ -13,12 +14,12 @@
       <ul class="nav navbar-nav navbar-right">
         {{#if session.user_id}}
         <li><p class="navbar-text">Welcome <a class="navbar-link" href="/user/{{session.user_id}}">{{session.user_name}}</a></p></li>
-        <li><a href="./index/logout">Logout</a></li>
+        <li><a href="/index/logout">Logout</a></li>
 
         <!-- ADD ADDITIONAL CONDITION FOR FACEBOOK LOGIN -->
         {{else if session.passport}}
         <li><p class="navbar-text">Welcome <a class="navbar-link" href="/user/{{session.passport.user.id}}">{{session.passport.user.displayName}}</a></p></li>
-        <li><a href="./index/logout">Logout</a></li>
+        <li><a href="/index/logout">Logout</a></li>
 
         {{else}}
         <li><a href="#">How it works</a></li>
@@ -30,7 +31,13 @@
     </div>
   </nav>
   <div class="container-fluid">
-    {{{ body }}}
+    <div class="row">
+      <div class="col-md-2">
+      </div>
+      <div class="col-md-8">
+        {{{ body }}}
+      </div>
+    </div>
   </div>
   {{>footer}}
 </body>
