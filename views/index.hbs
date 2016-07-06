@@ -12,9 +12,9 @@
   <link rel="stylesheet" type="text/css" media="screen"
   href="http://tarruda.github.com/bootstrap-datetimepicker/assets/css/bootstrap-datetimepicker.min.css">
   <!-- GOOGLE AUTOCOMPLETE -->
-  <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+  <script type="text/javascript" src="http://www.google.com/jsapi?key=AIzaSyCsVqhn3Mi-rV82PbqFinMtoIS7mhMy3Xs"></script>
   <script type="text/javascript">
-  google.load("maps", "3.x", {callback: initialize, other_params:'sensor=false&libraries=places'});
+  google.load("maps", "3.x", {callback: initialize, other_params:'sensor=false&libraries=places&key=AIzaSyD2gxzAGO1he66elVkh6TLdYXhCYVc3o8E'});
   function initialize() {
 
     var input = document.getElementById('origin');
@@ -22,9 +22,9 @@
 
     var inputDest = document.getElementById('destination');
     var autocomplete2 = new google.maps.places.Autocomplete(inputDest, { types: ['(cities)'], region:'US' });
-  }
 
-  google.maps.event.addDomListener(window, 'load', initialize);
+    google.maps.event.addDomListener(window, 'load', initialize);
+  }
   </script>
 </head>
 
