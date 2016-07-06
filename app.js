@@ -16,6 +16,7 @@ var user = require('./routes/users');
 var index = require('./routes/index');
 var search = require('./routes/search');
 
+
 var app = express();
 
 // view handlebars setup
@@ -49,6 +50,7 @@ app.use(function(req, res, next) {
 app.use('/index', index);
 app.use('/user', user);
 app.use('/trip', search);
+
 
 // app.use(cookieParser());
 

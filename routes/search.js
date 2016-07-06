@@ -40,11 +40,23 @@ router.get('/search', function(req, res, next) {
   }
 });
 
+//render form to create new trip
+router.get('/newRide', function(req, res, next) {
+   res.render('newRide');
+ });
+
+//TODO users can create a trip (only users who are fb authenticated & isdriver: yes)
+// router.post('/', function(req, res, next) {
+//
+// })
+
+
 router.get('/:id', function(req, res, next) {
 
   knex('trips')
+  .join('users', 'users.id', '=', 'trips.user_id')
   .select()
-  .where('id', '=', req.params.id)
+  .where('trips.id', '=', req.params.id)
   .then(function(data) {
 
     console.log(data);
@@ -69,9 +81,14 @@ router.post('/reserve/:id', function(req, res, next) {
     .where('id', '=', req.params.id)
     .decrement('num_seats', 1)
     .then(function(data) {
-      res.redirect('/search');
+      res.redirect('/trip/' + req.params.id);
     });
   });
 });
+
+
+
+
+
 
 module.exports = router;

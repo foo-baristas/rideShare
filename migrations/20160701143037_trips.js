@@ -10,7 +10,11 @@ exports.up = function(knex, Promise) {
     table.string('details');
     table.integer('num_seats');
     table.integer('trip_cost');
-    table.integer('preferences_id');
+    table.text('smoking');
+    table.text('eating');
+    table.text('pets');
+    table.text('music');
+    table.text('talking');
     table.integer('user_id');
     table.string('car_description');
     table.string('car_img_url');
