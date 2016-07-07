@@ -30,10 +30,14 @@ router.get('/new', function(req, res) {
 router.get('/:id', function(req, res) {
 
   knex.select('*').from('users').where('users.id', req.params.id).then(function(data) {
+
+
+
+    //console.log(data[0]);
     res.status(200).render('showUser', {
       user: data[0],
-      canEditProfile: canEditProfile(data, req)
-      //review: showReviews(req),
+      canEditProfile: canEditProfile(data, req),
+      reviews: showReviews(req)
       //creation_date: cleanDate(JSON.stringify(data[0].creation_date))
     });
   }).catch(function(err){
@@ -42,31 +46,17 @@ router.get('/:id', function(req, res) {
   });
 });
 
-router.get('/:id/reviews', function(req, res) {
-
-  knex.select('*').from('users').fullOuterJoin('reviews', 'users.id', 'reviews.reviewed_id').where('users.id', req.params.id).then(function(data) {
+function showReviews(req){
+  knex.select('*').from('users').fullOuterJoin('reviews', 'users.id', 'reviews.reviewed_id').where('users.id', req.params.id).then(function(data){
+    console.log('entered the showReviews function');
     console.log(data[0]);
-    res.status(200).render('usersReviews', {
-      review: data[0],      //creation_date: cleanDate(JSON.stringify(data[0].creation_date))
-    });
-  }).catch(function(err){
-    console.error(err);
-    res.sendStatus(500);
+    if(data[0].id) {
+      return true;
+    } else {
+      return false;
+    }
   });
-
-
-});
-
-//  DELETE THIS IF THE ABOVE ROUTE WORKS
-// function showReviews(req){
-//   knex.select('*').from('users').fullOuterJoin('reviews', 'users.id', 'reviews.reviewed_id').where('users.id', req.params.id).then(function(data){
-//     console.log('entered the showReviews function');
-//     console.log(data[0].id);
-//     return data[0];
-//   });
-// }
-
-
+}
 
 // function getUserInfo(req){
 //   knex.select('*').from('users').where('users.id', req.params.id).then(function(data) {
@@ -74,7 +64,6 @@ router.get('/:id/reviews', function(req, res) {
 //     return data[0];
 //   });
 // }
-
 
 function canEditProfile(data, req){
   if(data[0].username == req.session.user_name) {
@@ -135,6 +124,8 @@ router.post('/', function(req, res) {
     });
   });
 });
+
+
 //THIS WORKS DON'T TOUCH IT!!! :)
 router.put('/:id', function(req, res) {
   var post = req.body;
@@ -164,14 +155,14 @@ router.put('/:id', function(req, res) {
     });
 });
 
-
-// router.delete('/:id', function(req, res){
-//   knex('users').delete().where({id: req.params.id}).then(function(data){
-//     res.redirect('/');
-//   }).catch(function(err){
-//     console.error(err);
-//     res.sendStatus(500);
-//   });
-// });
+//DELETE USER WORKS
+router.delete('/:id', function(req, res){
+  knex('users').where('id', req.params.id).del().then(function(data){
+    res.redirect('/index');
+  }).catch(function(err){
+    console.error(err);
+    res.sendStatus(500);
+  });
+});
 
 module.exports = router;

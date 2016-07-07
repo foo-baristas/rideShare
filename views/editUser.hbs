@@ -82,7 +82,12 @@
             <br>
             <button class="btn btn-success" type="submit">Save Changes</button>
         </div>
-</div>
-</form>
-
+    </form>
+    <div class="row">
+      <div class="col-md-offset-4">
+        <form class="delete_user" method="POST" action="/user/{{ user.id }}?_method=delete">
+          <button class="btn btn-danger" type="submit">Delete Account</button>
+        </form>
+      </div>
+    </div>
 </div>
