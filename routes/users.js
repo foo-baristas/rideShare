@@ -6,13 +6,6 @@ var express = require('express'),
     bcrypt = require('bcrypt');
 
 
-// MIGHT NOT NEED THIS ROUTE IF MODAL ON LANDING PAGE IS SUCCESSFUL
-router.get('/new', function(req, res) {
-    res.render('newUser');
-});
-
-
-
 // router.get('/', function(req, res) {
 //   knex('users').select().orderBy('id').then(function(data){
 //     res.status(200).render('######', {users:data});
@@ -25,15 +18,17 @@ router.get('/new', function(req, res) {
 //   });
 // });
 
+router.get('/new', function(req, res) {
+    res.render('newUser');
+});
+
 // FIX: DATABASE QUERY TO INCLUDE REVIEWER DETAILS
-// FIX GETUSERINTO FUNCTION BELOW
 router.get('/:id', function(req, res) {
 
   knex.select('*').from('users').where('users.id', req.params.id).then(function(data) {
     res.status(200).render('showUser', {
       user: data[0],
       canEditProfile: canEditProfile(data, req)
-      //review: showReviews(req),
       //creation_date: cleanDate(JSON.stringify(data[0].creation_date))
     });
   }).catch(function(err){
@@ -41,40 +36,6 @@ router.get('/:id', function(req, res) {
     res.sendStatus(500);
   });
 });
-
-router.get('/:id/reviews', function(req, res) {
-
-  knex.select('*').from('users').fullOuterJoin('reviews', 'users.id', 'reviews.reviewed_id').where('users.id', req.params.id).then(function(data) {
-    console.log(data[0]);
-    res.status(200).render('usersReviews', {
-      review: data[0],      //creation_date: cleanDate(JSON.stringify(data[0].creation_date))
-    });
-  }).catch(function(err){
-    console.error(err);
-    res.sendStatus(500);
-  });
-
-
-});
-
-//  DELETE THIS IF THE ABOVE ROUTE WORKS
-// function showReviews(req){
-//   knex.select('*').from('users').fullOuterJoin('reviews', 'users.id', 'reviews.reviewed_id').where('users.id', req.params.id).then(function(data){
-//     console.log('entered the showReviews function');
-//     console.log(data[0].id);
-//     return data[0];
-//   });
-// }
-
-
-
-// function getUserInfo(req){
-//   knex.select('*').from('users').where('users.id', req.params.id).then(function(data) {
-//     //console.log(data[0]);
-//     return data[0];
-//   });
-// }
-
 
 function canEditProfile(data, req){
   if(data[0].username == req.session.user_name) {
@@ -84,6 +45,37 @@ function canEditProfile(data, req){
     return false;
   }
 }
+
+router.get('/:id/reviews', function(req, res) {
+
+  knex.select('*').from('users').fullOuterJoin('reviews', 'users.id', 'reviews.reviewed_id').where('users.id', req.params.id).then(function(data) {
+    console.log(data[0]);
+    res.status(200).render('usersReviews', {
+      review: data[0],
+      //creation_date: cleanDate(JSON.stringify(data[0].creation_date))
+    });
+  }).catch(function(err){
+    console.error(err);
+    res.sendStatus(500);
+  });
+});
+
+router.get('/:id/new-review', function(req, res) {
+  res.render('newReview');
+
+  // knex('users').select().where({id: req.params.id}).then(function(data) {
+  //     console.log(data[0]);
+  //     //res.status(200).render('newReview', {review:data[0]});
+  //   }).catch(function(err) {
+  //     console.error(err);
+  //     res.sendStatus(500);
+  //   });
+});
+
+
+
+
+
 
 function cleanDate(date) {
     var dateClean = date.slice(1, 11);
@@ -103,7 +95,7 @@ router.get('/:id/edit', function(req, res) {
 
 router.post('/', function(req, res) {
   console.log(req.body);
-  var post = req.body
+  var post = req.body;
 
   bcrypt.genSalt(Number(post.saltRounds), function(err, salt) {
     bcrypt.hash(post.password, salt, function(err, hash) {
@@ -161,6 +153,25 @@ router.put('/:id', function(req, res) {
         res.sendStatus(500);
     });
 });
+
+
+router.post('/new-review', function(req, res) {
+  console.log(req.session.user_id);
+  var post = req.body;
+      knex('reviews').insert({
+          reviewer_id: req.session.user_id,
+          reviewed_id: req.params.id,
+          rating: post.rating,
+          comment: post.comment,
+          creation_date: new Date()
+      }).then(function() {
+          res.redirect('/index/');
+      }).catch(function(err) {
+          console.error(err);
+          res.sendStatus(500);
+      });
+});
+
 
 
 // router.delete('/:id', function(req, res){
