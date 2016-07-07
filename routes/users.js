@@ -151,8 +151,6 @@ router.get('/:id/edit', function(req, res) {
 router.post('/', function(req, res) {
   console.log(req.body);
   var post = req.body;
-  post.name_first = nameArray[0][0];
-  post.name_last = nameArray[0][1];
   //if is_driver exists in the database (if it's truthy, set it equal to true, if not, then false)
   var is_driver = ((post.is_driver) ? true : false);
 
@@ -219,6 +217,8 @@ router.post('/', function(req, res) {
 router.post('/fb', function(req, res) {
   console.log(req.body);
   var post = req.body;
+  post.name_first = nameArray[0][0];
+  post.name_last = nameArray[0][1];
   //if is_driver exists in the database (if it's truthy, set it equal to true, if not, then false)
   var is_driver = ((post.is_driver) ? true : false);
 
