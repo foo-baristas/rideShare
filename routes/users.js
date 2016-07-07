@@ -175,7 +175,7 @@ router.post('/', function(req, res) {
       }).returning('id')
         .then(function(id) {
           //TODO: change redirect later to: res.redirect('/trip/search');
-          res.redirect('/index/');
+          res.redirect('/user/' + id);
 
       }).catch(function(err) {
           console.error(err);

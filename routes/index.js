@@ -113,7 +113,6 @@ router.post('/auth', function(req, res, next) {
     if (data.length === 1) {
       bcrypt.compare(req.body.password, data[0].password, function(err, result) {
       if (result) {
-          //TODO: change to render landing page with greeting + user's name (dynamically update in header partial)
           req.session = {};
           req.session.user_id = data[0].id;
           req.session.user_name = data[0].username;
