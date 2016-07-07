@@ -1,0 +1,25 @@
+<div class="col-sm-4"></div>
+<div class="col-sm-4" id="new-review-page">
+
+    <h2>Write a Review</h2>
+
+    <form class="form-inline" method='POST' action='/user/{{user}}/new-review'>
+
+        <div class="form-group row">
+            <label for="rating" class="col-sm-4 form-control-label">Rating</label>
+            <div class="col-sm-12">
+                <input name='rating' type="text" class="form-control" id="rating" placeholder=1-5>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="comment" class="col-sm-4 form-control-label">Comment</label>
+            <div class="col-sm-12">
+                <textarea rows="10" name='comment' type="text" class="form-control" id="comment" placeholder='Write comment here'></textarea>
+            </div>
+        </div>
+        <button class="btn btn-success" type="submit">Submit Review</button>
+</div>
+</form>
+
+</div>

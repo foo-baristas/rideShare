@@ -1,0 +1,93 @@
+<div class="col-sm-3"></div>
+<div class="col-sm-6" id="edit-user-page">
+
+    <h2>Edit Profile</h2>
+
+    <form class="form-inline" method='POST' action='/user/{{ user.id }}?_method=PUT'>
+
+        <div class="form-group row">
+            <label for="name_first" class="col-sm-4 form-control-label">First Name</label>
+            <div class="col-sm-8">
+                <input name='name_first' type="text" class="form-control" id="first_name" placeholder= {{user.name_first}} value= {{user.name_first}}>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="last_first" class="col-sm-4 form-control-label">Last Name</label>
+            <div class="col-sm-8">
+                <input name='name_last' type="text" class="form-control" id="last_name" placeholder= {{user.name_last}} value= {{user.name_last}}>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="profile_pic_url" class="col-sm-4 form-control-label">Profile Pic</label>
+            <div class="col-sm-8">
+                <input name='profile_pic_url' type="url" class="form-control" id="profile_pic_url" placeholder= {{user.profile_pic_url}} value= {{user.profile_pic_url}}>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="age" class="col-sm-4 form-control-label">Age</label>
+            <div class="col-sm-8">
+                <input name='age' type="text" class="form-control" id="age" placeholder= {{user.age}} value= {{user.age}}>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="email" class="col-sm-4 form-control-label">Email</label>
+            <div class="col-sm-8">
+                <input name='email' type="text" class="form-control" id="email" placeholder= {{user.email}} value= {{user.email}}>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="description" class="col-sm-4 form-control-label">Description</label>
+            <div class="col-sm-8">
+                <input name='description' type="text" class="form-control" id="description" value= {{user.description}}>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="username" class="col-sm-4 form-control-label">Username</label>
+            <div class="col-sm-8">
+                <input name='username' type="text" class="form-control" id="username" placeholder= {{user.username}} value= {{user.username}}>
+            </div>
+        </div>
+
+        <!-- <div class="form-group row">
+            <label for="password" class="col-sm-4 form-control-label">Password</label>
+            <div class="col-sm-8">
+                <input name='password' type="password" class="form-control" id="password" placeholder= {{user.password}} value= {{user.password}}>
+            </div>
+        </div> -->
+        <h3>I'm cool with the following in my car:</h3>
+        <div id="center">
+            <label class="checkbox-inline">
+                <input type="checkbox" name="smoking" value="smoking"> smoking
+            </label>
+            <label class="checkbox-inline">
+                <input type="checkbox" name="eating" value="eating"> eating
+            </label>
+            <br>
+            <label class="checkbox-inline">
+                <input type="checkbox" name="music" value="music"> music
+            </label>
+            <label class="checkbox-inline">
+                <input type="checkbox" name="talking" value="talking"> talking
+            </label>
+            <label class="checkbox-inline">
+                <input type="checkbox" name="pets" value="pets"> pets
+                <br>
+            </label>
+            <br>
+            <button class="btn btn-success" type="submit">Save Changes</button>
+        </div>
+    </form>
+    <div class="row">
+      <div class="col-md-offset-4">
+        <form class="delete_user" method="POST" action="/user/{{ user.id }}?_method=delete">
+          <button class="btn btn-danger" type="submit">Delete Account</button>
+        </form>
+      </div>
+    </div>
+</div>

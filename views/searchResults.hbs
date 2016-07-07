@@ -13,9 +13,9 @@
   <!-- Latest compiled and minified JavaScript -->
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
   <!-- DATE-PICKER BOOTSTRAPCDN -->
-  <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap-combined.min.css" rel="stylesheet">
-  <link rel="stylesheet" type="text/css" media="screen"
-  href="http://tarruda.github.com/bootstrap-datetimepicker/assets/css/bootstrap-datetimepicker.min.css">
+  <!-- <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap-combined.min.css" rel="stylesheet"> -->
+  <!-- <link rel="stylesheet" type="text/css" media="screen" -->
+  <!-- href="http://tarruda.github.com/bootstrap-datetimepicker/assets/css/bootstrap-datetimepicker.min.css"> -->
 
   <script type="text/javascript" src="http://www.google.com/jsapi?key=AIzaSyCsVqhn3Mi-rV82PbqFinMtoIS7mhMy3Xs"></script>
   <style>
@@ -83,147 +83,105 @@
 </head>
 
 <body class="container-fluid">
-
-
-
-  <form class="landing-search" action="/index" method="post">
-    <fieldset class="form-group">
-      <div class="col-md-3">
-        <label for="origin">Origin</label>
-        <input type="text" name="origin" id="origin" value="{{info.origin}}">
-        {{#if info.error.origin}}
-        <small class="text-muted"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>{{info.error.origin}}</small>
-        {{/if}}
-      </div>
-      <div class="col-md-3">
-        <label for="destination">Destination</label>
-        <input type="text" name="destination" id="destination" value="{{info.destination}}">
-        {{#if info.error.destination}}
-        <small class="text-muted"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>{{info.error.destination}}</small>
-        {{/if}}
-      </div>
+  <form class="landing-search form-inline" action="/index" method="post">
+    <div class="form-group">
+      <label for="origin">Origin</label>
+      <input type="text" name="origin" id="origin" value="{{info.origin}}">
+      {{#if info.error.origin}}
+      <small class="text-muted"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>{{info.error.origin}}</small>
+      {{/if}}
+      <label for="destination">Destination</label>
+      <input type="text" name="destination" id="destination" value="{{info.destination}}">
+      {{#if info.error.destination}}
+      <small class="text-muted"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>{{info.error.destination}}</small>
+      {{/if}}
       <!-- VY'S ORIGINAL DATE-PICKER CODE -->
-      <!-- <div class="col-md-3">
       <label for="date">Date</label>
       <input type="date" name="date" value="{{info.date}}">
       {{#if info.error.date}}
       <small class="text-muted"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>{{info.error.date}}</small>
       {{/if}}
-    </div> -->
 
-
-    <!-- START BOOTSTRAP DATE-TIME-PICKER -->
-    <div class="col-md-4" id="datetimepicker4" class="input-append">
-      <label for="destination">Date</label>
-      <input type="text" name="date" value="{{info.date}}">
-      {{#if info.error.date}}
-      <small class="text-muted"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>{{info.error.date}}</small>
-      {{/if}}
-      <span class="add-on">
-        <i data-time-icon="icon-time" data-date-icon="icon-calendar">
-        </i>
-      </span>
-    </div>
-    <script type="text/javascript"
-    src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js">
-    </script>
-    <script type="text/javascript"
-    src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/js/bootstrap.min.js">
-    </script>
-    <script type="text/javascript"
-    src="http://tarruda.github.com/bootstrap-datetimepicker/assets/js/bootstrap-datetimepicker.min.js">
-    </script>
-    <script type="text/javascript"
-    src="http://tarruda.github.com/bootstrap-datetimepicker/assets/js/bootstrap-datetimepicker.pt-BR.js">
-    </script>
-    <script type="text/javascript">
-    $(function() {
-      $('#datetimepicker4').datetimepicker({
-        pickTime: false
-      });
-    });
-    </script>
-    <!-- END BOOTSTRAP DATE-TIME-PICKER -->
-
-    <div class="col-md-2">
-      <button type="submit" class="btn btn-primary">Find my ride</button>
-    </div>
-  </fieldset>
-</form>
-
-
-
-{{#if queries.origin}}
-<h3>Trips From: <span>{{queries.origin}}</span>&nbsp;&nbsp;<img src="https://cdn2.iconfinder.com/data/icons/navigation-set-arrows-part-two/32/Double_Arrow_Right-24.png">&nbsp;&nbsp;<span>{{queries.destination}}</span></h3>
-{{else}}
-<h3>Showing all available trips.</h3>
-{{/if}}
-
-<div class="row">
-  <div class="col-sm-1"></div>
-  <div class="col-sm-10">
-    {{#each objects}}
-    <div class="row trip">
-      <a href="/trip/{{id}}">
-        <!-- DRIVER PROFILE -->
-        <div class="col-md-4 driver_profile">
-          <div class="row">
-            <div class="col-md-5 vertPic">
-              <img class="profile" width="125" height="125" src="{{profile_pic_url}}">
-            </div>
-            <div class="col-md-4 vertInfo">
-              <span class="name">{{name_first}}</span>&nbsp;<span class="name">{{name_last}}</span>
-              <span>Age: {{age}}</span><br />
-              <a href="/user/{{ user_id }}">View profile</a>
-              {{#if isFB_verified}}
-              <img src="https://cdn3.iconfinder.com/data/icons/social-media-chamfered-corner/154/facebook-24.png">&nbsp;<span>Verified</span>
-              {{/if}}
-            </div>
-          </div>
-        </div>
-
-        <!-- TRIP DETAILS -->
-        <div class="col-md-6 trip_details">
-          <div class="row">
-            <h4>{{start_location}} to {{end_location}}</h4>
-            <h5>{{date_of}}</h5>
-            <span>{{details}}</span>
-          </div>
-          <div class="row">
-            <img width="50" height="50" src="{{car_img_url}}">
-            <span><strong>{{car_description}}</strong></span>
-          </div>
-        </div>
-      </a>
-      <!-- COST INFORMATION -->
-      <div class="col-md-1 cost_information">
-        <h2 class="cost">${{trip_cost}}</h2>
-        <h5>{{num_seats}} seats available.</h5>
-        <form method="POST" action="/trip/reserve/{{id}}">
-          {{#if num_seats}}
-          <button class="btn btn-primary" type="submit">Reserve</button>
-          {{else}}
-          <button class="btn btn-primary" type="submit" disabled="true">Reserve</button>
-          {{/if}}
-        </form>
+      <div class="input-group">
+        <button type="submit" class="btn btn-primary input-group-addon" style="color: white;">Find my ride</button>
+        <a href="/trip/advanced" class="input-group-addon">Advanced Search</a>
       </div>
     </div>
-    {{/each}}
+  </form>
+
+
+
+  {{#if queries.origin}}
+  <h3>Trips From: <span>{{queries.origin}}</span>&nbsp;&nbsp;<img src="https://cdn2.iconfinder.com/data/icons/navigation-set-arrows-part-two/32/Double_Arrow_Right-24.png">&nbsp;&nbsp;<span>{{queries.destination}}</span></h3>
+  {{else}}
+  <h3>Showing all available trips.</h3>
+  {{/if}}
+
+  <div class="row">
+    <div class="col-sm-1"></div>
+    <div class="col-sm-10">
+      {{#each objects}}
+      <div class="row trip">
+        <a href="/trip/{{id}}">
+          <!-- DRIVER PROFILE -->
+          <div class="col-md-4 driver_profile">
+            <div class="row">
+              <div class="col-md-5 vertPic">
+                <img class="profile" width="125" height="125" src="{{profile_pic_url}}">
+              </div>
+              <div class="col-md-4 vertInfo">
+                <span class="name">{{name_first}}</span>&nbsp;<span class="name">{{name_last}}</span>
+                <span>Age: {{age}}</span><br />
+                <a href="/user/{{ user_id }}">View profile</a>
+                {{#if isFB_verified}}
+                <img src="https://cdn3.iconfinder.com/data/icons/social-media-chamfered-corner/154/facebook-24.png">&nbsp;<span>Verified</span>
+                {{/if}}
+              </div>
+            </div>
+          </div>
+
+          <!-- TRIP DETAILS -->
+          <div class="col-md-6 trip_details">
+            <div class="row">
+              <h4>{{start_location}} to {{end_location}}</h4>
+              <h5>{{date_of}}</h5>
+              <span>{{details}}</span>
+            </div>
+            <div class="row">
+              <img width="50" height="50" src="{{car_img_url}}">
+              <span><strong>{{car_description}}</strong></span>
+            </div>
+          </div>
+        </a>
+        <!-- COST INFORMATION -->
+        <div class="col-md-1 cost_information">
+          <h2 class="cost">${{trip_cost}}</h2>
+          <h5>{{num_seats}} seats available.</h5>
+          <form method="POST" action="/trip/reserve/{{id}}">
+            {{#if num_seats}}
+            <button class="btn btn-primary" type="submit">Reserve</button>
+            {{else}}
+            <button class="btn btn-primary" type="submit" disabled="true">Reserve</button>
+            {{/if}}
+          </form>
+        </div>
+      </div>
+      {{/each}}
+    </div>
   </div>
-</div>
 
-<script type="text/javascript">
-google.load("maps", "3.x", {callback: initialize, other_params:'libraries=places&key=AIzaSyD2gxzAGO1he66elVkh6TLdYXhCYVc3o8E'});
-function initialize() {
+  <script type="text/javascript">
+  google.load("maps", "3.x", {callback: initialize, other_params:'libraries=places&key=AIzaSyD2gxzAGO1he66elVkh6TLdYXhCYVc3o8E'});
+  function initialize() {
 
-  var input = document.getElementById('origin');
-  var autocomplete = new google.maps.places.Autocomplete(input, { types: ['(cities)'], region:'US' });
+    var input = document.getElementById('origin');
+    var autocomplete = new google.maps.places.Autocomplete(input, { types: ['(cities)'], region:'US' });
 
-  var inputDest = document.getElementById('destination');
-  var autocomplete2 = new google.maps.places.Autocomplete(inputDest, { types: ['(cities)'], region:'US' });
+    var inputDest = document.getElementById('destination');
+    var autocomplete2 = new google.maps.places.Autocomplete(inputDest, { types: ['(cities)'], region:'US' });
 
-  google.maps.event.addDomListener(window, 'load', initialize);
-}
-</script>
+    google.maps.event.addDomListener(window, 'load', initialize);
+  }
+  </script>
 </body>
 </html>

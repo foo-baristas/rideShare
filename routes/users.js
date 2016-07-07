@@ -2,19 +2,13 @@
 
 var express = require('express'),
     router = express.Router(),
-    knex = require('../db/knex');
-
-
-
-// MIGHT NOT NEED THIS ROUTE IF MODAL ON LANDING PAGE IS SUCCESSFUL
-router.get('/new', function(req, res) {
-    res.render('newUser');
-});
+    knex = require('../db/knex'),
+    bcrypt = require('bcrypt');
 
 
 // router.get('/', function(req, res) {
 //   knex('users').select().orderBy('id').then(function(data){
-//     res.status(200).render('showUser', {users:data});
+//     res.status(200).render('######', {users:data});
 //    }).catch(function(err){
 //     console.log(data[0]);
 //     res.status(200).render('#######', data[0]);
@@ -24,17 +18,80 @@ router.get('/new', function(req, res) {
 //   });
 // });
 
-// FIX: DATABASE QUERY TO INCLUDE REVIEWER DETAILS
+router.get('/new', function(req, res, next) {
+
+    fbUserExistsInOurDatabase(req.session).then(function(a){
+      if(a){
+        console.log('the final step before redirect happens');
+        res.redirect('/trip/search');
+      } else {
+        res.render('newUser'); //THIS PART WORKS THANK THE LORD
+      }
+    }).catch(function(err){
+      next(err);
+    });
+});
+
+
+function fbUserExistsInOurDatabase(data) {
+  console.log('entered this function');
+  return new Promise(function(resolve, reject){
+    if (data.passport) {
+      var name = data.passport.user.displayName;
+      console.log(name);
+      exists(name).then(function(result) {
+            console.log('finished exists function');
+            if(result.length === 1) {
+              console.log('true!');
+              resolve(true);
+            } else {
+              console.log('false!');
+              resolve(false);
+            }
+        })
+        .catch(function(err){
+          reject(err);
+        });
+    } else {
+      console.log("2. User not logged in via facebook");
+      resolve(false);
+    }
+  })
+}
+
+function exists(name) {
+  console.log('entered exists function');
+  var nameArray = name.split(' ');
+  return knex.select('*').from('users').where({name_first: nameArray[0], name_last: nameArray[1]});
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 router.get('/:id', function(req, res) {
-  knex.select('*').from('users').fullOuterJoin('reviews', 'users.id', 'reviews.reviewed_id').where('users.id', req.params.id).then(function(data){
-    res.status(200).render('showUser', {user:data[0], canEditProfile: canEditProfile(data, req), creation_date: cleanDate(JSON.stringify(data[0].creation_date))});
+  knex.select('*').from('users').where('users.id', req.params.id).then(function(data) {
+    //console.log(data[0]);
+    res.status(200).render('showUser', {
+      user: data[0],
+      canEditProfile: canEditProfile(data, req),
+      //creation_date: cleanDate(JSON.stringify(data[0].creation_date))
+    });
   }).catch(function(err){
     console.error(err);
     res.sendStatus(500);
   });
 });
-
 
 function canEditProfile(data, req){
   if(data[0].username == req.session.user_name) {
@@ -45,29 +102,96 @@ function canEditProfile(data, req){
   }
 }
 
+router.get('/:id/reviews', function(req, res) {
+
+  knex.select('*').from('users').fullOuterJoin('reviews', 'users.id', 'reviews.reviewed_id').where('users.id', req.params.id).then(function(data) {
+    console.log(data[0]);
+    res.status(200).render('usersReviews', {
+      review: data[0],
+      //creation_date: cleanDate(JSON.stringify(data[0].creation_date))
+    });
+  }).catch(function(err){
+    console.error(err);
+    res.sendStatus(500);
+  });
+});
+
+router.get('/:id/new-review', function(req, res) {
+  res.render('newReview', {user: req.params.id});
+});
+
+
+
+function showReviews(req){
+  knex.select('*').from('users').fullOuterJoin('reviews', 'users.id', 'reviews.reviewed_id').where('users.id', req.params.id).then(function(data){
+    console.log('entered the showReviews function');
+    console.log(data[0]);
+    if(data[0].id) {
+      return true;
+    } else {
+      return false;
+    }
+  });
+}
+
 function cleanDate(date) {
     var dateClean = date.slice(1, 11);
     return dateClean;
 }
 
-//
-//
-// router.get('/:id/edit', function(req, res) {
-//   knex('users').select().where({id: req.params.id}).then(function(data){
-//     res.status(200).render('editUser', {user:data[0]});
-//   }).catch(function(err){
-//     console.error(err);
-//     res.sendStatus(500);
-//   });
-// });
-//
-// // IS FOLLOWING ROUTE CORRECT?
+// THIS WORKS DON'T TOUCH IT!!!!! :)
+router.get('/:id/edit', function(req, res) {
+  knex('users').select().where({id: req.params.id}).then(function(data){
+    res.status(200).render('editUser', {user:data[0]});
+  }).catch(function(err){
+    console.error(err);
+    res.sendStatus(500);
+  });
+});
+
+//POST NEW USER INFO WORKING
 router.post('/', function(req, res) {
   console.log(req.body);
-  var post = req.body
+  var post = req.body;
+
+  bcrypt.genSalt(Number(post.saltRounds), function(err, salt) {
+    bcrypt.hash(post.password, salt, function(err, hash) {
+      knex('users').insert({
+          username: post.username,
+          password: hash,
+          name_first: post.name_first,
+          name_last: post.name_last,
+          profile_pic_url: post.profile_pic_url,
+          age: post.age,
+          description: post.description,
+          email: post.email,
+          smoking: post.smoking,
+          eating: post.eating,
+          pets: post.pets,
+          music: post.music,
+          talking: post.talking,
+          is_driver: post.is_driver,
+          isFB_verified: post.isFB_verified
+      }).returning('id')
+        .then(function(id) {
+          //TODO: change redirect later to: res.redirect('/trip/search');
+          res.redirect('/user/' + id);
+
+      }).catch(function(err) {
+          console.error(err);
+          res.sendStatus(500);
+      });
+    });
+  });
+});
 
 
-    knex('users').insert({
+//THIS WORKS DON'T TOUCH IT!!! :)
+router.put('/:id', function(req, res) {
+  var post = req.body;
+  console.log(post);
+
+    knex('users').update({
         name_first: post.name_first,
         name_last: post.name_last,
         profile_pic_url: post.profile_pic_url,
@@ -83,34 +207,46 @@ router.post('/', function(req, res) {
         talking: post.talking,
         is_driver: post.is_driver,
         isFB_verified: post.isFB_verified
-    }).then(function() {
-        res.redirect('/trip/search');
+    }).where('id', req.params.id).then(function() {
+        res.redirect('/user/' + req.params.id);
     }).catch(function(err) {
         console.error(err);
         res.sendStatus(500);
     });
 });
 
-//
-// router.put('/:id', function(req, res) {
-//
-//   // COPY INSERT OBJECT FROM ABOVE HERE
-//
-//   knex('users').update({name_first: req.body.user.name_first, name_last: req.body.user.name_last, profile_pic_url: req.body.user.profile_pic_url, age: req.body.user.age, description: req.body.user.description, email: req.body.user.email, username: req.body.user.username, password: req.body.user.password, preferences_id: req.body.user.preferences_id, is_driver: req.body.user.is_driver, isFB_verified: req.body.user.isFB_verified}).where({id: req.params.id}).then(function(data){
-//     res.redirect('/user/' + req.params.id);
-//   }).catch(function(err){
-//     console.error(err);
-//     res.sendStatus(500);
-//   });
-// });
-//
-// router.delete('/:id', function(req, res){
-//   knex('users').delete().where({id: req.params.id}).then(function(data){
-//     res.redirect('/');
-//   }).catch(function(err){
-//     console.error(err);
-//     res.sendStatus(500);
-//   });
-// });
+
+router.post('/:id/new-review', function(req, res) {
+  console.log(req.session.user_id);
+  var post = req.body;
+      knex('reviews').insert({
+
+          reviewer_id: req.session.user_id,
+          reviewed_id: req.params.id,
+
+          // reviewer_id: 21,
+          // reviewed_id: 20,
+
+          rating: post.rating,
+          comment: post.comment,
+          creation_date: new Date()
+      }).then(function() {
+          res.redirect('/index/');
+      }).catch(function(err) {
+          console.error(err);
+          res.sendStatus(500);
+      });
+});
+
+
+//DELETE USER WORKS
+router.delete('/:id', function(req, res){
+  knex('users').where('id', req.params.id).del().then(function(data){
+    res.redirect('/index');
+  }).catch(function(err){
+    console.error(err);
+    res.sendStatus(500);
+  });
+});
 
 module.exports = router;
