@@ -1,9 +1,9 @@
 'use strict';
 
 var express = require('express'),
-    router = express.Router(),
-    knex = require('../db/knex'),
-    bcrypt = require('bcrypt');
+router = express.Router(),
+knex = require('../db/knex'),
+bcrypt = require('bcrypt');
 
 
 // router.get('/', function(req, res) {
@@ -20,21 +20,23 @@ var express = require('express'),
 
 router.get('/new', function(req, res, next) {
 
-  res.render('/newUser');
+  //res.render('newUser');
 
-    // fbUserExistsInOurDatabase(req.session).then(function(a){
-    //   if(a){
-    //     res.redirect('/trip/search');
-    //   } else {
-    //     var name = req.session.passport.user.displayName;
-    //     var nameArray = name.split(' ');
-    //     console.log(nameArray);
-    //     res.render('newUser', {first_name : nameArray[0], last_name : nameArray[1]});
-    //   }
-    // }).catch(function(err){
-    //   next(err);
-    // });
-
+  fbUserExistsInOurDatabase(req.session).then(function(a){
+    if(a){
+      res.redirect('/trip/search');
+    } else if (req.session && req.session.passport) {
+      var name = req.session.passport.user.displayName;
+      var nameArray = name.split(' ');
+      console.log(nameArray);
+      res.render('newUser', {first_name : nameArray[0], last_name : nameArray[1]});
+    } else {
+      res.render('newUser');
+    }
+  }).catch(function(err){
+    console.log(err);
+    //next(err);
+  });
 });
 
 
@@ -43,15 +45,15 @@ function fbUserExistsInOurDatabase(data) {
     if (data.passport) {
       var name = data.passport.user.displayName;
       exists(name).then(function(result) {
-            if(result.length === 1) {
-              resolve(true);
-            } else {
-              resolve(false);
-            }
-        })
-        .catch(function(err){
-          reject(err);
-        });
+        if(result.length === 1) {
+          resolve(true);
+        } else {
+          resolve(false);
+        }
+      })
+      .catch(function(err){
+        reject(err);
+      });
     } else {
       resolve(false);
     }
@@ -119,8 +121,8 @@ function showReviews(req){
 }
 
 function cleanDate(date) {
-    var dateClean = date.slice(1, 11);
-    return dateClean;
+  var dateClean = date.slice(1, 11);
+  return dateClean;
 }
 
 // THIS WORKS DON'T TOUCH IT!!!!! :)
@@ -141,29 +143,29 @@ router.post('/', function(req, res) {
   bcrypt.genSalt(Number(post.saltRounds), function(err, salt) {
     bcrypt.hash(post.password, salt, function(err, hash) {
       knex('users').insert({
-          username: post.username,
-          password: hash,
-          name_first: post.name_first,
-          name_last: post.name_last,
-          profile_pic_url: post.profile_pic_url,
-          age: post.age,
-          description: post.description,
-          email: post.email,
-          smoking: post.smoking,
-          eating: post.eating,
-          pets: post.pets,
-          music: post.music,
-          talking: post.talking,
-          is_driver: post.is_driver,
-          isFB_verified: post.isFB_verified
+        username: post.username,
+        password: hash,
+        name_first: post.name_first,
+        name_last: post.name_last,
+        profile_pic_url: post.profile_pic_url,
+        age: post.age,
+        description: post.description,
+        email: post.email,
+        smoking: post.smoking,
+        eating: post.eating,
+        pets: post.pets,
+        music: post.music,
+        talking: post.talking,
+        is_driver: post.is_driver,
+        isFB_verified: post.isFB_verified
       }).returning('id')
-        .then(function(id) {
-          //TODO: change redirect later to: res.redirect('/trip/search');
-          res.redirect('/user/' + id);
+      .then(function(id) {
+        //TODO: change redirect later to: res.redirect('/trip/search');
+        res.redirect('/user/' + id);
 
       }).catch(function(err) {
-          console.error(err);
-          res.sendStatus(500);
+        console.error(err);
+        res.sendStatus(500);
       });
     });
   });
@@ -175,51 +177,51 @@ router.put('/:id', function(req, res) {
   var post = req.body;
   console.log(post);
 
-    knex('users').update({
-        name_first: post.name_first,
-        name_last: post.name_last,
-        profile_pic_url: post.profile_pic_url,
-        age: post.age,
-        description: post.description,
-        email: post.email,
-        username: post.username,
-        password: post.password,
-        smoking: post.smoking,
-        eating: post.eating,
-        pets: post.pets,
-        music: post.music,
-        talking: post.talking,
-        is_driver: post.is_driver,
-        isFB_verified: post.isFB_verified
-    }).where('id', req.params.id).then(function() {
-        res.redirect('/user/' + req.params.id);
-    }).catch(function(err) {
-        console.error(err);
-        res.sendStatus(500);
-    });
+  knex('users').update({
+    name_first: post.name_first,
+    name_last: post.name_last,
+    profile_pic_url: post.profile_pic_url,
+    age: post.age,
+    description: post.description,
+    email: post.email,
+    username: post.username,
+    password: post.password,
+    smoking: post.smoking,
+    eating: post.eating,
+    pets: post.pets,
+    music: post.music,
+    talking: post.talking,
+    is_driver: post.is_driver,
+    isFB_verified: post.isFB_verified
+  }).where('id', req.params.id).then(function() {
+    res.redirect('/user/' + req.params.id);
+  }).catch(function(err) {
+    console.error(err);
+    res.sendStatus(500);
+  });
 });
 
 
 router.post('/:id/new-review', function(req, res) {
   console.log(req.session.user_id);
   var post = req.body;
-      knex('reviews').insert({
+  knex('reviews').insert({
 
-          reviewer_id: req.session.user_id,
-          reviewed_id: req.params.id,
+    reviewer_id: req.session.user_id,
+    reviewed_id: req.params.id,
 
-          // reviewer_id: 21,
-          // reviewed_id: 20,
+    // reviewer_id: 21,
+    // reviewed_id: 20,
 
-          rating: post.rating,
-          comment: post.comment,
-          creation_date: new Date()
-      }).then(function() {
-          res.redirect('/index/');
-      }).catch(function(err) {
-          console.error(err);
-          res.sendStatus(500);
-      });
+    rating: post.rating,
+    comment: post.comment,
+    creation_date: new Date()
+  }).then(function() {
+    res.redirect('/index/');
+  }).catch(function(err) {
+    console.error(err);
+    res.sendStatus(500);
+  });
 });
 
 
