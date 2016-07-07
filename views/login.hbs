@@ -17,9 +17,20 @@
         <div class="row">
             <form class="" action="/index/auth" method="post">
                 <fieldset class="form-group">
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <label for="username">Username</label>
                         <input type="text" name="username" value="">
+
+                    <!-- <div class="row"> -->
+                    {{#if info.noMatch}}
+                        <small class="text-muted"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>oops. password and username don't match.</small>
+                    {{/if}}
+                    <!-- </div> -->
+                    {{#if info.noUser}}
+                        <!-- <div class="col-md-4"> -->
+                        <small class="text-muted"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>uh oh. user {{info.user}} doesn't exist.</small>
+                        <!-- </div> -->
+                    {{/if}}
                     </div>
                     <div class="col-md-4">
                         <label for="password">Password</label>
