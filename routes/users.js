@@ -92,7 +92,7 @@ router.get('/:id/edit', function(req, res) {
   });
 });
 
-
+//POST NEW USER INFO WORKING
 router.post('/', function(req, res) {
   console.log(req.body);
   var post = req.body
@@ -115,10 +115,12 @@ router.post('/', function(req, res) {
           talking: post.talking,
           is_driver: post.is_driver,
           isFB_verified: post.isFB_verified
-      }).then(function() {
+      }).returning('id')
+        .then(function(id) {
           //TODO: change redirect later to: res.redirect('/trip/search');
-          res.redirect('/index/auth');
-      }).catch(function(next) {
+          res.redirect('/index/');
+
+      }).catch(function(err) {
           console.error(err);
           res.sendStatus(500);
       });
