@@ -26,11 +26,17 @@ function fbUserExistsInOurDatabase(data, req, res) {
   if (data.passport) { //if the user is logged in with Facebook
     console.log("2. User is logged in with FB");
     var name = data.passport.user.displayName;
+    var nameArray = name.split(' ');
+
+// FACEBOOK LOGIN ISSUE BELOW?
 
     exists(name).then(function(result) {
           if(result.length === 1) {
             console.log("3. The user exists in our database! Hooray!");
-            //res.redirect('/');
+            req.session = {};
+            req.session.user_name = nameArray[0];
+
+
           } else {
             console.log("3. User does not exist in our database");
             console.log("4. FB user needs to be added to our database");

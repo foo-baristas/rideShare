@@ -106,16 +106,21 @@
 
 /*new user*/
 
-/*h2 {
+#new-user-page h2 {
     text-align: center;
     margin-bottom: 20px;
 }
-.navbar {
+#new-user-page .navbar {
     position: absolute;
 }
-main {
+#new-user-page main {
     margin-top: 50px;
 }
-.form-inline .form-group {
+#new-user-page .form-inline .form-group {
     margin-bottom: 10px;
-}*/
+}
+#new-user-page p {
+  text-align: center;
+  font-size: 1.3em;
+  margin-bottom: 20px;
+}
