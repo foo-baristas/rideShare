@@ -10,31 +10,37 @@ router.get('/search', function(req, res, next) {
   console.log(query);
   if (Object.keys(query).length === 0) {
     knex('trips')
-    .join('users', 'users.id', '=', 'trips.user_id')
-    .join('preferences', 'preferences.id', '=', 'trips.preferences_id')
+    .join('users', 'trips.user_id', '=', 'users.id')
     .select('trips.id AS id', 'profile_pic_url', 'name_first', 'name_last', 'age', 'user_id', 'isFB_verified',
-    'start_location', 'end_location', 'date_of', 'details', 'car_img_url', 'car_description', 'trip_cost', 'num_seats',
-    'isSmoking', 'isPets', 'isTalking', 'isFood', 'isMusic')
+    'start_location', 'end_location', 'date_of', 'details', 'car_img_url', 'car_description', 'trip_cost', 'num_seats')
     .then(function(data) {
 
-      console.log(data);
+      console.log('QUERY', data);
       res.status(200).render('searchResults', {objects: data, queries: query});
     });
   } else { //search?origin=Denver&destination=Fort%20Collins
     knex('trips')
     .join('users', 'users.id', '=', 'trips.user_id')
-    .join('preferences', 'preferences.id', '=', 'trips.preferences_id')
+    .select('*')
+    //.join('preferences', 'preferences.id', '=', 'trips.preferences_id')
     .select('trips.id AS id', 'profile_pic_url', 'name_first', 'name_last', 'age', 'user_id', 'isFB_verified',
-    'start_location', 'end_location', 'date_of', 'details', 'car_img_url', 'car_description', 'trip_cost', 'num_seats',
-    'isSmoking', 'isPets', 'isTalking', 'isFood', 'isMusic')
+    'start_location', 'end_location', 'date_of', 'details', 'car_img_url', 'car_description', 'trip_cost', 'num_seats')
     .where({
       start_location: query.origin.split(',')[0],
+<<<<<<< HEAD
       end_location: query.destination.split(',')[0],
+=======
+      end_location: query.destination.split(',')[0]
+>>>>>>> e21c85524a8e95b40f53a2919f9dc16b21c7c663
       // isSmoking: (query.smoking ? true : false) | false,
       // isPets: (query.pets ? true : false) | false,
       // isTalking: (query.talking ? true : false) | false,
       // isFood: (query.eating ? true : false) | false,
+<<<<<<< HEAD
       // isMusic: (query.music ? true : false) | false
+=======
+      // isMusic: (query.music ? true : false) | false,
+>>>>>>> e21c85524a8e95b40f53a2919f9dc16b21c7c663
     })
     .whereRaw('CAST(date_of AS DATE) = ?', [query.date]) //TODO: this is broken....It used to work
     .where('trip_cost', '<=', query.maxprice || 9999)
@@ -58,12 +64,38 @@ router.get('/advanced', function(req, res, next) {
 });
 
 //TODO users can create a trip (only users who are fb authenticated & isdriver: yes)
-// router.post('/', function(req, res, next) {
-//
-// })
+router.post('/', function(req, res, next) {
+  var post = req.body;
+  console.log(post);
 
+  knex('trips').insert({
+    start_location: post.origin.split(',')[0],
+    end_location: post.destination.split(',')[0],
+    details: post.trip_details,
+    num_seats: post.num_seats,
+    smoking: post.smoking,
+    eating: post.eating,
+    pets: post.pets,
+    music: post.music,
+    talking: post.talking,
+    car_description: post.car_description,
+    car_img_url: post.car_img_url,
+    date_of: post.date,
+    user_id: req.session.user_id,
+    trip_cost: post.trip_cost
+  }).returning('id')
+  .then(function(id) {
+    res.redirect('/trip/' + id[0]);
+  }).catch(function(err) {
+    console.log(err);
+    res.sendStatus(500);
+  });
+});
 
 router.get('/:id', function(req, res, next) {
+
+  // console.log('How: ' + req.params.id);
+  if (isNaN(req.params.id)) return;
 
   knex('trips')
   .join('users', 'users.id', '=', 'trips.user_id')
@@ -71,15 +103,9 @@ router.get('/:id', function(req, res, next) {
   .where('trips.id', '=', req.params.id)
   .then(function(data) {
 
-    console.log(data);
+    console.log('QUERY', data);
     res.render('showRide', data[0]);
   });
-});
-
-router.post('/new', function(req, res, next) {
-  var post = req.body;
-  console.log(post);
-
 });
 
 router.post('/reserve/:id', function(req, res, next) {

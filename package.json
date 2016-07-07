@@ -23,7 +23,10 @@
     "knex": "^0.11.7",
     "logger": "0.0.1",
     "method-override": "^2.3.6",
+<<<<<<< HEAD
     "morgan": "^1.7.0",
+=======
+>>>>>>> e21c85524a8e95b40f53a2919f9dc16b21c7c663
     "passport": "^0.3.2",
     "passport-facebook": "^2.1.1",
     "path": "^0.12.7",
