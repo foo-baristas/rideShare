@@ -114,7 +114,7 @@
   <div class="row">
     {{#each objects}}
     <div class="row trip">
-      <span onclick="redirect({{id}});">
+      <span onclick="window.location.href = '/trip/{{id}}';">
         <div class="form-group col-sm-4">
           <img class="col-md-6" src="{{profile_pic_url}}">
           <label class="col-md-6 form-control-label">
@@ -179,6 +179,11 @@
             <form method="post" action="/trip/reserve/{{id}}">
               <button type="submit" class="btn btn-default">
                 <span class="glyphicon glyphicon-pushpin"></span> Reserve
+              </button>
+            </form>
+            <form method="get" action="/trip/{{id}}">
+              <button type="submit" class="btn btn-default">
+                <span class="glyphicon glyphicon-option-vertical"></span> View
               </button>
             </form>
           </label>
