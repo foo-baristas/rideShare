@@ -7,6 +7,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieSession = require('cookie-session');
 var bodyParser = require('body-parser');
+var methodOverride = require('method-override');
 var handlebars = require('express-handlebars');
 var passport = require('passport');
 var Strategy = require('passport-facebook').Strategy;
@@ -29,6 +30,7 @@ app.use(express.static(path.join(__dirname, '/public/')));
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
+app.use(methodOverride('_method'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
@@ -42,7 +44,7 @@ app.use(cookieSession({
 app.use(function(req, res, next) {
 
   res.locals.session = req.session;
-  console.log(res.locals.session);
+  //console.log(res.locals.session);
   next();
 });
 
