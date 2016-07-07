@@ -6,13 +6,6 @@ var express = require('express'),
     bcrypt = require('bcrypt');
 
 
-// MIGHT NOT NEED THIS ROUTE IF MODAL ON LANDING PAGE IS SUCCESSFUL
-router.get('/new', function(req, res) {
-    res.render('newUser');
-});
-
-
-
 // router.get('/', function(req, res) {
 //   knex('users').select().orderBy('id').then(function(data){
 //     res.status(200).render('######', {users:data});
@@ -25,8 +18,11 @@ router.get('/new', function(req, res) {
 //   });
 // });
 
+router.get('/new', function(req, res) {
+    res.render('newUser');
+});
+
 // FIX: DATABASE QUERY TO INCLUDE REVIEWER DETAILS
-// FIX GETUSERINTO FUNCTION BELOW
 router.get('/:id', function(req, res) {
 
   knex.select('*').from('users').where('users.id', req.params.id).then(function(data) {
@@ -46,6 +42,43 @@ router.get('/:id', function(req, res) {
   });
 });
 
+function canEditProfile(data, req){
+  if(data[0].username == req.session.user_name) {
+    console.log('This user is authorized to edit this profile');
+    return true;
+  } else {
+    return false;
+  }
+}
+
+router.get('/:id/reviews', function(req, res) {
+
+  knex.select('*').from('users').fullOuterJoin('reviews', 'users.id', 'reviews.reviewed_id').where('users.id', req.params.id).then(function(data) {
+    console.log(data[0]);
+    res.status(200).render('usersReviews', {
+      review: data[0],
+      //creation_date: cleanDate(JSON.stringify(data[0].creation_date))
+    });
+  }).catch(function(err){
+    console.error(err);
+    res.sendStatus(500);
+  });
+});
+
+router.get('/:id/new-review', function(req, res) {
+  res.render('newReview', {user: req.params.id});
+
+  // knex('users').select().where({id: req.params.id}).then(function(data) {
+  //     console.log(data[0]);
+  //     //res.status(200).render('newReview', {review:data[0]});
+  //   }).catch(function(err) {
+  //     console.error(err);
+  //     res.sendStatus(500);
+  //   });
+});
+
+
+
 function showReviews(req){
   knex.select('*').from('users').fullOuterJoin('reviews', 'users.id', 'reviews.reviewed_id').where('users.id', req.params.id).then(function(data){
     console.log('entered the showReviews function');
@@ -56,22 +89,6 @@ function showReviews(req){
       return false;
     }
   });
-}
-
-// function getUserInfo(req){
-//   knex.select('*').from('users').where('users.id', req.params.id).then(function(data) {
-//     //console.log(data[0]);
-//     return data[0];
-//   });
-// }
-
-function canEditProfile(data, req){
-  if(data[0].username == req.session.user_name) {
-    console.log('This user is authorized to edit this profile');
-    return true;
-  } else {
-    return false;
-  }
 }
 
 function cleanDate(date) {
@@ -92,7 +109,7 @@ router.get('/:id/edit', function(req, res) {
 //POST NEW USER INFO WORKING
 router.post('/', function(req, res) {
   console.log(req.body);
-  var post = req.body
+  var post = req.body;
 
   bcrypt.genSalt(Number(post.saltRounds), function(err, salt) {
     bcrypt.hash(post.password, salt, function(err, hash) {
@@ -154,6 +171,30 @@ router.put('/:id', function(req, res) {
         res.sendStatus(500);
     });
 });
+
+
+router.post('/:id/new-review', function(req, res) {
+  console.log(req.session.user_id);
+  var post = req.body;
+      knex('reviews').insert({
+
+          reviewer_id: req.session.user_id,
+          reviewed_id: req.params.id,
+
+          // reviewer_id: 21,
+          // reviewed_id: 20,
+
+          rating: post.rating,
+          comment: post.comment,
+          creation_date: new Date()
+      }).then(function() {
+          res.redirect('/index/');
+      }).catch(function(err) {
+          console.error(err);
+          res.sendStatus(500);
+      });
+});
+
 
 //DELETE USER WORKS
 router.delete('/:id', function(req, res){

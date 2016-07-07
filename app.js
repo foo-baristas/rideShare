@@ -44,7 +44,7 @@ app.use(cookieSession({
 app.use(function(req, res, next) {
 
   res.locals.session = req.session;
-  //console.log(res.locals.session);
+  console.log(res.locals.session);
   next();
 });
 
