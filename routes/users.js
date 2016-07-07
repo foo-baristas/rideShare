@@ -20,32 +20,32 @@ var express = require('express'),
 
 router.get('/new', function(req, res, next) {
 
-    fbUserExistsInOurDatabase(req.session).then(function(a){
-      if(a){
-        console.log('the final step before redirect happens');
-        res.redirect('/trip/search');
-      } else {
-        res.render('newUser'); //THIS PART WORKS THANK THE LORD
-      }
-    }).catch(function(err){
-      next(err);
-    });
+  res.render('/newUser');
+
+    // fbUserExistsInOurDatabase(req.session).then(function(a){
+    //   if(a){
+    //     res.redirect('/trip/search');
+    //   } else {
+    //     var name = req.session.passport.user.displayName;
+    //     var nameArray = name.split(' ');
+    //     console.log(nameArray);
+    //     res.render('newUser', {first_name : nameArray[0], last_name : nameArray[1]});
+    //   }
+    // }).catch(function(err){
+    //   next(err);
+    // });
+
 });
 
 
 function fbUserExistsInOurDatabase(data) {
-  console.log('entered this function');
   return new Promise(function(resolve, reject){
     if (data.passport) {
       var name = data.passport.user.displayName;
-      console.log(name);
       exists(name).then(function(result) {
-            console.log('finished exists function');
             if(result.length === 1) {
-              console.log('true!');
               resolve(true);
             } else {
-              console.log('false!');
               resolve(false);
             }
         })
@@ -53,31 +53,15 @@ function fbUserExistsInOurDatabase(data) {
           reject(err);
         });
     } else {
-      console.log("2. User not logged in via facebook");
       resolve(false);
     }
-  })
+  });
 }
 
 function exists(name) {
-  console.log('entered exists function');
   var nameArray = name.split(' ');
   return knex.select('*').from('users').where({name_first: nameArray[0], name_last: nameArray[1]});
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 router.get('/:id', function(req, res) {
   knex.select('*').from('users').where('users.id', req.params.id).then(function(data) {
