@@ -4,9 +4,9 @@ exports.seed = function(knex, Promise) {
     .then(function () {
       return Promise.all([
         // Inserts seed entries
-        knex('reviews').insert({reviewer_id: 15, reviewed_id: 16, rating: 5, comment: 'This driver is the best driver ever. Not only did she arrive punctually, but she also brought tons of cookies for the passengers to eat.', creation_date: new Date() }),
-        
-        knex('reviews').insert({reviewer_id: 16, reviewed_id: 15, rating: 1, comment: 'This Billy character is so creepy. He said that I was sooooooo hot, and that he wanted to touch my hiney. Also something about a penguion. So creepy.', creation_date: new Date() }),
+        knex('reviews').insert({reviewer_id: 17, reviewed_id: 19, rating: 5, comment: 'This driver is the best driver ever. Not only did she arrive punctually, but she also brought tons of cookies for the passengers to eat.', creation_date: new Date() }),
+
+        knex('reviews').insert({reviewer_id: 15, reviewed_id: 19, rating: 1, comment: 'This Billy character is so creepy. He said that I was sooooooo hot, and that he wanted to touch my hiney. Also something about a penguion. So creepy.', creation_date: new Date() }),
       ]);
     });
 };
