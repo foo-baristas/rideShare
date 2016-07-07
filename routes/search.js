@@ -57,9 +57,12 @@ router.get('/advanced', function(req, res, next) {
 
 function joinPartsAsDate(dateParts, timeParts) {
 
-  if (dateParts && dateParts.split('-').length === 3 && timeParts && timeParts.split(':').length === 2) {
+  dateParts = dateParts.split('-');
+  timeParts = timeParts.split(':');
+  
+  if (dateParts && dateParts.length === 3 && timeParts && timeParts.length === 2) {
     // dateParts[1] -= 1; could be done here
-    return new Date(Date.UTC.apply(undefined, dateParts.concat(timeParts))).toISOString();
+    return new Date(Date.UTC.apply(undefined, dateParts.concat(timeParts)));
   } else {
     return 'NOPE: ' + dateParts.length + ' :: ' + timeParts.length;
   }
