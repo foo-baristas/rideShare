@@ -105,6 +105,10 @@ router.get('/logout', function(req, res, next) {
 
 //TODO: compare with bcrypt here
 router.post('/auth', function(req, res, next) {
+var info = {
+  user: req.body.username
+};
+
   knex('users').select('username', 'password', 'id').where({
     username: req.body.username
   }).then(function(data) {
@@ -119,13 +123,19 @@ router.post('/auth', function(req, res, next) {
           console.log(req.session);
           res.redirect('/index');
       } else {
-          //TODO: output on same page with same message in error format
-          res.send('Sorry, username and password don\'t match.');
+          //if password and username don't match
+          info.noMatch = true;
+          res.render('login', {
+            info: info
+          });
       }
      });
     } //TODO: output on same page with same message in error format
     else {
-      res.send('Sorry, username not found.');
+      info.noUser = true;
+      res.render('login', {
+        info: info
+      });
     }
   }).catch(next);
 });
