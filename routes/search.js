@@ -34,7 +34,7 @@ router.get('/search', function(req, res, next) {
       // isFood: (query.eating ? true : false) | false,
       // isMusic: (query.music ? true : false) | false
     })
-    //.whereRaw('CAST(date_of AS DATE) = ?', [query.date]) //TODO: this is broken....It used to work
+    .whereRaw('CAST(date_of AS DATE) = ?', [query.date]) //TODO: this is broken....It used to work
     .where('trip_cost', '<=', query.maxprice || 9999)
     .where('num_seats', '>=', query.seats || 1)
     .then(function(data) {
@@ -61,7 +61,8 @@ function joinPartsAsDate(dateParts, timeParts) {
   timeParts = timeParts.split(':');
 
   if (dateParts && dateParts.length === 3 && timeParts && timeParts.length === 2) {
-    // dateParts[1] -= 1; could be done here
+
+    dateParts[1] -= 1;
     return new Date(Date.UTC.apply(undefined, dateParts.concat(timeParts)));
   } else {
     return 'NOPE: ' + dateParts.length + ' :: ' + timeParts.length;
@@ -91,8 +92,8 @@ router.post('/', function(req, res, next) {
 
     console.log('Da preferences id', data[0]);
     knex('trips').insert({
-      start_location: post.origin.split(',')[0],
-      end_location: post.destination.split(',')[0],
+      start_location: post.origin,
+      end_location: post.destination,
       details: post.trip_details,
       num_seats: post.num_seats,
       smoking: post.smoking,
