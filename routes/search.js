@@ -55,11 +55,23 @@ router.get('/advanced', function(req, res, next) {
   res.render('advancedSearch');
 });
 
+function joinPartsAsDate(dateParts, timeParts) {
+
+  if (dateParts && dateParts.split('-').length === 3 && timeParts && timeParts.split(':').length === 2) {
+    // dateParts[1] -= 1; could be done here
+    return new Date(Date.UTC.apply(undefined, dateParts.concat(timeParts))).toISOString();
+  } else {
+    return 'NOPE: ' + dateParts.length + ' :: ' + timeParts.length;
+  }
+}
+
+
 //TODO users can create a trip (only users who are fb authenticated & isdriver: yes)
 //WORKING
 router.post('/', function(req, res, next) {
   var post = req.body;
   console.log(post);
+  console.log(joinPartsAsDate(post.date, post.time));
 
   knex('trips').insert({
     start_location: post.origin.split(',')[0],
@@ -73,7 +85,7 @@ router.post('/', function(req, res, next) {
     talking: post.talking,
     car_description: post.car_description,
     car_img_url: post.car_img_url,
-    date_of: post.date,
+    date_of: joinPartsAsDate(post.date, post.time),
     user_id: req.session.user_id,
     trip_cost: post.trip_cost
   }).returning('id')
