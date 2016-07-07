@@ -60,6 +60,14 @@
                 <input name='password' type="password" class="form-control" id="password" placeholder= {{user.password}} value= {{user.password}}>
             </div>
         </div> -->
+        <label for="is_driver">I'm offering rides as a driver</label>
+          {{#if user.is_driver}}
+            <input type="checkbox" name="is_driver" value="is_driver" checked>
+            {{ else }}
+            <input type="checkbox" name="is_driver" value="is_driver">
+          {{/if}}
+
+
         <h3>I'm cool with the following in my car:</h3>
         <div id="center">
             <label class="checkbox-inline">
