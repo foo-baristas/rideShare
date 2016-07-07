@@ -102,6 +102,10 @@ router.get('/:id/new-review', function(req, res) {
   res.render('newReview', {user: req.params.id});
 });
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> c845e45ec926a1c68b8061d8e18804f28721df6a
 function showReviews(req){
   knex.select('*').from('users').fullOuterJoin('reviews', 'users.id', 'reviews.reviewed_id').where('users.id', req.params.id).then(function(data){
     console.log('entered the showReviews function');
@@ -140,6 +144,10 @@ router.get('/:id/edit', function(req, res) {
 //     check = true;
 //   }
 // }
+<<<<<<< HEAD
+=======
+
+>>>>>>> c845e45ec926a1c68b8061d8e18804f28721df6a
 //POST NEW USER INFO WORKING
 router.post('/', function(req, res) {
   console.log(req.body);
@@ -264,6 +272,10 @@ router.post('/fb', function(req, res) {
         knex('fbIDs').insert({
           fb_id: (String(req.session.passport.user.id)).slice(12),
           user_id: id[0]
+<<<<<<< HEAD
+=======
+
+>>>>>>> c845e45ec926a1c68b8061d8e18804f28721df6a
         }).returning('user_id')
       .then(function(id) {
           req.session = {};
@@ -307,6 +319,10 @@ router.put('/:id', function(req, res) {
       }).returning('id')
       .then(function(id) {
         res.redirect('/user/' + id);
+<<<<<<< HEAD
+=======
+
+>>>>>>> c845e45ec926a1c68b8061d8e18804f28721df6a
       }).catch(function(err) {
         console.error(err);
         res.sendStatus(500);
@@ -345,12 +361,23 @@ router.put('/:id', function(req, res) {
 //   });
 // });
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> c845e45ec926a1c68b8061d8e18804f28721df6a
 router.post('/:id/new-review', function(req, res) {
   console.log(req.session.user_id);
   var post = req.body;
   knex('reviews').insert({
+<<<<<<< HEAD
     reviewer_id: req.session.user_id,
     reviewed_id: req.params.id,​
+=======
+
+    reviewer_id: req.session.user_id,
+    reviewed_id: req.params.id,
+
+>>>>>>> c845e45ec926a1c68b8061d8e18804f28721df6a
     // reviewer_id: 21,
     // reviewed_id: 20,
 
@@ -365,6 +392,10 @@ router.post('/:id/new-review', function(req, res) {
   });
 });
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> c845e45ec926a1c68b8061d8e18804f28721df6a
 //DELETE USER WORKS
 router.delete('/:id', function(req, res){
   knex('users').where('id', req.params.id).del().then(function(data){
