@@ -30,16 +30,6 @@ router.get('/new', function(req, res) {
 router.get('/:id', function(req, res) {
 
   knex.select('*').from('users').where('users.id', req.params.id).then(function(data) {
-<<<<<<< HEAD
-
-
-
-    //console.log(data[0]);
-    res.status(200).render('showUser', {
-      user: data[0],
-      canEditProfile: canEditProfile(data, req),
-      reviews: showReviews(req)
-=======
     res.status(200).render('showUser', {
       user: data[0],
       canEditProfile: canEditProfile(data, req)
@@ -57,9 +47,7 @@ router.get('/:id/reviews', function(req, res) {
   knex.select('*').from('users').fullOuterJoin('reviews', 'users.id', 'reviews.reviewed_id').where('users.id', req.params.id).then(function(data) {
     console.log(data[0]);
     res.status(200).render('usersReviews', {
-      review: data[0],
->>>>>>> e21c85524a8e95b40f53a2919f9dc16b21c7c663
-      //creation_date: cleanDate(JSON.stringify(data[0].creation_date))
+      review: data[0],      //creation_date: cleanDate(JSON.stringify(data[0].creation_date))
     });
   }).catch(function(err){
     console.error(err);
@@ -69,19 +57,6 @@ router.get('/:id/reviews', function(req, res) {
 
 });
 
-<<<<<<< HEAD
-function showReviews(req){
-  knex.select('*').from('users').fullOuterJoin('reviews', 'users.id', 'reviews.reviewed_id').where('users.id', req.params.id).then(function(data){
-    console.log('entered the showReviews function');
-    console.log(data[0]);
-    if(data[0].id) {
-      return true;
-    } else {
-      return false;
-    }
-  });
-}
-=======
 //  DELETE THIS IF THE ABOVE ROUTE WORKS
 // function showReviews(req){
 //   knex.select('*').from('users').fullOuterJoin('reviews', 'users.id', 'reviews.reviewed_id').where('users.id', req.params.id).then(function(data){
@@ -90,7 +65,6 @@ function showReviews(req){
 //     return data[0];
 //   });
 // }
->>>>>>> e21c85524a8e95b40f53a2919f9dc16b21c7c663
 
 
 
@@ -151,11 +125,7 @@ router.post('/', function(req, res) {
           isFB_verified: post.isFB_verified
       }).then(function() {
           //TODO: change redirect later to: res.redirect('/trip/search');
-<<<<<<< HEAD
-          res.redirect('/index');
-=======
           res.redirect('/index/auth');
->>>>>>> e21c85524a8e95b40f53a2919f9dc16b21c7c663
       }).catch(function(next) {
           console.error(err);
           res.sendStatus(500);
@@ -163,13 +133,6 @@ router.post('/', function(req, res) {
     });
   });
 });
-<<<<<<< HEAD
-
-
-=======
-
-
->>>>>>> e21c85524a8e95b40f53a2919f9dc16b21c7c663
 //THIS WORKS DON'T TOUCH IT!!! :)
 router.put('/:id', function(req, res) {
   var post = req.body;

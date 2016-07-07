@@ -27,20 +27,12 @@ router.get('/search', function(req, res, next) {
     'start_location', 'end_location', 'date_of', 'details', 'car_img_url', 'car_description', 'trip_cost', 'num_seats')
     .where({
       start_location: query.origin.split(',')[0],
-<<<<<<< HEAD
-      end_location: query.destination.split(',')[0],
-=======
       end_location: query.destination.split(',')[0]
->>>>>>> e21c85524a8e95b40f53a2919f9dc16b21c7c663
       // isSmoking: (query.smoking ? true : false) | false,
       // isPets: (query.pets ? true : false) | false,
       // isTalking: (query.talking ? true : false) | false,
       // isFood: (query.eating ? true : false) | false,
-<<<<<<< HEAD
       // isMusic: (query.music ? true : false) | false
-=======
-      // isMusic: (query.music ? true : false) | false,
->>>>>>> e21c85524a8e95b40f53a2919f9dc16b21c7c663
     })
     .whereRaw('CAST(date_of AS DATE) = ?', [query.date]) //TODO: this is broken....It used to work
     .where('trip_cost', '<=', query.maxprice || 9999)
