@@ -9,15 +9,23 @@
     margin-left: 3.5em;
 }
 
-/*style for showUser page*/
+ #logo {
+  font-size: 2.5em;
+  font-family: 'Lato', serif;
+  color: mediumblue;
+}
+#logo-share {
+  color: lightsteelblue;
+}
 
+/*style for showUser page*/
 
 #show-user-page #profile img {
     width: 100%;
     border-radius: 50%;
 }
 #show-user-page h2 {
-  margin-top: 65px;
+    margin-top: 65px;
 }
 #show-user-page h3, p {
     margin-top: 10px;
@@ -26,13 +34,12 @@
     font-size: 1.2em;
 }
 #show-user-page #preferences {
-  margin-top: 40px;
-  border: 1px solid lightgray;
+    margin-top: 40px;
+    border: 1px solid lightgray;
 }
 #show-user-page #preferences img {
     width: 15%;
 }
-
 #show-user-page #preferences h2, #reviews h2 {
     text-align: center;
     margin-top: 0;
@@ -54,3 +61,35 @@
 }
 
 /*end show-user-page*/
+
+
+/*STYLE FOR EDIT USER*/
+
+#edit-user-page {
+  border: 1px solid lightgray;
+}
+#edit-user-page h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+#edit-user-page h3 {
+  font-size: 1.4em;
+}
+#edit-user-page .navbar {
+    position: absolute;
+}
+#edit-user-page main {
+    margin-top: 50px;
+}
+#edit-user-page .form-inline .form-group {
+    margin-bottom: 10px;
+}
+#edit-user-page #center {
+  text-align: center;
+  font-size: 1.1em;
+}
+#edit-user-page button {
+  margin-top: 10px;
+}
+
+/*end edit user style*/
