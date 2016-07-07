@@ -1,12 +1,56 @@
 .header {
-  margin-bottom: 10em;
+    margin-bottom: 10em;
 }
-
 .articles {
-  margin-top: 5em;
-  text-align: center;
+    margin-top: 5em;
+    text-align: center;
+}
+.text-muted {
+    margin-left: 3.5em;
 }
 
-.text-muted {
-  margin-left: 3.5em;
+/*style for showUser page*/
+
+
+#show-user-page #profile img {
+    width: 100%;
+    border-radius: 50%;
 }
+#show-user-page h2 {
+  margin-top: 65px;
+}
+#show-user-page h3, p {
+    margin-top: 10px;
+}
+#show-user-page h3 {
+    font-size: 1.2em;
+}
+#show-user-page #preferences {
+  margin-top: 40px;
+  border: 1px solid lightgray;
+}
+#show-user-page #preferences img {
+    width: 15%;
+}
+
+#show-user-page #preferences h2, #reviews h2 {
+    text-align: center;
+    margin-top: 0;
+}
+#show-user-page #review-text {
+    margin-top: 15px;
+}
+#show-user-page ul {
+    list-style-type: none;
+    margin-top: 20px;
+    text-align: center;
+    padding: 0;
+}
+#show-user-page li {
+    display: inline;
+}
+#show-user-page .entry {
+    display: inline;
+}
+
+/*end show-user-page*/
