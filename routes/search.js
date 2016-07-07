@@ -8,39 +8,60 @@ router.get('/search', function(req, res, next) {
 
   var query = req.query;
   console.log(query);
-  if (Object.keys(query).length === 0) {
+
+  if (Object.keys(query).length === 0) { //select all
     knex('trips')
     .join('users', 'trips.user_id', '=', 'users.id')
     .select('trips.id AS id', 'profile_pic_url', 'name_first', 'name_last', 'age', 'user_id', 'isFB_verified',
     'start_location', 'end_location', 'date_of', 'details', 'car_img_url', 'car_description', 'trip_cost', 'num_seats')
     .then(function(data) {
-
-      console.log('QUERY', data);
+      console.log(data);
       res.status(200).render('searchResults', {objects: data, queries: query});
     });
-  } else { //search?origin=Denver&destination=Fort%20Collins
+  }
+  else if(query.seats) { //select with advanced search params
     knex('trips')
     .join('users', 'users.id', '=', 'trips.user_id')
-    .select('*')
-    //.join('preferences', 'preferences.id', '=', 'trips.preferences_id')
+    .join('preferences', 'preferences.id', '=', 'trips.preferences_id')
+    .select('trips.id AS id', 'profile_pic_url', 'name_first', 'name_last', 'age', 'user_id', 'isFB_verified',
+    'start_location', 'end_location', 'date_of', 'details', 'car_img_url', 'car_description', 'trip_cost', 'num_seats',
+    'isSmoking', 'isPets', 'isTalking', 'isFood', 'isMusic')
+    .where(!query.any ? {
+      start_location: query.origin.split(',')[0],
+      end_location: query.destination.split(',')[0],
+      isSmoking: (query.smoking ? true : false) | false,
+      isPets: (query.pets ? true : false) | false,
+      isTalking: (query.talking ? true : false) | false,
+      isFood: (query.eating ? true : false) | false,
+      isMusic: (query.music ? true : false) | false
+    } : {
+      
+      start_location: query.origin.split(',')[0],
+      end_location: query.destination.split(',')[0]
+    })
+    .whereRaw('CAST(date_of AS DATE) = ?', [query.date])
+    .where('trip_cost', '<=', query.maxprice || 9999)
+    .where('num_seats', '>=', query.seats || 1)
+    .then(function(data) {
+
+      res.status(200).render('searchResults', {objects: data, queries: query});
+    });
+  }
+  else { //select with city, city, date
+    knex('trips')
+    .join('users', 'users.id', '=', 'trips.user_id')
+    .join('preferences', 'preferences.id', '=', 'trips.preferences_id')
     .select('trips.id AS id', 'profile_pic_url', 'name_first', 'name_last', 'age', 'user_id', 'isFB_verified',
     'start_location', 'end_location', 'date_of', 'details', 'car_img_url', 'car_description', 'trip_cost', 'num_seats')
     .where({
       start_location: query.origin.split(',')[0],
       end_location: query.destination.split(',')[0]
-      // isSmoking: (query.smoking ? true : false) | false,
-      // isPets: (query.pets ? true : false) | false,
-      // isTalking: (query.talking ? true : false) | false,
-      // isFood: (query.eating ? true : false) | false,
-      // isMusic: (query.music ? true : false) | false
     })
-    .whereRaw('CAST(date_of AS DATE) = ?', [query.date]) //TODO: this is broken....It used to work
+    .whereRaw('CAST(date_of AS DATE) = ?', [query.date])
     .where('trip_cost', '<=', query.maxprice || 9999)
     .where('num_seats', '>=', query.seats || 1)
     .then(function(data) {
-
-      console.log('OH', data);
-      //console.log((new Date(data[0].date_of)).toISOString().split('T')[0]);
+      console.log(data);
       res.status(200).render('searchResults', {objects: data, queries: query});
     });
   }
