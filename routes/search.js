@@ -34,7 +34,7 @@ router.get('/search', function(req, res, next) {
       // isFood: (query.eating ? true : false) | false,
       // isMusic: (query.music ? true : false) | false
     })
-    .whereRaw('CAST(date_of AS DATE) = ?', [query.date]) //TODO: this is broken....It used to work
+    //.whereRaw('CAST(date_of AS DATE) = ?', [query.date]) //TODO: this is broken....It used to work
     .where('trip_cost', '<=', query.maxprice || 9999)
     .where('num_seats', '>=', query.seats || 1)
     .then(function(data) {
@@ -59,7 +59,7 @@ function joinPartsAsDate(dateParts, timeParts) {
 
   dateParts = dateParts.split('-');
   timeParts = timeParts.split(':');
-  
+
   if (dateParts && dateParts.length === 3 && timeParts && timeParts.length === 2) {
     // dateParts[1] -= 1; could be done here
     return new Date(Date.UTC.apply(undefined, dateParts.concat(timeParts)));
@@ -76,27 +76,43 @@ router.post('/', function(req, res, next) {
   console.log(post);
   console.log(joinPartsAsDate(post.date, post.time));
 
-  knex('trips').insert({
-    start_location: post.origin.split(',')[0],
-    end_location: post.destination.split(',')[0],
-    details: post.trip_details,
-    num_seats: post.num_seats,
-    smoking: post.smoking,
-    eating: post.eating,
-    pets: post.pets,
-    music: post.music,
-    talking: post.talking,
-    car_description: post.car_description,
-    car_img_url: post.car_img_url,
-    date_of: joinPartsAsDate(post.date, post.time),
-    user_id: req.session.user_id,
-    trip_cost: post.trip_cost
-  }).returning('id')
-  .then(function(id) {
-    res.redirect('/trip/' + id[0]);
-  }).catch(function(err) {
-    console.log(err);
-    res.sendStatus(500);
+  knex('preferences').insert({
+
+    isSmoking: (post.smoking ? true : false) | false,
+    isPets: (post.pets ? true : false) | false,
+    isTalking: (post.talking ? true : false) | false,
+    isFood: (post.eating ? true : false) | false,
+    isMusic: (post.music ? true : false) | false,
+    luggage_size: 'None',
+    luggage_num: 1
+  })
+  .returning('id')
+  .then(function(data) {
+
+    console.log('Da preferences id', data[0]);
+    knex('trips').insert({
+      start_location: post.origin.split(',')[0],
+      end_location: post.destination.split(',')[0],
+      details: post.trip_details,
+      num_seats: post.num_seats,
+      smoking: post.smoking,
+      eating: post.eating,
+      pets: post.pets,
+      music: post.music,
+      talking: post.talking,
+      car_description: post.car_description,
+      car_img_url: post.car_img_url,
+      date_of: joinPartsAsDate(post.date, post.time),
+      user_id: req.session.user_id,
+      preferences_id: data[0],
+      trip_cost: post.trip_cost
+    }).returning('id')
+    .then(function(id) {
+      res.redirect('/trip/' + id[0]);
+    }).catch(function(err) {
+      console.log(err);
+      res.sendStatus(500);
+    });
   });
 });
 
