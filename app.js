@@ -51,6 +51,10 @@ app.engine('.hbs', handlebars({
 
       var curDay = new Date(date);
       return months[curDay.getMonth()] + ' ' + getOrdinal(curDay.getDay());
+    },
+    formatTime: function(date) {
+
+      return new Date(date).toLocaleTimeString().replace(/:\d+ /, ' ');
     }
   }
 }));
