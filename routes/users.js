@@ -26,9 +26,14 @@ router.get('/new', function(req, res) {
 router.get('/:id', function(req, res) {
 
   knex.select('*').from('users').where('users.id', req.params.id).then(function(data) {
+
+
+
+    //console.log(data[0]);
     res.status(200).render('showUser', {
       user: data[0],
-      canEditProfile: canEditProfile(data, req)
+      canEditProfile: canEditProfile(data, req),
+      reviews: showReviews(req)
       //creation_date: cleanDate(JSON.stringify(data[0].creation_date))
     });
   }).catch(function(err){
@@ -61,7 +66,7 @@ router.get('/:id/reviews', function(req, res) {
 });
 
 router.get('/:id/new-review', function(req, res) {
-  res.render('newReview');
+  res.render('newReview', {user: req.params.id});
 
   // knex('users').select().where({id: req.params.id}).then(function(data) {
   //     console.log(data[0]);
@@ -74,8 +79,17 @@ router.get('/:id/new-review', function(req, res) {
 
 
 
-
-
+function showReviews(req){
+  knex.select('*').from('users').fullOuterJoin('reviews', 'users.id', 'reviews.reviewed_id').where('users.id', req.params.id).then(function(data){
+    console.log('entered the showReviews function');
+    console.log(data[0]);
+    if(data[0].id) {
+      return true;
+    } else {
+      return false;
+    }
+  });
+}
 
 function cleanDate(date) {
     var dateClean = date.slice(1, 11);
@@ -92,7 +106,7 @@ router.get('/:id/edit', function(req, res) {
   });
 });
 
-
+//POST NEW USER INFO WORKING
 router.post('/', function(req, res) {
   console.log(req.body);
   var post = req.body;
@@ -115,16 +129,20 @@ router.post('/', function(req, res) {
           talking: post.talking,
           is_driver: post.is_driver,
           isFB_verified: post.isFB_verified
-      }).then(function() {
+      }).returning('id')
+        .then(function(id) {
           //TODO: change redirect later to: res.redirect('/trip/search');
-          res.redirect('/index/auth');
-      }).catch(function(next) {
+          res.redirect('/index/');
+
+      }).catch(function(err) {
           console.error(err);
           res.sendStatus(500);
       });
     });
   });
 });
+
+
 //THIS WORKS DON'T TOUCH IT!!! :)
 router.put('/:id', function(req, res) {
   var post = req.body;
@@ -155,12 +173,17 @@ router.put('/:id', function(req, res) {
 });
 
 
-router.post('/new-review', function(req, res) {
+router.post('/:id/new-review', function(req, res) {
   console.log(req.session.user_id);
   var post = req.body;
       knex('reviews').insert({
+
           reviewer_id: req.session.user_id,
           reviewed_id: req.params.id,
+
+          // reviewer_id: 21,
+          // reviewed_id: 20,
+
           rating: post.rating,
           comment: post.comment,
           creation_date: new Date()
@@ -173,14 +196,14 @@ router.post('/new-review', function(req, res) {
 });
 
 
-
-// router.delete('/:id', function(req, res){
-//   knex('users').delete().where({id: req.params.id}).then(function(data){
-//     res.redirect('/');
-//   }).catch(function(err){
-//     console.error(err);
-//     res.sendStatus(500);
-//   });
-// });
+//DELETE USER WORKS
+router.delete('/:id', function(req, res){
+  knex('users').where('id', req.params.id).del().then(function(data){
+    res.redirect('/index');
+  }).catch(function(err){
+    console.error(err);
+    res.sendStatus(500);
+  });
+});
 
 module.exports = router;

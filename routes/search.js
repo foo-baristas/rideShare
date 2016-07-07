@@ -56,6 +56,7 @@ router.get('/advanced', function(req, res, next) {
 });
 
 //TODO users can create a trip (only users who are fb authenticated & isdriver: yes)
+//WORKING
 router.post('/', function(req, res, next) {
   var post = req.body;
   console.log(post);
