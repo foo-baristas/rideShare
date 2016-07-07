@@ -36,6 +36,7 @@
   .trip:hover {
 
     background-color: #d6d6d6;
+    cursor: pointer;
   }
 
   .cost {
@@ -68,18 +69,6 @@
     transform: translateY(10%);
   }
 
-  a:link {
-
-    color: black;
-    text-decoration: none;
-  }
-
-  a:visited {
-
-    color: black;
-    text-decoration: none;
-  }
-
   .icon {
 
     width: 20px;
@@ -100,7 +89,6 @@
       {{#if info.error.destination}}
       <small class="text-muted"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>{{info.error.destination}}</small>
       {{/if}}
-      <!-- VY'S ORIGINAL DATE-PICKER CODE -->
       <label for="date">Date</label>
       <input type="date" name="date" value="{{info.date}}">
       {{#if info.error.date}}
@@ -108,7 +96,9 @@
       {{/if}}
 
       <div class="input-group">
-        <button type="submit" class="btn btn-primary input-group-addon" style="color: white;">Find my ride</button>
+        <button type="submit" class="btn btn-primary input-group-addon" style="color: white;">
+          <span class="glyphicon glyphicon-search"></span> Find my ride
+        </button>
         <a href="/trip/advanced" class="input-group-addon">Advanced Search</a>
       </div>
     </div>
@@ -131,7 +121,8 @@
           <label class="col-md-6 form-control-label">
             {{name_first}} {{name_last}} <br />
             Age: {{age}}<br />
-            Rating: ?
+            Rating: ?<br />
+            <a href="/user/{{user_id}}">View Profile</a>
           </label>
           <label class="col-md-12">
             <br />
@@ -166,7 +157,7 @@
             {{/if}}
           </label>
         </div>
-        <div class="form-group col-sm-7">
+        <div class="form-group col-sm-6">
           <div class="row">
             <label class="col-md-12">
               {{start_location}} - {{end_location}}<br />
@@ -183,7 +174,13 @@
         </div>
 
         <div class="form-group col-sm-2">
-
+          <label class="col-md-12">
+            ${{trip_cost}} per seat<br />
+            {{num_seats}} seat(s) left<br />
+            <button type="submit" class="btn btn-default">
+              <span class="glyphicon glyphicon-pushpin"></span> Reserve
+            </button>
+          </label>
         </div>
       </span>
     </div>
