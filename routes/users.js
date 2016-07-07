@@ -18,22 +18,73 @@ var express = require('express'),
 //   });
 // });
 
-router.get('/new', function(req, res) {
-    res.render('newUser');
+router.get('/new', function(req, res, next) {
+
+    fbUserExistsInOurDatabase(req.session).then(function(a){
+      if(a){
+        console.log('the final step before redirect happens');
+        res.redirect('/trip/search');
+      } else {
+        res.render('newUser'); //THIS PART WORKS THANK THE LORD
+      }
+    }).catch(function(err){
+      next(err);
+    });
 });
 
-// FIX: DATABASE QUERY TO INCLUDE REVIEWER DETAILS
+
+function fbUserExistsInOurDatabase(data) {
+  console.log('entered this function');
+  return new Promise(function(resolve, reject){
+    if (data.passport) {
+      var name = data.passport.user.displayName;
+      console.log(name);
+      exists(name).then(function(result) {
+            console.log('finished exists function');
+            if(result.length === 1) {
+              console.log('true!');
+              resolve(true);
+            } else {
+              console.log('false!');
+              resolve(false);
+            }
+        })
+        .catch(function(err){
+          reject(err);
+        });
+    } else {
+      console.log("2. User not logged in via facebook");
+      resolve(false);
+    }
+  })
+}
+
+function exists(name) {
+  console.log('entered exists function');
+  var nameArray = name.split(' ');
+  return knex.select('*').from('users').where({name_first: nameArray[0], name_last: nameArray[1]});
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 router.get('/:id', function(req, res) {
-
   knex.select('*').from('users').where('users.id', req.params.id).then(function(data) {
-
-
-
     //console.log(data[0]);
     res.status(200).render('showUser', {
       user: data[0],
       canEditProfile: canEditProfile(data, req),
-      reviews: showReviews(req)
       //creation_date: cleanDate(JSON.stringify(data[0].creation_date))
     });
   }).catch(function(err){
@@ -67,14 +118,6 @@ router.get('/:id/reviews', function(req, res) {
 
 router.get('/:id/new-review', function(req, res) {
   res.render('newReview', {user: req.params.id});
-
-  // knex('users').select().where({id: req.params.id}).then(function(data) {
-  //     console.log(data[0]);
-  //     //res.status(200).render('newReview', {review:data[0]});
-  //   }).catch(function(err) {
-  //     console.error(err);
-  //     res.sendStatus(500);
-  //   });
 });
 
 

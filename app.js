@@ -9,6 +9,7 @@ var cookieSession = require('cookie-session');
 var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
 var handlebars = require('express-handlebars');
+var knex = require('./db/knex');
 var passport = require('passport');
 var Strategy = require('passport-facebook').Strategy;
 
@@ -97,11 +98,41 @@ app.use(passport.session());
 app.get('/login/facebook',
   passport.authenticate('facebook'));
 
+
+
+/// WORKING HERE ////
 app.get('/login/facebook/return',
-  passport.authenticate('facebook', { successRedirect: '/index', failureRedirect: '/login' }),
-  function(req, res) {
-    res.redirect('/index');
-  });
+    passport.authenticate('facebook', { successRedirect: '/user/new', failureRedirect: '/login' }));
+
+
+
+// function getRedirectURL(name){
+//   console.log(name);
+//   console.log('entered redirect function');
+//   exists(name).then(function(result) {
+//     console.log('entered promise function');
+//     if(result.length === 1) {
+//       return '/index';
+//     } else {
+//       return '/user/new';
+//     }
+//   });
+// }
+//
+// function exists(name) {
+//   var nameArray = name.split(' ');
+//   return knex.select('*').from('users').where({name_first: nameArray[0], name_last: nameArray[1]});
+// }
+
+
+
+/// WORKING HERE END////
+
+
+
+
+
+
 
   // END FACEBOOK LOGIN
 
