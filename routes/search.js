@@ -10,9 +10,11 @@ router.get('/search', function(req, res, next) {
 
   if (Object.keys(query).length === 0) { //select all
     knex('trips')
-    .join('users', 'trips.user_id', '=', 'users.id')
+    .join('users', 'users.id', '=', 'trips.user_id')
+    .join('preferences', 'preferences.id', '=', 'trips.preferences_id')
     .select('trips.id AS id', 'profile_pic_url', 'name_first', 'name_last', 'age', 'user_id', 'isFB_verified',
-    'start_location', 'end_location', 'date_of', 'details', 'car_img_url', 'car_description', 'trip_cost', 'num_seats')
+    'start_location', 'end_location', 'date_of', 'details', 'car_img_url', 'car_description', 'trip_cost', 'num_seats',
+    'isSmoking', 'isPets', 'isTalking', 'isFood', 'isMusic')
     .then(function(data) {
       res.status(200).render('searchResults', {objects: data, queries: query});
     });
@@ -49,7 +51,8 @@ router.get('/search', function(req, res, next) {
     .join('users', 'users.id', '=', 'trips.user_id')
     .join('preferences', 'preferences.id', '=', 'trips.preferences_id')
     .select('trips.id AS id', 'profile_pic_url', 'name_first', 'name_last', 'age', 'user_id', 'isFB_verified',
-    'start_location', 'end_location', 'date_of', 'details', 'car_img_url', 'car_description', 'trip_cost', 'num_seats')
+    'start_location', 'end_location', 'date_of', 'details', 'car_img_url', 'car_description', 'trip_cost', 'num_seats',
+    'isSmoking', 'isPets', 'isTalking', 'isFood', 'isMusic')
     .where({
       start_location: query.origin.split(',')[0],
       end_location: query.destination.split(',')[0]

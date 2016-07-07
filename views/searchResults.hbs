@@ -28,14 +28,14 @@
 
     border-top: 1px solid black;
     border-bottom: 1px solid black;
-    padding-top: 5px;
-    padding-bottom: 5px;
+    padding-top: 25px;
     margin-bottom: 25px;
   }
 
   .trip:hover {
 
     background-color: #d6d6d6;
+    cursor: pointer;
   }
 
   .cost {
@@ -68,16 +68,9 @@
     transform: translateY(10%);
   }
 
-  a:link {
+  .icon {
 
-    color: black;
-    text-decoration: none;
-  }
-
-  a:visited {
-
-    color: black;
-    text-decoration: none;
+    width: 20px;
   }
   </style>
 </head>
@@ -95,7 +88,6 @@
       {{#if info.error.destination}}
       <small class="text-muted"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>{{info.error.destination}}</small>
       {{/if}}
-      <!-- VY'S ORIGINAL DATE-PICKER CODE -->
       <label for="date">Date</label>
       <input type="date" name="date" value="{{info.date}}">
       {{#if info.error.date}}
@@ -103,7 +95,9 @@
       {{/if}}
 
       <div class="input-group">
-        <button type="submit" class="btn btn-primary input-group-addon" style="color: white;">Find my ride</button>
+        <button type="submit" class="btn btn-primary input-group-addon" style="color: white;">
+          <span class="glyphicon glyphicon-search"></span> Find my ride
+        </button>
         <a href="/trip/advanced" class="input-group-addon">Advanced Search</a>
       </div>
     </div>
@@ -118,56 +112,85 @@
   {{/if}}
 
   <div class="row">
-    <div class="col-sm-1"></div>
-    <div class="col-sm-10">
-      {{#each objects}}
-      <div class="row trip">
-        <a href="/trip/{{id}}">
-          <!-- DRIVER PROFILE -->
-          <div class="col-md-4 driver_profile">
-            <div class="row">
-              <div class="col-md-5 vertPic">
-                <img class="profile" width="125" height="125" src="{{profile_pic_url}}">
-              </div>
-              <div class="col-md-4 vertInfo">
-                <span class="name">{{name_first}}</span>&nbsp;<span class="name">{{name_last}}</span>
-                <span>Age: {{age}}</span><br />
-                <a href="/user/{{ user_id }}">View profile</a>
-                {{#if isFB_verified}}
-                <img src="https://cdn3.iconfinder.com/data/icons/social-media-chamfered-corner/154/facebook-24.png">&nbsp;<span>Verified</span>
-                {{/if}}
-              </div>
-            </div>
-          </div>
-
-          <!-- TRIP DETAILS -->
-          <div class="col-md-6 trip_details">
-            <div class="row">
-              <h4>{{start_location}} to {{end_location}}</h4>
-              <h5>{{date_of}}</h5>
-              <span>{{details}}</span>
-            </div>
-            <div class="row">
-              <img width="50" height="50" src="{{car_img_url}}">
-              <span><strong>{{car_description}}</strong></span>
-            </div>
-          </div>
-        </a>
-        <!-- COST INFORMATION -->
-        <div class="col-md-1 cost_information">
-          <h2 class="cost">${{trip_cost}}</h2>
-          <h5>{{num_seats}} seats available.</h5>
-          <form method="POST" action="/trip/reserve/{{id}}">
-            {{#if num_seats}}
-            <button class="btn btn-primary" type="submit">Reserve</button>
+    {{#each objects}}
+    <div class="row trip">
+      <span onclick="window.location.href = '/trip/{{id}}';">
+        <div class="form-group col-sm-4">
+          <img class="col-md-6" src="{{profile_pic_url}}">
+          <label class="col-md-6 form-control-label">
+            {{name_first}} {{name_last}} <br />
+            Age: {{age}}<br />
+            Rating: ?<br />
+            <a href="/user/{{user_id}}">View Profile</a>
+          </label>
+          <label class="col-md-12">
+            <br />
+            {{#if isSmoking}}
+            <img class="icon" src="/images/smoking.png">
             {{else}}
-            <button class="btn btn-primary" type="submit" disabled="true">Reserve</button>
+            <img class="icon" src="/images/no_smoking.png">
             {{/if}}
-          </form>
+
+            {{#if isFood}}
+            <img class="icon" src="/images/eating.png">
+            {{else}}
+            <img class="icon" src="/images/no_eating.png">
+            {{/if}}
+
+            {{#if isPets}}
+            <img class="icon" src="/images/pets.png">
+            {{else}}
+            <img class="icon" src="/images/no_pets.png">
+            {{/if}}
+
+            {{#if isMusic}}
+            <img class="icon" src="/images/music.png">
+            {{else}}
+            <img class="icon" src="/images/no_music.png">
+            {{/if}}
+
+            {{#if isTalking}}
+            <img class="icon" src="/images/talking.png">
+            {{else}}
+            <img class="icon" src="/images/no_talking.png">
+            {{/if}}
+          </label>
         </div>
-      </div>
-      {{/each}}
+        <div class="form-group col-sm-6">
+          <div class="row">
+            <label class="col-md-12">
+              {{start_location}} - {{end_location}}<br />
+              {{formatDate date_of}} @ {{formatTime date_of}}
+            </label>
+          </div>
+          <br />
+          <div class="row">
+            <label class="col-md-12">
+              Car Description: {{car_description}}<br />
+              <img width="50" src="{{car_img_url}}">
+            </label>
+          </div>
+        </div>
+
+        <div class="form-group col-sm-2">
+          <label class="col-md-12">
+            ${{trip_cost}} per seat<br />
+            {{num_seats}} seat(s) left<br />
+            <form method="post" action="/trip/reserve/{{id}}">
+              <button type="submit" class="btn btn-default">
+                <span class="glyphicon glyphicon-pushpin"></span> Reserve
+              </button>
+            </form>
+            <form method="get" action="/trip/{{id}}">
+              <button type="submit" class="btn btn-default">
+                <span class="glyphicon glyphicon-option-vertical"></span> View
+              </button>
+            </form>
+          </label>
+        </div>
+      </span>
     </div>
+    {{/each}}
   </div>
 
   <script type="text/javascript">
