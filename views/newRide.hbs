@@ -22,125 +22,102 @@
         <h2>Create a Ride</h2>
       </div>
     </div>
-    <form class="newRide" action="/trip" method="post">
+    <form class="newRide form-horizontal" action="/trip" method="post">
       <div class="row">
-        <!-- <fieldset class="form-group"> -->
-        <div class="col-md-3">
-          <label for="origin">Origin</label>
+        <!-- <fieldset class="form-group row"> -->
+        <div class="form-group row">
+          <label class="col-sm-2 form-control-label" for="origin">Origin</label>
           <input type="text" name="origin" id="origin" value="">
         </div>
-        <div class="col-md-4">
-          <label for="destination">Destination</label>
+        <div class="form-group row">
+          <label class="col-sm-2 form-control-label"  for="destination">Destination</label>
           <input type="text" name="destination" id="destination" value="">
         </div>
-        <div class="col-md-3">
-          <label for="date time">Date & Time of Departure
-          <input type="date" name="date" id="time" value="{{info.date}}">
-          {{#if info.error.date}}
-          <small class="text-muted"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>{{info.error.date}}</small>
-          {{/if}}
-
-          <input type="time" name="time" id="time" value="{{info.time}}">
-          {{#if info.error.time}}
-          <small class="text-muted"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>{{info.error.time}}</small>
-          {{/if}}
-          </label>
+        <div class="form-group row">
+          <label class="col-sm-2 form-control-label"  for="date time">Date & Time of Departure</label>
+          <div class="input-group">
+            <input class="input-group-addon form-control col-sm-5" type="date" name="date" id="time" value="{{info.date}}">
+            <input class="input-group-addon form-control col-sm-5" type="time" name="time" id="time" value="{{info.time}}">
+          </div>
         </div>
-          <!-- START BOOTSTRAP DATE-TIME-PICKER -->
-          <!-- <div class="col-md-4" id="datetimepicker4" class="input-append">
-          <label for="destination">Date & Time of Departure</label>
-          <input type="text" name="date_of" value="{{info.date}}"></input>
-          {{#if info.error.date}}
-          <small class="text-muted"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>{{info.error.date}}</small>
-          {{/if}}
-          <span class="add-on"><i data-time-icon="icon-time" data-date-icon="icon-calendar">
-        </i></span>
       </div>
-      <script type="text/javascript"
-      src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js">
-    </script>
-    <script type="text/javascript"
-    src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/js/bootstrap.min.js">
+      <div class="row">
+        <div class="form-group row">
+          <label class="col-sm-2 form-control-label"  for="details">Trip Details</label>
+          <textarea class="form-control" rows="3" name="trip_details"></textarea>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-2 form-control-label"  for="num_seats">Number of Seats Available</label>
+          <select class="form-control" id="num_seats" name="num_seats">
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+            <option>6</option>
+            <option>7</option>
+            <option>8</option>
+          </select>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-2 form-control-label"  for="car_img_url">Car Image URL</label>
+          <input type="text" class="form-control" name="car_img_url" value="">
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-2 form-control-label"  for="car_description">Car Description</label>
+          <textarea name="car_description" class="form-control" id="car_description" rows="3"></textarea>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group row">
+          <h4>I'm cool with the following in my car:</h4>
+          <label class="col-sm-2 form-control-label"  class="checkbox-inline">
+            <input type="checkbox" name="smoking" value="smoking"> smoking
+          </label>
+          <label class="col-sm-2 form-control-label"  class="checkbox-inline">
+            <input type="checkbox" name="eating" value="eating"> eating
+          </label>
+          <label class="col-sm-2 form-control-label"  class="checkbox-inline">
+            <input type="checkbox" name="music" value="music"> music
+          </label>
+          <label class="col-sm-2 form-control-label"  class="checkbox-inline">
+            <input type="checkbox" name="talking" value="talking"> talking
+          </label>
+          <label class="col-sm-2 form-control-label"  class="checkbox-inline">
+            <input type="checkbox" name="pets" value="pets"> pets
+            <br>
+          </label>
+          <br>
+        </div>
+        <div class="form-group row">
+          <!-- <h4>PULL DATA FROM USER ACCOUNT FOR FIELDS BELOW WHEN AUTHENTICATION IS FINISHED</h4> -->
+          <label class="col-sm-2 form-control-label"  for="trip_cost">Price per Seat</label>
+          <div class="input-group">
+            <div class="input-group-addon">$</div>
+            <input type="text" class="form-control" name="trip_cost" value="" placeholder="Amount">
+            <div class="input-group-addon">.00</div>
+          </div>
+        </div>
+        <div class="form-group row">
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <script type="text/javascript">
+  google.load("maps", "3.x", {callback: initialize, other_params:'v=3.exp&libraries=places&key=AIzaSyD2gxzAGO1he66elVkh6TLdYXhCYVc3o8E'});
+  function initialize() {
+
+    var input = document.getElementById('origin');
+    var autocomplete = new google.maps.places.Autocomplete(input, { types: ['(cities)'], region:'US' });
+
+    var inputDest = document.getElementById('destination');
+    var autocomplete2 = new google.maps.places.Autocomplete(inputDest, { types: ['(cities)'], region:'US' });
+
+    google.maps.event.addDomListener(window, 'load', initialize);
+  }
   </script>
-  <script type="text/javascript"
-  src="http://tarruda.github.com/bootstrap-datetimepicker/assets/js/bootstrap-datetimepicker.min.js">
-</script>
-<script type="text/javascript"
-src="http://tarruda.github.com/bootstrap-datetimepicker/assets/js/bootstrap-datetimepicker.pt-BR.js">
-</script> -->
-<!-- END BOOTSTRAP DATE-TIME-PICKER -->
-</div>
-<div class="row">
-  <div class="col-md-3">
-    <label for="details">Trip Details</label>
-    <textarea class="form-control" rows="3" name="trip_details"></textarea>
-  </div>
-  <div class="col-md-4">
-    <label for="num_seats">Number of Seats Available</label>
-    <select class="form-control" id="num_seats" name="num_seats">
-      <option>1</option>
-      <option>2</option>
-      <option>3</option>
-      <option>4</option>
-      <option>5</option>
-      <option>6</option>
-      <option>7</option>
-      <option>8</option>
-    </select>
-    <label for="car_img_url">Car Image URL</label>
-    <input type="text" name="car_img_url" value="">
-  </div>
-  <div class="col-md-4">
-    <label for="car_description">Car Description</label>
-    <textarea name="car_description" class="form-control" id="car_description" rows="3"></textarea>
-  </div>
-</div>
-<div class="row">
-  <div class="col-md-6">
-    <h4>I'm cool with the following in my car:</h4>
-    <label class="checkbox-inline">
-      <input type="checkbox" name="smoking" value="smoking"> smoking
-    </label>
-    <label class="checkbox-inline">
-      <input type="checkbox" name="eating" value="eating"> eating
-    </label>
-    <label class="checkbox-inline">
-      <input type="checkbox" name="music" value="music"> music
-    </label>
-    <label class="checkbox-inline">
-      <input type="checkbox" name="talking" value="talking"> talking
-    </label>
-    <label class="checkbox-inline">
-      <input type="checkbox" name="pets" value="pets"> pets
-      <br>
-    </label>
-    <br>
-  </div>
-  <div class="col-md-3">
-    <!-- <h4>PULL DATA FROM USER ACCOUNT FOR FIELDS BELOW WHEN AUTHENTICATION IS FINISHED</h4> -->
-    <label for="trip_cost">Price per Seat</label>
-    <input type="text" name="trip_cost" value="" placeholder="$">
-  </div>
-  <div class="col-md-3">
-    <button type="submit" class="btn btn-primary">Submit</button>
-  </div>
-</div>
-</form>
-</div>
-
-<script type="text/javascript">
-google.load("maps", "3.x", {callback: initialize, other_params:'v=3.exp&libraries=places&key=AIzaSyD2gxzAGO1he66elVkh6TLdYXhCYVc3o8E'});
-function initialize() {
-
-  var input = document.getElementById('origin');
-  var autocomplete = new google.maps.places.Autocomplete(input, { types: ['(cities)'], region:'US' });
-
-  var inputDest = document.getElementById('destination');
-  var autocomplete2 = new google.maps.places.Autocomplete(inputDest, { types: ['(cities)'], region:'US' });
-
-  google.maps.event.addDomListener(window, 'load', initialize);
-}
-</script>
 </body>
 
 </html>
