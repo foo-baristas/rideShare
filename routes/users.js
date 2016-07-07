@@ -20,21 +20,20 @@ var express = require('express'),
 
 router.get('/new', function(req, res, next) {
 
-  res.render('/newUser');
+  //res.render('newUser');
 
-    // fbUserExistsInOurDatabase(req.session).then(function(a){
-    //   if(a){
-    //     res.redirect('/trip/search');
-    //   } else {
-    //     var name = req.session.passport.user.displayName;
-    //     var nameArray = name.split(' ');
-    //     console.log(nameArray);
-    //     res.render('newUser', {first_name : nameArray[0], last_name : nameArray[1]});
-    //   }
-    // }).catch(function(err){
-    //   next(err);
-    // });
-
+    fbUserExistsInOurDatabase(req.session).then(function(a){
+      if(a){
+        res.redirect('/trip/search');
+      } else {
+        var name = req.session.passport.user.displayName;
+        var nameArray = name.split(' ');
+        console.log(nameArray);
+        res.render('newUser', {first_name : nameArray[0], last_name : nameArray[1]});
+      }
+    }).catch(function(err){
+      next(err);
+    });
 });
 
 
