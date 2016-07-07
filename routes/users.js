@@ -30,14 +30,10 @@ router.get('/new', function(req, res) {
 router.get('/:id', function(req, res) {
 
   knex.select('*').from('users').where('users.id', req.params.id).then(function(data) {
-
-
-
-    //console.log(data[0]);
     res.status(200).render('showUser', {
       user: data[0],
       canEditProfile: canEditProfile(data, req),
-      reviews: showReviews(req)
+      review: showReviews(req),
       //creation_date: cleanDate(JSON.stringify(data[0].creation_date))
     });
   }).catch(function(err){
@@ -49,12 +45,8 @@ router.get('/:id', function(req, res) {
 function showReviews(req){
   knex.select('*').from('users').fullOuterJoin('reviews', 'users.id', 'reviews.reviewed_id').where('users.id', req.params.id).then(function(data){
     console.log('entered the showReviews function');
-    console.log(data[0]);
-    if(data[0].id) {
-      return true;
-    } else {
-      return false;
-    }
+    console.log(data[0].id);
+    return data[0];
   });
 }
 
