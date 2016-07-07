@@ -23,10 +23,44 @@ var app = express();
 
 // view handlebars setup
 app.set('views', path.join(__dirname, 'views'));
-app.engine('.hbs', handlebars({defaultLayout: 'single', extname: '.hbs'}));
+app.engine('.hbs', handlebars({
+  defaultLayout: 'single',
+  extname: '.hbs',
+  helpers: {
+    formatDate: function(date) {
+      var months = [
+        'January',
+        'February',
+        'March',
+        'April',
+        'May',
+        'June',
+        'July',
+        'August',
+        'September',
+        'October',
+        'November',
+        'December'
+      ];
+
+      function getOrdinal(n) {
+        var s=["th","st","nd","rd"],
+        v=n%100;
+        return n+(s[(v-20)%10]||s[v]||s[0]);
+      }
+
+      var curDay = new Date(date);
+      return months[curDay.getMonth()] + ' ' + getOrdinal(curDay.getDay());
+    },
+    formatTime: function(date) {
+
+      return new Date(date).toLocaleTimeString().replace(/:\d+ /, ' ');
+    }
+  }
+}));
+
 app.set('view engine', '.hbs');
 app.use(express.static(path.join(__dirname, '/public/')));
-
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -60,35 +94,35 @@ app.use('/trip', search);
 // START FACEBOOK LOGIN
 
 passport.use(new Strategy({
-    clientID: process.env.CLIENT_ID,
-    clientSecret: process.env.CLIENT_SECRET,
-    callbackURL: 'http://localhost:3000/login/facebook/return'
-  },
-  function(accessToken, refreshToken, profile, cb) {
-    // In this example, the user's Facebook profile is supplied as the user
-    // record.  In a production-quality application, the Facebook profile should
-    // be associated with a user record in the application's database, which
-    // allows for account linking and authentication with other identity
-    // providers.
-    return cb(null, profile);
-  }));
+  clientID: process.env.CLIENT_ID,
+  clientSecret: process.env.CLIENT_SECRET,
+  callbackURL: 'http://localhost:3000/login/facebook/return'
+},
+function(accessToken, refreshToken, profile, cb) {
+  // In this example, the user's Facebook profile is supplied as the user
+  // record.  In a production-quality application, the Facebook profile should
+  // be associated with a user record in the application's database, which
+  // allows for account linking and authentication with other identity
+  // providers.
+  return cb(null, profile);
+}));
 
-  // Configure Passport authenticated session persistence.
-  //
-  // In order to restore authentication state across HTTP requests, Passport needs
-  // to serialize users into and deserialize users out of the session.  In a
-  // production-quality application, this would typically be as simple as
-  // supplying the user ID when serializing, and querying the user record by ID
-  // from the database when deserializing.  However, due to the fact that this
-  // example does not have a database, the complete Facebook profile is serialized
-  // and deserialized.
-  passport.serializeUser(function(user, cb) {
-    cb(null, user);
-  });
+// Configure Passport authenticated session persistence.
+//
+// In order to restore authentication state across HTTP requests, Passport needs
+// to serialize users into and deserialize users out of the session.  In a
+// production-quality application, this would typically be as simple as
+// supplying the user ID when serializing, and querying the user record by ID
+// from the database when deserializing.  However, due to the fact that this
+// example does not have a database, the complete Facebook profile is serialized
+// and deserialized.
+passport.serializeUser(function(user, cb) {
+  cb(null, user);
+});
 
-  passport.deserializeUser(function(obj, cb) {
-    cb(null, obj);
-  });
+passport.deserializeUser(function(obj, cb) {
+  cb(null, obj);
+});
 
 // Initialize Passport and restore authentication state, if any, from the
 // session.
@@ -96,13 +130,13 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.get('/login/facebook',
-  passport.authenticate('facebook'));
+passport.authenticate('facebook'));
 
 
 
 /// WORKING HERE ////
 app.get('/login/facebook/return',
-    passport.authenticate('facebook', { successRedirect: '/user/new', failureRedirect: '/login' }));
+passport.authenticate('facebook', { successRedirect: '/user/new', failureRedirect: '/login' }));
 
 
 
@@ -134,7 +168,7 @@ app.get('/login/facebook/return',
 
 
 
-  // END FACEBOOK LOGIN
+// END FACEBOOK LOGIN
 
 // error handlers
 

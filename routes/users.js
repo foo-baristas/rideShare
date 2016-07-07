@@ -135,14 +135,92 @@ router.get('/:id/edit', function(req, res) {
   });
 });
 
+//TODO: delete this passwordCheck function or refactor following route into it
+// function passwordCheck(data, req){
+//   var check;
+//   if (req.body.password !== req.body.password_confirm) {
+//     console.log('passwords match');
+//     check = false;
+//   } else {
+//     console.log('passwords do not match')
+//     check = true;
+//   }
+// }
+
 //POST NEW USER INFO WORKING
 router.post('/', function(req, res) {
   console.log(req.body);
   var post = req.body;
+  //if is_driver exists in the database (if it's truthy, set it equal to true, if not, then false)
+  var is_driver = ((post.is_driver) ? true : false);
 
+  var user = {
+    username: post.username,
+    password: '',
+    password_confirm: '',
+    name_first: post.name_first,
+    name_last: post.name_last,
+    profile_pic_url: post.profile_pic_url,
+    age: post.age,
+    description: post.description,
+    email: post.email,
+    smoking: post.smoking,
+    eating: post.eating,
+    pets: post.pets,
+    music: post.music,
+    talking: post.talking,
+    is_driver: is_driver,
+    isFB_verified: post.isFB_verified
+  };
+
+  if (req.body.password !== req.body.password_confirm) {
+     console.log('passwords don\'t match');
+     user.password_error = true;
+     res.render('newUser', {user : user});
+  } else {
+     console.log('passwords don\'t match');
   bcrypt.genSalt(Number(post.saltRounds), function(err, salt) {
     bcrypt.hash(post.password, salt, function(err, hash) {
       knex('users').insert({
+          username: post.username,
+          password: hash,
+          name_first: post.name_first,
+          name_last: post.name_last,
+          profile_pic_url: post.profile_pic_url,
+          age: post.age,
+          description: post.description,
+          email: post.email,
+          smoking: post.smoking,
+          eating: post.eating,
+          pets: post.pets,
+          music: post.music,
+          talking: post.talking,
+          is_driver: is_driver,
+          isFB_verified: post.isFB_verified
+      }).returning('id')
+        .then(function(id) {
+          req.session = {};
+          req.session.user_id = id;
+          req.session.user_name = post.username;
+          console.log(req.session);
+          res.redirect('/user/' + id);
+      }).catch(function(err) {
+          console.error(err);
+          res.sendStatus(500);
+      });
+    });
+  });
+ }
+});
+
+
+//THIS WORKS DON'T TOUCH IT!!! :)
+router.put('/:id', function(req, res) {
+  var post = req.body;
+  var is_driver = ((post.is_driver) ? true : false);
+  console.log(post);
+
+    knex('users').update({
         username: post.username,
         password: hash,
         name_first: post.name_first,
@@ -156,11 +234,10 @@ router.post('/', function(req, res) {
         pets: post.pets,
         music: post.music,
         talking: post.talking,
-        is_driver: post.is_driver,
+        is_driver: is_driver,
         isFB_verified: post.isFB_verified
       }).returning('id')
       .then(function(id) {
-        //TODO: change redirect later to: res.redirect('/trip/search');
         res.redirect('/user/' + id);
 
       }).catch(function(err) {
@@ -168,38 +245,38 @@ router.post('/', function(req, res) {
         res.sendStatus(500);
       });
     });
-  });
-});
+//   });
+// });
 
-
+//DUPLICATE FROM EARLIER VERSION OF ABOVE ROUTE
 //THIS WORKS DON'T TOUCH IT!!! :)
-router.put('/:id', function(req, res) {
-  var post = req.body;
-  console.log(post);
-
-  knex('users').update({
-    name_first: post.name_first,
-    name_last: post.name_last,
-    profile_pic_url: post.profile_pic_url,
-    age: post.age,
-    description: post.description,
-    email: post.email,
-    username: post.username,
-    password: post.password,
-    smoking: post.smoking,
-    eating: post.eating,
-    pets: post.pets,
-    music: post.music,
-    talking: post.talking,
-    is_driver: post.is_driver,
-    isFB_verified: post.isFB_verified
-  }).where('id', req.params.id).then(function() {
-    res.redirect('/user/' + req.params.id);
-  }).catch(function(err) {
-    console.error(err);
-    res.sendStatus(500);
-  });
-});
+// router.put('/:id', function(req, res) {
+//   var post = req.body;
+//   console.log(post);
+//
+//   knex('users').update({
+//     name_first: post.name_first,
+//     name_last: post.name_last,
+//     profile_pic_url: post.profile_pic_url,
+//     age: post.age,
+//     description: post.description,
+//     email: post.email,
+//     username: post.username,
+//     password: post.password,
+//     smoking: post.smoking,
+//     eating: post.eating,
+//     pets: post.pets,
+//     music: post.music,
+//     talking: post.talking,
+//     is_driver: post.is_driver,
+//     isFB_verified: post.isFB_verified
+//   }).where('id', req.params.id).then(function() {
+//     res.redirect('/user/' + req.params.id);
+//   }).catch(function(err) {
+//     console.error(err);
+//     res.sendStatus(500);
+//   });
+// });
 
 
 router.post('/:id/new-review', function(req, res) {
