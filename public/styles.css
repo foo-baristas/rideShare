@@ -8,14 +8,13 @@
 .text-muted {
     margin-left: 3.5em;
 }
-
- #logo {
-  font-size: 2.5em;
-  font-family: 'Lato', serif;
-  color: mediumblue;
+#logo {
+    font-size: 2.5em;
+    font-family: 'Lato', serif;
+    color: mediumblue;
 }
 #logo-share {
-  color: lightsteelblue;
+    color: lightsteelblue;
 }
 
 /*style for showUser page*/
@@ -66,14 +65,14 @@
 /*STYLE FOR EDIT USER*/
 
 #edit-user-page {
-  border: 1px solid lightgray;
+    border: 1px solid lightgray;
 }
 #edit-user-page h2 {
     text-align: center;
     margin-bottom: 20px;
 }
 #edit-user-page h3 {
-  font-size: 1.4em;
+    font-size: 1.4em;
 }
 #edit-user-page .navbar {
     position: absolute;
@@ -85,21 +84,38 @@
     margin-bottom: 10px;
 }
 #edit-user-page #center {
-  text-align: center;
-  font-size: 1.1em;
+    text-align: center;
+    font-size: 1.1em;
 }
 #edit-user-page button {
-  margin-top: 10px;
+    margin-top: 10px;
 }
 
 /*end edit user style*/
 
 
 /*style for new review*/
-#new-review-page  {
-  border: 1px solid lightgray;
-  margin-top: 40px;
+
+#new-review-page {
+    border: 1px solid lightgray;
+    margin-top: 40px;
 }
-#new-review-page form  {
-  padding-left: 20px;
+#new-review-page form {
+    padding-left: 20px;
 }
+
+/*new user*/
+
+/*h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+.navbar {
+    position: absolute;
+}
+main {
+    margin-top: 50px;
+}
+.form-inline .form-group {
+    margin-bottom: 10px;
+}*/

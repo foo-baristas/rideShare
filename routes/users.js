@@ -1,9 +1,9 @@
 'use strict';
 
 var express = require('express'),
-    router = express.Router(),
-    knex = require('../db/knex'),
-    bcrypt = require('bcrypt');
+router = express.Router(),
+knex = require('../db/knex'),
+bcrypt = require('bcrypt');
 
 
 // router.get('/', function(req, res) {
@@ -18,22 +18,59 @@ var express = require('express'),
 //   });
 // });
 
-router.get('/new', function(req, res) {
-    res.render('newUser');
+router.get('/new', function(req, res, next) {
+
+  //res.render('newUser');
+
+  fbUserExistsInOurDatabase(req.session).then(function(a){
+    if(a){
+      res.redirect('/trip/search');
+    } else if (req.session && req.session.passport) {
+      var name = req.session.passport.user.displayName;
+      var nameArray = name.split(' ');
+      console.log(nameArray);
+      res.render('newUser', {first_name : nameArray[0], last_name : nameArray[1]});
+    } else {
+      res.render('newUser');
+    }
+  }).catch(function(err){
+    console.log(err);
+    //next(err);
+  });
 });
 
-// FIX: DATABASE QUERY TO INCLUDE REVIEWER DETAILS
+
+function fbUserExistsInOurDatabase(data) {
+  return new Promise(function(resolve, reject){
+    if (data.passport) {
+      var name = data.passport.user.displayName;
+      exists(name).then(function(result) {
+        if(result.length === 1) {
+          resolve(true);
+        } else {
+          resolve(false);
+        }
+      })
+      .catch(function(err){
+        reject(err);
+      });
+    } else {
+      resolve(false);
+    }
+  });
+}
+
+function exists(name) {
+  var nameArray = name.split(' ');
+  return knex.select('*').from('users').where({name_first: nameArray[0], name_last: nameArray[1]});
+}
+
 router.get('/:id', function(req, res) {
-
   knex.select('*').from('users').where('users.id', req.params.id).then(function(data) {
-
-
-
     //console.log(data[0]);
     res.status(200).render('showUser', {
       user: data[0],
       canEditProfile: canEditProfile(data, req),
-      reviews: showReviews(req)
       //creation_date: cleanDate(JSON.stringify(data[0].creation_date))
     });
   }).catch(function(err){
@@ -67,14 +104,6 @@ router.get('/:id/reviews', function(req, res) {
 
 router.get('/:id/new-review', function(req, res) {
   res.render('newReview', {user: req.params.id});
-
-  // knex('users').select().where({id: req.params.id}).then(function(data) {
-  //     console.log(data[0]);
-  //     //res.status(200).render('newReview', {review:data[0]});
-  //   }).catch(function(err) {
-  //     console.error(err);
-  //     res.sendStatus(500);
-  //   });
 });
 
 
@@ -92,8 +121,8 @@ function showReviews(req){
 }
 
 function cleanDate(date) {
-    var dateClean = date.slice(1, 11);
-    return dateClean;
+  var dateClean = date.slice(1, 11);
+  return dateClean;
 }
 
 // THIS WORKS DON'T TOUCH IT!!!!! :)
@@ -145,7 +174,6 @@ router.post('/', function(req, res) {
   };
 
   if (req.body.password !== req.body.password_confirm) {
-    //TODO: make info object
      console.log('passwords don\'t match');
      user.password_error = true;
      res.render('newUser', {user : user});
@@ -193,14 +221,14 @@ router.put('/:id', function(req, res) {
   console.log(post);
 
     knex('users').update({
+        username: post.username,
+        password: hash,
         name_first: post.name_first,
         name_last: post.name_last,
         profile_pic_url: post.profile_pic_url,
         age: post.age,
         description: post.description,
         email: post.email,
-        username: post.username,
-        password: post.password,
         smoking: post.smoking,
         eating: post.eating,
         pets: post.pets,
@@ -208,35 +236,69 @@ router.put('/:id', function(req, res) {
         talking: post.talking,
         is_driver: is_driver,
         isFB_verified: post.isFB_verified
-    }).where('id', req.params.id).then(function() {
-        res.redirect('/user/' + req.params.id);
-    }).catch(function(err) {
+      }).returning('id')
+      .then(function(id) {
+        res.redirect('/user/' + id);
+
+      }).catch(function(err) {
         console.error(err);
         res.sendStatus(500);
+      });
     });
-});
+//   });
+// });
+
+//DUPLICATE FROM EARLIER VERSION OF ABOVE ROUTE
+//THIS WORKS DON'T TOUCH IT!!! :)
+// router.put('/:id', function(req, res) {
+//   var post = req.body;
+//   console.log(post);
+//
+//   knex('users').update({
+//     name_first: post.name_first,
+//     name_last: post.name_last,
+//     profile_pic_url: post.profile_pic_url,
+//     age: post.age,
+//     description: post.description,
+//     email: post.email,
+//     username: post.username,
+//     password: post.password,
+//     smoking: post.smoking,
+//     eating: post.eating,
+//     pets: post.pets,
+//     music: post.music,
+//     talking: post.talking,
+//     is_driver: post.is_driver,
+//     isFB_verified: post.isFB_verified
+//   }).where('id', req.params.id).then(function() {
+//     res.redirect('/user/' + req.params.id);
+//   }).catch(function(err) {
+//     console.error(err);
+//     res.sendStatus(500);
+//   });
+// });
 
 
 router.post('/:id/new-review', function(req, res) {
   console.log(req.session.user_id);
   var post = req.body;
-      knex('reviews').insert({
+  knex('reviews').insert({
 
-          reviewer_id: req.session.user_id,
-          reviewed_id: req.params.id,
+    reviewer_id: req.session.user_id,
+    reviewed_id: req.params.id,
 
-          // reviewer_id: 21,
-          // reviewed_id: 20,
+    // reviewer_id: 21,
+    // reviewed_id: 20,
 
-          rating: post.rating,
-          comment: post.comment,
-          creation_date: new Date()
-      }).then(function() {
-          res.redirect('/index/');
-      }).catch(function(err) {
-          console.error(err);
-          res.sendStatus(500);
-      });
+    rating: post.rating,
+    comment: post.comment,
+    creation_date: new Date()
+  }).then(function() {
+    res.redirect('/index/');
+  }).catch(function(err) {
+    console.error(err);
+    res.sendStatus(500);
+  });
 });
 
 
