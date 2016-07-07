@@ -5,7 +5,6 @@ router = express.Router(),
 knex = require('../db/knex'),
 bcrypt = require('bcrypt');
 
-
 // router.get('/', function(req, res) {
 //   knex('users').select().orderBy('id').then(function(data){
 //     res.status(200).render('######', {users:data});
@@ -19,9 +18,7 @@ bcrypt = require('bcrypt');
 // });
 var nameArray = [];
 router.get('/new', function(req, res, next) {
-
   //res.render('newUser');
-
   fbUserExistsInOurDatabase(req.session).then(function(a){
     if(a){
       res.redirect('/trip/search');
@@ -38,7 +35,6 @@ router.get('/new', function(req, res, next) {
     //next(err);
   });
 });
-
 
 function fbUserExistsInOurDatabase(data) {
   return new Promise(function(resolve, reject){
@@ -105,7 +101,6 @@ router.get('/:id/reviews', function(req, res) {
 router.get('/:id/new-review', function(req, res) {
   res.render('newReview', {user: req.params.id});
 });
-
 
 
 function showReviews(req){
