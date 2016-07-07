@@ -1,16 +1,23 @@
 <div id="show-user-page">
     <!-- PHOTO, NAME, AGE, DESCRIPTION -->
-    <div class='row content' id="profile">
-        <div class='col-sm-5'> <img src='{{ user.profile_pic_url }}'></div>
-        <div class='col-sm-7'>
-            <div class='row'>
-                <h2>{{ user.name_first}} {{ user.name_last }}</h2> </div>
-            <div class='row'>
-                <h3>{{ user.age }} yrs old</h3></div>
-            <div class='row'>
+    <div class="row content" id="profile">
+        <div class="col-sm-5"> <img src="{{ user.profile_pic_url }}"></div>
+        <div class="col-sm-7">
+            <div class="row">
+                <h2>{{ user.name_first}} {{ user.name_last }}</h2>
+            </div>
+            <div class="row">
+                <h3>{{ user.age }} yrs old</h3>
+            </div>
+            {{#if user.is_driver}}
+              <div class="row">
+                <h5><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>driver offering rides</h5>
+              </div>
+            {{/if}}
+            <div class="row">
                 <p>{{ user.description }}</p>
             </div>
-            <div class='row'>
+            <div class="row">
                 <a href="/user/{{user.id}}/reviews">See {{ user.name_first }}'s reviews</a>
             </div>
 
@@ -34,7 +41,7 @@
 
 
     <!-- PREFERENCES -->
-    <div class='row content' id="preferences">
+    <div class="row content" id="preferences">
         <h2>Preferences</h2>
         <ul>
             <li>

@@ -1,87 +1,98 @@
-<div class="col-sm-3"></div>
-<div class="col-sm-6" id="new-user-page">
-    <h2>Sign Up</h2>
+<h2>Sign Up</h2>
 
-    <form class="form-inline" method='POST' action='/user'>
+            <form class="form-inline" method='POST' action='/user'>
 
-        <div class="form-group row">
-            <label for="name_first" class="col-sm-4 form-control-label">First Name</label>
-            <div class="col-sm-8">
-                <input name='name_first' type="text" class="form-control" id="first_name" placeholder="first name">
-            </div>
-        </div>
+              <div class="form-group row">
+                <label for="name_first" class="col-sm-4 form-control-label">First Name</label>
+                <div class="col-sm-8">
+                    <input name='name_first' type="text" class="form-control" id="first_name" placeholder="first name" value="{{user.name_first}}">
+                </div>
+              </div>
 
-        <div class="form-group row">
-            <label for="last_first" class="col-sm-4 form-control-label">Last Name</label>
-            <div class="col-sm-8">
-                <input name='name_last' type="text" class="form-control" id="last_name" placeholder="last name">
-            </div>
-        </div>
+              <div class="form-group row">
+                <label for="last_first" class="col-sm-4 form-control-label">Last Name</label>
+                <div class="col-sm-8">
+                  <input name='name_last' type="text" class="form-control" id="last_name" placeholder="last name" value="{{user.name_last}}">
+                </div>
+              </div>
 
-        <div class="form-group row">
-            <label for="profile_pic_url" class="col-sm-4 form-control-label">Profile Pic</label>
-            <div class="col-sm-8">
-                <input name='profile_pic_url' type="url" class="form-control" id="profile_pic_url" placeholder="insert URL">
-            </div>
-        </div>
+              <div class="form-group row">
+                <label for="profile_pic_url" class="col-sm-4 form-control-label">Profile Pic</label>
+                <div class="col-sm-8">
+                  <input name='profile_pic_url' type="url" class="form-control" id="profile_pic_url" placeholder="insert URL" value="{{user.profile_pic_url}}">
+                </div>
+              </div>
 
-        <div class="form-group row">
-            <label for="age" class="col-sm-4 form-control-label">Age</label>
-            <div class="col-sm-8">
-                <input name='age' type="text" class="form-control" id="age" placeholder="age">
-            </div>
-        </div>
+              <div class="form-group row">
+                <label for="age" class="col-sm-4 form-control-label">Age</label>
+                <div class="col-sm-8">
+                  <input name='age' type="text" class="form-control" id="age" placeholder="age" value="{{user.age}}">
+                </div>
+              </div>
 
-        <div class="form-group row">
-            <label for="email" class="col-sm-4 form-control-label">Email</label>
-            <div class="col-sm-8">
-                <input name='email' type="text" class="form-control" id="email" placeholder="email">
-            </div>
-        </div>
+              <div class="form-group row">
+                <label for="email" class="col-sm-4 form-control-label">Email</label>
+                <div class="col-sm-8">
+                  <input name='email' type="text" class="form-control" id="email" placeholder="email" value="{{user.email}}">
+                </div>
+              </div>
 
-        <div class="form-group row">
-            <label for="description" class="col-sm-4 form-control-label">Description</label>
-            <div class="col-sm-8">
-                <input name='description' type="text" class="form-control" id="description" placeholder="description">
-            </div>
-        </div>
+              <div class="form-group row">
+                <label for="description" class="col-sm-4 form-control-label">Description</label>
+                <div class="col-sm-8">
+                  <input name='description' type="text" class="form-control" id="description" placeholder="description" value="{{user.description}}">
+                </div>
+              </div>
 
-        <div class="form-group row">
-            <label for="username" class="col-sm-4 form-control-label">Username</label>
-            <div class="col-sm-8">
-                <input name='username' type="text" class="form-control" id="username" placeholder="username">
-            </div>
-        </div>
+              <div class="form-group row">
+                <label for="username" class="col-sm-4 form-control-label">Username</label>
+                <div class="col-sm-8">
+                  <input name='username' type="text" class="form-control" id="username" placeholder="username" value="{{user.username}}">
+                </div>
+              </div>
 
-        <div class="form-group row">
-            <label for="password" class="col-sm-4 form-control-label">Password</label>
-            <div class="col-sm-8">
-                <input name='password' type="password" class="form-control" id="password" placeholder="password">
-            </div>
-        </div>
+              <div class="form-group row">
+                <label for="password" class="col-sm-4 form-control-label">Password</label>
+                <div class="col-sm-8">
+                  <input name='password' type="password" class="form-control" id="password" placeholder="password">
+                </div>
+              <div class="row">
+                {{#if user.password_error}}
+                <small class="text-muted"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>passwords don't match</small>
+                {{/if}}
+              </div>
+              </div></br>
+              <div class="form-group row">
+                <label for="password_confirm" class="col-sm-4 form-control-label">Type in your password again</label>
+                <div class="col-sm-8">
+                  <input name="password_confirm" type="password" class="form-control" id="password_confirm" placeholder="password">
+                </div>
+              </div></br>
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <label for="is_driver">I'm offering rides as a driver</label>
+                        <input type="checkbox" name="is_driver" value="{{user.is_driver}}">
 
-
-        <!-- RADIO BUTTONS -->
-        <h3>I'm cool with the following in my car:</h3>
-        <label class="checkbox-inline">
-            <input type="checkbox" name="smoking" value="smoking"> smoking
-        </label>
-        <label class="checkbox-inline">
-            <input type="checkbox" name="eating" value="eating"> eating
-        </label>
-        <label class="checkbox-inline">
-            <input type="checkbox" name="music" value="music"> music
-        </label>
-        <label class="checkbox-inline">
-            <input type="checkbox" name="talking" value="talking"> talking
-        </label>
-        <label class="checkbox-inline">
-            <input type="checkbox" name="pets" value="pets"> pets
-            <br>
-        </label>
-        <br>
-        <button class="btn btn-success" type="submit">Sign Up</button>
-</div>
-</form>
-
-</div>
+                    <!-- RADIO BUTTONS -->
+                    <h3>I'm cool with the following in my car:</h3>
+                    <label class="checkbox-inline">
+                      <input type="checkbox" name="smoking" value="{{user.smoking}}"> smoking
+                    </label>
+                    <label class="checkbox-inline">
+                      <input type="checkbox" name="eating" value="{{user.eating}}"> eating
+                    </label>
+                    <label class="checkbox-inline">
+                      <input type="checkbox" name="music" value="{{user.music}}"> music
+                    </label>
+                    <label class="checkbox-inline">
+                      <input type="checkbox" name="talking" value="{{user.talking}}"> talking
+                    </label>
+                    <label class="checkbox-inline">
+                      <input type="checkbox" name="pets" value="{{user.pets}}"> pets<br>
+                    </label>
+                  </div>
+                  </div>
+                    <br>
+                    <button class="btn btn-success" type="submit">Sign Up</button>
+                </div>
+            </form>

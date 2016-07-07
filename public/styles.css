@@ -119,3 +119,8 @@
 #new-user-page .form-inline .form-group {
     margin-bottom: 10px;
 }
+#new-user-page p {
+  text-align: center;
+  font-size: 1.3em;
+  margin-bottom: 20px;
+}
