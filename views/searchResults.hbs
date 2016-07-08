@@ -1,82 +1,10 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-  <meta charset="utf-8">
-  <title>RideShare</title>
-  <!-- jQuery 2.2.4 minified -->
-  <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
-  <!-- Latest compiled and minified CSS -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-  <!-- Optional theme -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
-  <!-- Latest compiled and minified JavaScript -->
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-  <!-- DATE-PICKER BOOTSTRAPCDN -->
-  <!-- <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap-combined.min.css" rel="stylesheet"> -->
-  <!-- <link rel="stylesheet" type="text/css" media="screen" -->
-  <!-- href="http://tarruda.github.com/bootstrap-datetimepicker/assets/css/bootstrap-datetimepicker.min.css"> -->
-
-  <script type="text/javascript" src="http://www.google.com/jsapi?key=AIzaSyCsVqhn3Mi-rV82PbqFinMtoIS7mhMy3Xs"></script>
-  <style>
-  body {
-    background-color: #ebebeb;
-  }
-
-
-  .trip {
-
-    border-top: 1px solid black;
-    border-bottom: 1px solid black;
-    padding-top: 25px;
-    margin-bottom: 25px;
-  }
-
-  .trip:hover {
-
-    background-color: #d6d6d6;
-    cursor: pointer;
-  }
-
-  .cost {
-
-    color: green;
-  }
-
-  .profile {
-
-    border-radius: 50px;
-  }
-
-  .name {
-
-    font-size: 20px;
-    font-weight: bold;
-  }
-
-  .vertInfo {
-
-    position: inherit;
-    top: 50%;
-    transform: translateY(50%);
-  }
-
-  .vertPic {
-
-    position: inherit;
-    top: 50%;
-    transform: translateY(10%);
-  }
-
-  .icon {
-
-    width: 20px;
-  }
-  </style>
-</head>
-
-<body class="container-fluid">
+<<<<<<< HEAD
+ <body class="container-fluid" id="search-results">
   <form class="landing-search form-inline" action="/index" method="post">
+=======
+<body class="container-fluid" id="search-results">
+  <form class="landing-search form-inline" action="/" method="post">
+>>>>>>> ce9843da6e9331531bfe428689b74b4b52763aff
     <div class="form-group">
       <label for="origin">Origin</label>
       <input type="text" name="origin" id="origin" value="{{info.origin}}">
@@ -94,10 +22,9 @@
       <small class="text-muted"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>{{info.error.date}}</small>
       {{/if}}
 
-      <div class="input-group">
-        <button type="submit" class="btn btn-primary input-group-addon" style="color: white;">
-          <span class="glyphicon glyphicon-search"></span> Find my ride
-        </button>
+      <div class="row input-group">
+        <!-- <div class="col-md-6"> -->
+        <button type="submit" class="btn btn-primary input-group-addon">Find my ride</button>
         <a href="/trip/advanced" class="input-group-addon">Advanced Search</a>
       </div>
     </div>
@@ -116,40 +43,40 @@
     <div class="row trip">
       <span onclick="window.location.href = '/trip/{{id}}';">
         <div class="form-group col-sm-4">
-          <img class="col-md-6" src="{{profile_pic_url}}">
+          <img id="profile-pic" class="col-md-6" src="{{profile_pic_url}}">
           <label class="col-md-6 form-control-label">
-            {{name_first}} {{name_last}} <br />
+            <span id="name">{{name_first}} {{name_last}}</span> <br />
             Age: {{age}}<br />
-            Rating: ?<br />
+            <!-- Rating: ?<br /> -->
             <a href="/user/{{user_id}}">View Profile</a>
           </label>
           <label class="col-md-12">
             <br />
-            {{#if isSmoking}}
+            {{#if data.isSmoking}}
             <img class="icon" src="/images/smoking.png">
             {{else}}
             <img class="icon" src="/images/no_smoking.png">
             {{/if}}
 
-            {{#if isFood}}
+            {{#if data.isFood}}
             <img class="icon" src="/images/eating.png">
             {{else}}
             <img class="icon" src="/images/no_eating.png">
             {{/if}}
 
-            {{#if isPets}}
+            {{#if data.isPets}}
             <img class="icon" src="/images/pets.png">
             {{else}}
             <img class="icon" src="/images/no_pets.png">
             {{/if}}
 
-            {{#if isMusic}}
+            {{#if data.isMusic}}
             <img class="icon" src="/images/music.png">
             {{else}}
             <img class="icon" src="/images/no_music.png">
             {{/if}}
 
-            {{#if isTalking}}
+            {{#if data.isTalking}}
             <img class="icon" src="/images/talking.png">
             {{else}}
             <img class="icon" src="/images/no_talking.png">
@@ -159,30 +86,41 @@
         <div class="form-group col-sm-6">
           <div class="row">
             <label class="col-md-12">
-              {{start_location}} - {{end_location}}<br />
+              <span id="start-end-location">{{start_location}} - {{end_location}}</span><br />
               {{formatDate date_of}} @ {{formatTime date_of}}
             </label>
           </div>
           <br />
           <div class="row">
             <label class="col-md-12">
-              Car Description: {{car_description}}<br />
-              <img width="50" src="{{car_img_url}}">
+              <span id="car-description">Car Description:</span> <br>{{car_description}}<br />
+              <img id="car-image" src="{{car_img_url}}">
             </label>
           </div>
         </div>
 
         <div class="form-group col-sm-2">
           <label class="col-md-12">
-            ${{trip_cost}} per seat<br />
-            {{num_seats}} seat(s) left<br />
+            <span>${{trip_cost}}</span> per seat<br />
+            {{num_seats}} seat(s) left
+            <hr>
+            {{#if session.user_id}}
             <form method="post" action="/trip/reserve/{{id}}">
-              <button type="submit" class="btn btn-default">
+              <button type="submit" class="btn btn-default col-sm-12">
                 <span class="glyphicon glyphicon-pushpin"></span> Reserve
               </button>
             </form>
-            <form method="get" action="/trip/{{id}}">
-              <button type="submit" class="btn btn-default">
+            {{else}}
+            <form method="get" action="/login">
+              <button style="font-size: 10px;" type="submit" class="btn btn-default col-sm-12">
+                Login to <br>Reserve
+              </button>
+            </form>
+            {{/if}}
+            <br />
+            <br />
+            <form id="view-button" method="get" action="/trip/{{id}}">
+              <button type="submit" class="btn btn-default col-sm-12">
                 <span class="glyphicon glyphicon-option-vertical"></span> View
               </button>
             </form>
@@ -190,21 +128,7 @@
         </div>
       </span>
     </div>
+
     {{/each}}
+
   </div>
-
-  <script type="text/javascript">
-  google.load("maps", "3.x", {callback: initialize, other_params:'libraries=places&key=AIzaSyD2gxzAGO1he66elVkh6TLdYXhCYVc3o8E'});
-  function initialize() {
-
-    var input = document.getElementById('origin');
-    var autocomplete = new google.maps.places.Autocomplete(input, { types: ['(cities)'], region:'US' });
-
-    var inputDest = document.getElementById('destination');
-    var autocomplete2 = new google.maps.places.Autocomplete(inputDest, { types: ['(cities)'], region:'US' });
-
-    google.maps.event.addDomListener(window, 'load', initialize);
-  }
-  </script>
-</body>
-</html>

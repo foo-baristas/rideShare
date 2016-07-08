@@ -1,62 +1,52 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <title>rideShare</title>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
-  <link rel="stylesheet" type="text/css" href="/styles.css" />
-  <!-- <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap-combined.min.css" rel="stylesheet"> -->
-  <!-- <link rel="stylesheet" type="text/css" media="screen" -->
-  <!-- href="http://tarruda.github.com/bootstrap-datetimepicker/assets/css/bootstrap-datetimepicker.min.css"> -->
-  <!-- GOOGLE AUTOCOMPLETE -->
-  <script type="text/javascript" src="http://www.google.com/jsapi?key=AIzaSyCsVqhn3Mi-rV82PbqFinMtoIS7mhMy3Xs"></script>
-  <script type="text/javascript">
-  google.load("maps", "3.x", {callback: initialize, other_params:'sensor=false&libraries=places&key=AIzaSyD2gxzAGO1he66elVkh6TLdYXhCYVc3o8E'});
-  function initialize() {
-
-    var input = document.getElementById('origin');
-    var autocomplete = new google.maps.places.Autocomplete(input, { types: ['(cities)'], region:'US' });
-
-    var inputDest = document.getElementById('destination');
-    var autocomplete2 = new google.maps.places.Autocomplete(inputDest, { types: ['(cities)'], region:'US' });
-
-    google.maps.event.addDomListener(window, 'load', initialize);
-  }
-  </script>
-</head>
-
-<body>
-  <div class="container-fluid">
+  <div class="container-fluid" id="index">
+    <div class="row main">
+      <!-- <div class="col-md-12"> -->
+    <img src="https://d30y9cdsu7xlg0.cloudfront.net/png/49796-200.png" alt="" />
     <form class="landing-search form-inline" action="/index" method="post">
       <div class="form-group">
         <label for="origin">Origin</label>
         <input type="text" name="origin" id="origin" value="{{info.origin}}">
-        {{#if info.error.origin}}
+        <!-- {{#if info.error.origin}}
         <small class="text-muted"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>{{info.error.origin}}</small>
-        {{/if}}
+        {{/if}} -->
         <label for="destination">Destination</label>
         <input type="text" name="destination" id="destination" value="{{info.destination}}">
-        {{#if info.error.destination}}
+        <!-- {{#if info.error.destination}}
         <small class="text-muted"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>{{info.error.destination}}</small>
-        {{/if}}
+        {{/if}} -->
         <!-- VY'S ORIGINAL DATE-PICKER CODE -->
         <label for="date">Date</label>
         <input type="date" name="date" value="{{info.date}}">
+        <!-- {{#if info.error.date}}
+        <small class="text-muted"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>{{info.error.date}}</small>
+        {{/if}} -->
+        <div class="row">
+        {{#if info.error.origin}}
+        <small class="text-muted"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>{{info.error.origin}}</small>
+        {{/if}}
+        {{#if info.error.destination}}
+        <small class="text-muted"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>{{info.error.destination}}</small>
+        {{/if}}
         {{#if info.error.date}}
         <small class="text-muted"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>{{info.error.date}}</small>
         {{/if}}
-
-        <div class="input-group">
-          <button type="submit" class="btn btn-primary input-group-addon" style="color: white;">Find my ride</button>
-          <a href="/trip/advanced" class="input-group-addon">Advanced Search</a>
         </div>
+
+        <div class="row input-group">
+          <!-- <div class="col-md-6"> -->
+          <button type="submit" class="btn btn-primary input-group-addon">Find my ride</button>
+          <a href="/trip/advanced" class="input-group-addon">Advanced Search</a>
+        <!-- </div> -->
+      </div>
       </div>
     </form>
-
+  <!-- </div> -->
+</div>
+    <div class="row" id="all-trips">
+      <div class="col-md-3">
     <a href="/trip/search">See all Trips</a>
-
+      </div>
+  </div>
     <div class="row articles">
       <div class="col-md-4">
         <h3> <span class="glyphicon glyphicon-road" aria-hidden="true"></span> Need a lift?</h3>
@@ -77,12 +67,4 @@
         </p>
       </div>
     </div>
-
-
-
-
   </div>
-</div>
-</body>
-
-</html>

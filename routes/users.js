@@ -18,9 +18,16 @@ bcrypt = require('bcrypt');
 // });
 var nameArray = [];
 router.get('/new', function(req, res, next) {
+
   //res.render('newUser');
+
+  //CHANGED: THIS IS WHERE I FIXED FB LOGIN!
   fbUserExistsInOurDatabase(req.session).then(function(a){
     if(a){
+      console.log('I HATE FB', a);
+      req.session = {};
+      req.session.user_name = a[0].username;
+      req.session.user_id = a[0].id;
       res.redirect('/trip/search');
     } else if (req.session && req.session.passport) {
       var name = req.session.passport.user.displayName;
@@ -42,7 +49,7 @@ function fbUserExistsInOurDatabase(data) {
       var name = data.passport.user.displayName;
       exists(name).then(function(result) {
         if(result.length === 1) {
-          resolve(true);
+          resolve(result); //CHANGED: instead of resolving true, I resolve with the results object
         } else {
           resolve(false);
         }
@@ -76,7 +83,7 @@ router.get('/:id', function(req, res) {
 });
 
 function canEditProfile(data, req){
-  if(data[0].username == req.session.user_name) {
+  if(data[0].username === req.session.user_name) { //CHANGED == to ===
     console.log('This user is authorized to edit this profile');
     return true;
   } else {
@@ -87,9 +94,9 @@ function canEditProfile(data, req){
 router.get('/:id/reviews', function(req, res) {
 
   knex.select('*').from('users').fullOuterJoin('reviews', 'users.id', 'reviews.reviewed_id').where('users.id', req.params.id).then(function(data) {
-    console.log(data[0]);
+    console.log(data);
     res.status(200).render('usersReviews', {
-      review: data[0],
+      review: data
       //creation_date: cleanDate(JSON.stringify(data[0].creation_date))
     });
   }).catch(function(err){
@@ -101,7 +108,6 @@ router.get('/:id/reviews', function(req, res) {
 router.get('/:id/new-review', function(req, res) {
   res.render('newReview', {user: req.params.id});
 });
-
 
 function showReviews(req){
   knex.select('*').from('users').fullOuterJoin('reviews', 'users.id', 'reviews.reviewed_id').where('users.id', req.params.id).then(function(data){
@@ -266,11 +272,10 @@ router.post('/fb', function(req, res) {
         knex('fbIDs').insert({
           fb_id: (String(req.session.passport.user.id)).slice(12),
           user_id: id[0]
-
         }).returning('user_id')
       .then(function(id) {
           req.session = {};
-          req.session.user_id = id;
+          req.session.user_id = id[0];
           req.session.user_name = post.username;
           console.log(req.session);
           res.redirect('/user/' + id);
@@ -289,10 +294,9 @@ router.put('/:id', function(req, res) {
   var post = req.body;
   var is_driver = ((post.is_driver) ? true : false);
   console.log(post);
-
-    knex('users').update({
+    knex('users').where('id', req.params.id).update({
         username: post.username,
-        password: hash,
+        //password: hash,
         name_first: post.name_first,
         name_last: post.name_last,
         profile_pic_url: post.profile_pic_url,
@@ -309,7 +313,6 @@ router.put('/:id', function(req, res) {
       }).returning('id')
       .then(function(id) {
         res.redirect('/user/' + id);
-
       }).catch(function(err) {
         console.error(err);
         res.sendStatus(500);
@@ -348,34 +351,28 @@ router.put('/:id', function(req, res) {
 //   });
 // });
 
-
 router.post('/:id/new-review', function(req, res) {
   console.log(req.session.user_id);
   var post = req.body;
   knex('reviews').insert({
-
     reviewer_id: req.session.user_id,
     reviewed_id: req.params.id,
-
-    // reviewer_id: 21,
-    // reviewed_id: 20,
-
     rating: post.rating,
     comment: post.comment,
     creation_date: new Date()
   }).then(function() {
-    res.redirect('/index/');
+    res.redirect('/user/' + req.params.id);
   }).catch(function(err) {
     console.error(err);
     res.sendStatus(500);
   });
 });
 
-
 //DELETE USER WORKS
 router.delete('/:id', function(req, res){
   knex('users').where('id', req.params.id).del().then(function(data){
-    res.redirect('/index');
+    req.session = {};
+    res.redirect('/');
   }).catch(function(err){
     console.error(err);
     res.sendStatus(500);
