@@ -289,7 +289,7 @@ router.put('/:id', function(req, res) {
   var post = req.body;
   var is_driver = ((post.is_driver) ? true : false);
   console.log(post);
-    knex('users').update({
+    knex('users').where('id', req.params.id).update({
         username: post.username,
         //password: hash,
         name_first: post.name_first,
