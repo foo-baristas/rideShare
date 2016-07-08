@@ -86,9 +86,36 @@
     color: lightsteelblue;
 }
 
+/* style for newUser page */
+#newUser form {
+  margin-top: 2em;
+}
+
+#newUser #is_driver {
+  margin-top: 2em;
+}
+
+#newUser .wrapper label {
+  padding:.5em;
+}
+
+/*style for login*/
+#login small {
+  position: relative;
+  right: -2em;
+}
+
+#login button {
+  position: relative;
+  right: -42em;
+  top: -2.2em;
+}
+
+#login form {
+  margin-top: 10em;
 /*style for search-results*/
 
-#search-results .form-group {
+#search-results .form {
   text-align: center;
   position: relative;
   margin-top: 20px;
