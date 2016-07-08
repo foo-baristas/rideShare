@@ -1,3 +1,8 @@
+* {
+  font-family: 'Lato', serif;
+}
+
+/* partials */
 .header {
     margin-bottom: 10em;
 }
@@ -8,6 +13,63 @@
 .text-muted {
     margin-left: 3.5em;
 }
+
+footer {
+  position: relative;
+  top: 10em;
+}
+
+/*index*/
+#index {
+  background-image: 'car.jpeg';
+}
+
+#index img {
+  position: relative;
+  left: 21em;
+  height: 10em;
+}
+
+#index .form-group {
+  text-align: center;
+  position: relative
+}
+
+#index .form-group .input-group {
+  margin: 3em;
+}
+
+#index label {
+  padding: 1em;
+}
+
+#index .input-group button {
+  color: lightsteelblue;
+  background-color: mediumblue;
+}
+
+#index .input-group a {
+  background-color: lightsteelblue;
+  color: black;
+}
+
+#index #all-trips {
+  text-align: center;
+  position: relative;
+  left: 15em;
+  top: em;
+  font-size: large;
+}
+
+#index .articles {
+  background-color: lightgrey;
+  height: 12em;
+}
+
+#nav-bar a {
+  color: mediumblue;
+}
+
 #logo {
     font-size: 2.5em;
     font-family: 'Lato', serif;

@@ -104,7 +104,6 @@ router.get('/:id/new-review', function(req, res) {
   res.render('newReview', {user: req.params.id});
 });
 
-
 function showReviews(req){
   knex.select('*').from('users').fullOuterJoin('reviews', 'users.id', 'reviews.reviewed_id').where('users.id', req.params.id).then(function(data){
     console.log('entered the showReviews function');
