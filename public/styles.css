@@ -18,12 +18,13 @@ footer {
   bottom: 0;
   width: 100%;
   margin-top: 50px;
-  height: 10em;
+  height: 4em;
   background-color: lightsteelblue;
   color: #444444;
   text-align: center;
   font-family: 'Lato', serif;
   position: relative;
+  padding-top: 15px;
 }
 #octocat {
   width: 40px;
