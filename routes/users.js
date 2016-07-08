@@ -366,6 +366,7 @@ router.post('/:id/new-review', function(req, res) {
 //DELETE USER WORKS
 router.delete('/:id', function(req, res){
   knex('users').where('id', req.params.id).del().then(function(data){
+    req.session = null; 
     res.redirect('/index');
   }).catch(function(err){
     console.error(err);
