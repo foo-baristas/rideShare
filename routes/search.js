@@ -144,6 +144,7 @@ router.get('/:id', function(req, res, next) {
 
   knex('trips')
   .join('users', 'users.id', '=', 'trips.user_id')
+  .join('preferences', 'preferences_id', '=', 'trips.preferences_id')
   .select()
   .where('trips.id', '=', req.params.id)
   .then(function(data) {
