@@ -177,19 +177,19 @@
             ${{trip_cost}} per seat<br />
             {{num_seats}} seat(s) left
             <hr>
-            {{#if session.user_id}}
+            <!-- {{#if session.user_id}}
             <form method="post" action="/trip/reserve/{{id}}">
               <button type="submit" class="btn btn-default col-sm-12">
                 <span class="glyphicon glyphicon-pushpin"></span> Reserve
               </button>
             </form>
             {{else}}
-            <form method="post" action="/trip/reserve/{{id}}">
+            <form method="get" action="/index/login">
               <button style="font-size: 10px;" type="submit" class="btn btn-default col-sm-12">
                 Login 'n Reserve
               </button>
             </form>
-            {{/if}}
+            {{/if}} -->
             <br />
             <br />
             <form method="get" action="/trip/{{id}}">
