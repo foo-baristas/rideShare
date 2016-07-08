@@ -138,3 +138,15 @@
   font-size: 1.3em;
   margin-bottom: 20px;
 }
+
+#show-review-page h1 {
+  width: 75%;
+  margin-left: 12.5%;
+  text-align: center;
+  margin-top: 150px;
+  font-size: 1.8em;
+  background-color: lightsteelblue;
+  border: 1px solid #666;
+  border-radius: 5px;
+  padding: 20px;
+}
