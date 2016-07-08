@@ -17,6 +17,7 @@
     border: 1px solid #bdbdbd;
     border-radius: 15px;
     padding: 10px;
+    text-align: center;
   }
 
   .flipme {
@@ -51,31 +52,39 @@
       <h2>{{start_location}} -- {{end_location}}</h2>
       <h4>Trip Scheduled For: {{formatDate date_of}} @ {{formatTime date_of}}</h4><br />
       <h5>Description:<br />
-      {{details}}</h5>
+        {{details}}</h5>
+      </div>
+      <div class="form-group col-sm-4">
+        <div class="trip-info">{{num_seats}} seat(s) available</div><br />
+        <div class="trip-info">${{trip_cost}} per passenger</div><br />
+        <div class="trip-info"><a href="">Book Now!</a></div>
+      </div>
     </div>
-    <div class="form-group col-sm-4">
-      <div class="trip-info">{{num_seats}} seat(s) available</div><br />
-      <div class="trip-info">${{trip_cost}} per passenger</div><br />
-      <div class="trip-info"><a href="">Book Now!</a></div>
+    <hr>
+    <div class="row">
+      <div class="form-group col-sm-12">
+        <h4>Trip Preferences</h4>
+      </div>
+    </div>
+    <hr>
+    <div class="row">
+      <div class="form-group col-sm-6">
+        <img class="col-md-3" src="{{profile_pic_url}}">
+        <label class="col-md-6 form-control-label">
+          {{name_first}} {{name_last}} <br />
+          Rating: ?<br />
+          <a href="/user/{{user_id}}">View Profile</a>
+        </label>
+      </div>
+      <div class="form-group col-sm-6">
+        <div class="col-sm-6 trip-info">
+          {{car_description}}
+        </div>
+        <div class="col-sm-6">
+          <img width="50" src="{{car_img_url}}">
+        </div>
+      </div>
     </div>
   </div>
-  <hr>
-  <div class="row">
-    <div class="form-group">
-      <h4>Trip Preferences</h4>
-    </div>
-  </div>
-  <hr>
-  <div class="row">
-    <div class="form-group col-sm-12">
-      <img class="col-md-2" src="{{profile_pic_url}}">
-      <label class="col-md-6 form-control-label">
-        {{name_first}} {{name_last}} <br />
-        Rating: ?<br />
-        <a href="/user/{{user_id}}">View Profile</a>
-      </label>
-    </div>
-  </div>
-</div>
 </body>
 </html>
