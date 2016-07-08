@@ -83,10 +83,11 @@ footer {
 
 #show-user-page #profile img {
     width: 100%;
+    border: 2px solid gray;
     border-radius: 50%;
 }
 #show-user-page h2 {
-    margin-top: 65px;
+    margin-top: 35px;
 }
 #show-user-page h3, p {
     margin-top: 10px;
@@ -94,12 +95,22 @@ footer {
 #show-user-page h3 {
     font-size: 1.2em;
 }
+#show-user-page {
+  border: 1px solid #666;
+  border-radius: 5px;
+  background-color: lightsteelblue;
+  padding: 20px;
+}
 #show-user-page #preferences {
     margin-top: 40px;
-    border: 1px solid lightgray;
+    border: 1px solid #666;
+    border-radius: 5px;
+    background-color: white;
+    width: 115%;
+    margin-left: -7.5%;
 }
 #show-user-page #preferences img {
-    width: 15%;
+    width: 11%;
 }
 #show-user-page #preferences h2, #reviews h2 {
     text-align: center;
@@ -119,6 +130,9 @@ footer {
 }
 #show-user-page .entry {
     display: inline;
+}
+#show-user-page a {
+  color: #666;
 }
 
 /*end show-user-page*/
@@ -185,4 +199,27 @@ footer {
   text-align: center;
   font-size: 1.3em;
   margin-bottom: 20px;
+}
+
+#show-review-page {
+    border: 1px solid #666;
+    border-radius: 5px;
+    margin-top: 40px;
+    padding: 20px;
+}
+
+#show-review-page h1 {
+  width: 75%;
+  margin-left: 12.5%;
+  text-align: center;
+  margin-top: 150px;
+  font-size: 1.8em;
+  background-color: lightsteelblue;
+  border: 1px solid #666;
+  border-radius: 5px;
+  padding: 20px;
+}
+#show-review-page span {
+  color: steelblue;
+  font-weight: bold;
 }

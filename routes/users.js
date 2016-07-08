@@ -18,7 +18,9 @@ bcrypt = require('bcrypt');
 // });
 var nameArray = [];
 router.get('/new', function(req, res, next) {
+
   //res.render('newUser');
+
   fbUserExistsInOurDatabase(req.session).then(function(a){
     if(a){
       res.redirect('/trip/search');
@@ -140,6 +142,7 @@ router.get('/:id/edit', function(req, res) {
 //     check = true;
 //   }
 // }
+
 //POST NEW USER INFO WORKING
 router.post('/', function(req, res) {
   console.log(req.body);
@@ -286,11 +289,9 @@ router.put('/:id', function(req, res) {
   var post = req.body;
   var is_driver = ((post.is_driver) ? true : false);
   console.log(post);
-
     knex('users').update({
         username: post.username,
-        //TODO: what to do with password on edit?
-        // password: hash,
+        //password: hash,
         name_first: post.name_first,
         name_last: post.name_last,
         profile_pic_url: post.profile_pic_url,
@@ -349,13 +350,13 @@ router.post('/:id/new-review', function(req, res) {
   console.log(req.session.user_id);
   var post = req.body;
   knex('reviews').insert({
-    reviewer_id: req.session.user_id,
+    reviewer_id: req.session.user_id[0],
     reviewed_id: req.params.id,
     rating: post.rating,
     comment: post.comment,
     creation_date: new Date()
   }).then(function() {
-    res.redirect('/index/');
+    res.redirect('/user/' + req.params.id);
   }).catch(function(err) {
     console.error(err);
     res.sendStatus(500);

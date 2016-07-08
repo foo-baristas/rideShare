@@ -124,7 +124,7 @@ router.post('/', function(req, res, next) {
       car_description: post.car_description,
       car_img_url: post.car_img_url,
       date_of: joinPartsAsDate(post.date, post.time),
-      user_id: req.session.user_id,
+      user_id: req.session.user_id[0],
       preferences_id: data[0],
       trip_cost: post.trip_cost
     }).returning('id')
