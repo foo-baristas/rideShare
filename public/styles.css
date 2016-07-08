@@ -139,6 +139,13 @@
   margin-bottom: 20px;
 }
 
+#show-review-page {
+    border: 1px solid #666;
+    border-radius: 5px;
+    margin-top: 40px;
+    padding: 20px;
+}
+
 #show-review-page h1 {
   width: 75%;
   margin-left: 12.5%;
@@ -149,4 +156,8 @@
   border: 1px solid #666;
   border-radius: 5px;
   padding: 20px;
+}
+#show-review-page span {
+  color: steelblue;
+  font-weight: bold;
 }
