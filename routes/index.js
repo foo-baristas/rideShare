@@ -34,6 +34,7 @@ function fbUserExistsInOurDatabase(data, req, res) {
 
       if(result.length >= 1) { // CHANGED TO >= to encapsulate more cases
         console.log('3. The user exists in our database! Hooray!');
+        console.log('TADA', result);
 
       } else {
         console.log('3. User does not exist in our database');

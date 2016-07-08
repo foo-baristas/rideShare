@@ -78,7 +78,7 @@ router.get('/:id', function(req, res) {
 });
 
 function canEditProfile(data, req){
-  if(data[0].username == req.session.user_name) {
+  if(data[0].username === req.session.user_name) { //CHANGED == to ===
     console.log('This user is authorized to edit this profile');
     return true;
   } else {
@@ -270,7 +270,7 @@ router.post('/fb', function(req, res) {
         }).returning('user_id')
       .then(function(id) {
           req.session = {};
-          req.session.user_id = id;
+          req.session.user_id = id[0];
           req.session.user_name = post.username;
           console.log(req.session);
           res.redirect('/user/' + id);
@@ -366,7 +366,7 @@ router.post('/:id/new-review', function(req, res) {
 //DELETE USER WORKS
 router.delete('/:id', function(req, res){
   knex('users').where('id', req.params.id).del().then(function(data){
-    req.session = null; 
+    req.session = null;
     res.redirect('/index');
   }).catch(function(err){
     console.error(err);
