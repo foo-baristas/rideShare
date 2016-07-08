@@ -33,17 +33,16 @@ function othersClicked() {
   </div>
   <br />
   <div class="form-group row">
-    <label class="col-sm-2 form-control-label" name="seats"> Number of Seats:</label>
+    <label class="col-sm-2 form-control-label" name="seats" for="seats"> Number of Seats:</label>
     <input class="form-control" type="number" name="seats" id="seats" value="1">
   </div>
-  <div class="row">
-    <div class="form-group row">
-      <label class="col-sm-2 form-control-label"  for="maxprice">Price per Seat</label>
-      <div class="input-group">
-        <div class="input-group-addon">$</div>
-        <input type="text" class="form-control" name="maxprice" value="" value="15">
-        <div class="input-group-addon">.00</div>
-      </div>
+  <div class="form-group row">
+    <!-- <h4>PULL DATA FROM USER ACCOUNT FOR FIELDS BELOW WHEN AUTHENTICATION IS FINISHED</h4> -->
+    <label class="col-sm-2 form-control-label"  for="trip_cost">Price per Seat</label>
+    <div class="input-group">
+      <div class="input-group-addon">$</div>
+      <input type="text" class="form-control" name="maxprice" value="1" placeholder="15">
+      <div class="input-group-addon">.00</div>
     </div>
   </div>
   <hr>
