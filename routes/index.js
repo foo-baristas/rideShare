@@ -35,6 +35,9 @@ function fbUserExistsInOurDatabase(data, req, res) {
       if(result.length >= 1) { // CHANGED TO >= to encapsulate more cases
         console.log('3. The user exists in our database! Hooray!');
         console.log('TADA', result);
+        req.session = {};
+        req.session.user_name = result.username;
+        req.session.user_id = result.id;
 
       } else {
         console.log('3. User does not exist in our database');
@@ -104,6 +107,7 @@ router.get('/login', function(req, res) {
 });
 
 router.get('/logout', function(req, res, next) {
+
   req.session = null;
   res.redirect('/index');
 });
