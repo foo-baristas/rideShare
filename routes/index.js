@@ -60,7 +60,7 @@ function exists(name) {
 }
 
 
-router.post('/', function(req, res) {
+router.post('/index', function(req, res) {
   console.log(req.body);
 
   var info = {

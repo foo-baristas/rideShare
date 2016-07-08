@@ -355,7 +355,7 @@ router.post('/:id/new-review', function(req, res) {
   console.log(req.session.user_id);
   var post = req.body;
   knex('reviews').insert({
-    reviewer_id: req.session.user_id[0],
+    reviewer_id: req.session.user_id,
     reviewed_id: req.params.id,
     rating: post.rating,
     comment: post.comment,
