@@ -151,14 +151,14 @@ router.get('/:id', function(req, res, next) {
   .where('trips.id', '=', req.params.id)
   .then(function(data) {
 
-    // knex('passengers')
-    // .select()
-    // .where('passengers.trips.id', '=', req.params.id)
-    // .then(function(thePassengers) {
+    knex('passengers')
+    .select()
+    .where('passengers.trip_id', '=', req.params.id)
+    .then(function(thePassengers) {
 
-    console.log('QUERY', data);
-    res.render('showRide', data[0]);
-    // });
+      console.log('QUERY', data, thePassengers);
+      res.render('showRide', {data: data[0], passengers: thePassengers.length});
+    });
   });
 });
 
