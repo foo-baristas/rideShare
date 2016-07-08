@@ -49,50 +49,56 @@
 <body class="container-fluid">
   <div class="row">
     <div class="form-group col-sm-8">
-      <h1>{{start_location}} -- {{end_location}}</h1>
-      <h3>Trip Scheduled For: {{formatDate date_of}} @ {{formatTime date_of}}</h3><br />
+      <h1>{{data.start_location}} -- {{data.end_location}}</h1>
+      <h3>Trip Scheduled For: {{formatDate data.date_of}} @ {{formatTime data.date_of}}</h3><br />
       <h4>Description:<br /><br />
-        {{details}}</h4>
+        {{data.details}}</h4>
       </div>
       <div class="form-group col-sm-4">
-        <div class="trip-info">{{num_seats}} seat(s) available</div><br />
-        <div class="trip-info">${{trip_cost}} per passenger</div><br />
+        <div class="trip-info">{{data.num_seats}} seat(s) available</div><br />
+        <div class="trip-info">${{data.trip_cost}} per passenger</div><br />
         {{#if session.user_id}}
-        <form id="book" action="/trip/reserve/{{id}}" method="post"></form>
+        {{#if data.num_seats}}
+        <form id="book" action="/trip/reserve/{{data.id}}" method="post"></form>
         <div class="trip-info"><a href="#" onclick="document.getElementById('book').submit();">Book Now!</a></div>
+        {{else}}
+        <div class="trip-info">Full!</div>
+        {{/if}}
         {{else}}
         <div class="trip-info"><a href="/index/login">Login to Book!</a></div>
         {{/if}}
+        <br />
+        <div class="trip-info">{{passengers}} passenger(s) scheduled on this trip.</div>
       </div>
     </div>
     <div class="row">
       <div class="form-group col-sm-12">
         <h4>Trip Preferences</h4>
-        {{#if isSmoking}}
+        {{#if data.isSmoking}}
         <img class="icon" src="/images/smoking.png">
         {{else}}
         <img class="icon" src="/images/no_smoking.png">
         {{/if}}
 
-        {{#if isFood}}
+        {{#if data.isFood}}
         <img class="icon" src="/images/eating.png">
         {{else}}
         <img class="icon" src="/images/no_eating.png">
         {{/if}}
 
-        {{#if isPets}}
+        {{#if data.isPets}}
         <img class="icon" src="/images/pets.png">
         {{else}}
         <img class="icon" src="/images/no_pets.png">
         {{/if}}
 
-        {{#if isMusic}}
+        {{#if data.isMusic}}
         <img class="icon" src="/images/music.png">
         {{else}}
         <img class="icon" src="/images/no_music.png">
         {{/if}}
 
-        {{#if isTalking}}
+        {{#if data.isTalking}}
         <img class="icon" src="/images/talking.png">
         {{else}}
         <img class="icon" src="/images/no_talking.png">
@@ -102,22 +108,21 @@
     <hr>
     <div class="row">
       <div class="form-group col-sm-6">
-        <img class="col-md-3" src="{{profile_pic_url}}">
+        <img class="col-md-3" src="{{data.profile_pic_url}}">
         <label class="col-md-6 form-control-label">
-          {{name_first}} {{name_last}} <br />
-          Rating: ?<br />
-          <a href="/user/{{user_id}}">View Profile</a>
+          {{data.name_first}} {{data.name_last}} <br />
+          Rating: {{rating}}/5 Stars<br />
+          <a href="/user/{{data.user_id}}">View Profile</a>
         </label>
       </div>
       <div class="form-group col-sm-6">
         <div class="col-sm-6 trip-info">
-          {{car_description}}
+          {{data.car_description}}
         </div>
         <div class="col-sm-6">
-          <img width="50" src="{{car_img_url}}">
+          <img width="50" src="{{data.car_img_url}}">
         </div>
       </div>
     </div>
-  </div>
-</body>
-</html>
+  </body>
+  </html>

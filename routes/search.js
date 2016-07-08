@@ -145,18 +145,30 @@ router.get('/:id', function(req, res, next) {
   knex('trips')
   .join('users', 'users.id', '=', 'trips.user_id')
   .join('preferences', 'preferences_id', '=', 'trips.preferences_id')
-  .select()
+  .select('trips.id AS id', 'profile_pic_url', 'name_first', 'name_last', 'age', 'user_id', 'isFB_verified',
+  'start_location', 'end_location', 'date_of', 'details', 'car_img_url', 'car_description', 'trip_cost', 'num_seats',
+  'isSmoking', 'isPets', 'isTalking', 'isFood', 'isMusic')
   .where('trips.id', '=', req.params.id)
   .then(function(data) {
 
-    // knex('passengers')
-    // .select()
-    // .where('passengers.trips.id', '=', req.params.id)
-    // .then(function(thePassengers) {
+    knex('reviews')
+    .avg('rating')
+    .where('reviews.reviewed_id', '=', data[0].user_id)
+    .then(function(averageReview) {
+      console.log('REVIEW', averageReview[0].avg);
+      knex('passengers')
+      .select()
+      .where('passengers.trip_id', '=', req.params.id)
+      .then(function(thePassengers) {
 
-    console.log('QUERY', data);
-    res.render('showRide', data[0]);
-    // });
+        console.log('QUERY', data, thePassengers);
+        res.render('showRide', {
+          data: data[0],
+          passengers: thePassengers.length,
+          rating: (averageReview[0].avg | 'No Reviews')
+        });
+      });
+    });
   });
 });
 

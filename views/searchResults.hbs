@@ -1,7 +1,10 @@
-
-
-<body class="container-fluid" id="search-results">
+<<<<<<< HEAD
+ <body class="container-fluid" id="search-results">
   <form class="landing-search form-inline" action="/index" method="post">
+=======
+<body class="container-fluid" id="search-results">
+  <form class="landing-search form-inline" action="/" method="post">
+>>>>>>> ce9843da6e9331531bfe428689b74b4b52763aff
     <div class="form-group">
       <label for="origin">Origin</label>
       <input type="text" name="origin" id="origin" value="{{info.origin}}">
@@ -49,34 +52,34 @@
           </label>
           <label class="col-md-12">
             <br />
-            {{#if isSmoking}}
-            <img class="icon" src="https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSHpMOdjrWhTLqIGWzTHCbylToB_7ywe1n-hTiFHWbgOobDGxHUBg">
+            {{#if data.isSmoking}}
+            <img class="icon" src="/images/smoking.png">
             {{else}}
-            <img class="icon" src="http://www.designofsignage.com/application/symbol/hands/image/600x600/hand-smoking.jpg">
+            <img class="icon" src="/images/no_smoking.png">
             {{/if}}
 
-            {{#if isFood}}
-            <img class="icon" src="http://www.clipartbest.com/cliparts/LiK/kqb/LiKkqbyaT.jpeg">
+            {{#if data.isFood}}
+            <img class="icon" src="/images/eating.png">
             {{else}}
-            <img class="icon" src="https://image.freepik.com/free-icon/restaurant-eating-tools-set-of-three-pieces_318-61020.png">
+            <img class="icon" src="/images/no_eating.png">
             {{/if}}
 
-            {{#if isPets}}
-            <img class="icon" src="http://free-icon-download.com/modules/PDdownloads/images/screenshots/free-image-download-no-pets-allowed-sign.png">
+            {{#if data.isPets}}
+            <img class="icon" src="/images/pets.png">
             {{else}}
-            <img class="icon" src="https://image.freepik.com/free-icon/pet-hotel-sign-with-a-dog-and-a-cat-under-a-roof-line_318-51335.png">
+            <img class="icon" src="/images/no_pets.png">
             {{/if}}
 
-            {{#if isMusic}}
-            <img class="icon" src="http://previews.123rf.com/images/shadowalice/shadowalice1502/shadowalice150200216/36857840-No-music-icon-great-for-any-use-Vector-EPS10--Stock-Vector.jpg">
+            {{#if data.isMusic}}
+            <img class="icon" src="/images/music.png">
             {{else}}
-            <img class="icon" src="http://downloadicons.net/sites/default/files/music-icon-61648.png">
+            <img class="icon" src="/images/no_music.png">
             {{/if}}
 
-            {{#if isTalking}}
-            <img class="icon" src="https://smalltalkbigresults.files.wordpress.com/2011/03/no_talking1.gif">
+            {{#if data.isTalking}}
+            <img class="icon" src="/images/talking.png">
             {{else}}
-            <img class="icon" src="http://martalozanomolano.com/wordpress/wp-content/uploads/2014/03/iconmonstr-speech-bubble-15-icon.png">
+            <img class="icon" src="/images/no_talking.png">
             {{/if}}
           </label>
         </div>
@@ -108,7 +111,7 @@
               </button>
             </form>
             {{else}}
-            <form method="get" action="/index/login">
+            <form method="get" action="/login">
               <button style="font-size: 10px;" type="submit" class="btn btn-default col-sm-12">
                 Login to <br>Reserve
               </button>
@@ -129,19 +132,3 @@
     {{/each}}
 
   </div>
-
-  <script type="text/javascript">
-  google.load("maps", "3.x", {callback: initialize, other_params:'libraries=places&key=AIzaSyD2gxzAGO1he66elVkh6TLdYXhCYVc3o8E'});
-  function initialize() {
-
-    var input = document.getElementById('origin');
-    var autocomplete = new google.maps.places.Autocomplete(input, { types: ['(cities)'], region:'US' });
-
-    var inputDest = document.getElementById('destination');
-    var autocomplete2 = new google.maps.places.Autocomplete(inputDest, { types: ['(cities)'], region:'US' });
-
-    google.maps.event.addDomListener(window, 'load', initialize);
-  }
-  </script>
-</body>
-</html>

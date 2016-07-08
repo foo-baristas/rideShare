@@ -60,7 +60,7 @@ function exists(name) {
 }
 
 
-router.post('/', function(req, res) {
+router.post('/index', function(req, res) {
   console.log(req.body);
 
   var info = {
@@ -109,7 +109,7 @@ router.get('/login', function(req, res) {
 router.get('/logout', function(req, res, next) {
 
   req.session = null;
-  res.redirect('/index');
+  res.redirect('/');
 });
 
 //TODO: compare with bcrypt here
@@ -130,7 +130,7 @@ router.post('/auth', function(req, res, next) {
           req.session.user_id = data[0].id;
           req.session.user_name = data[0].username;
           console.log(req.session);
-          res.redirect('/index');
+          res.redirect('/');
         } else {
           //if password and username don't match
           info.noMatch = true;

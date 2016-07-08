@@ -55,6 +55,9 @@ app.engine('.hbs', handlebars({
     formatTime: function(date) {
 
       return new Date(date).toLocaleTimeString().replace(/:\d+ /, ' ');
+    },
+    isZeroBig: function(value, success, failure) {
+      return (parseInt(value) > 0) ? '' : '';
     }
   }
 }));
@@ -84,7 +87,7 @@ app.use(function(req, res, next) {
 });
 
 
-app.use('/index', index);
+app.use('/', index);
 app.use('/user', user);
 app.use('/trip', search);
 

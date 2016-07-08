@@ -19,12 +19,15 @@
     bottom: 0;
     width: 100%;
     margin-top: 50px;
-    height: 40px;
+    /*height: 40px;*/
     background-color: lightsteelblue;
-    color: gray;
+    color: #444444;
     text-align: center;
     font-family: 'Lato', serif;
     position: relative;
+}
+#octocat {
+  width: 40px;
 }
 
 /*index*/
@@ -168,9 +171,9 @@
   color: steelblue;
 }
 
-#search-results .icon {
+/*#search-results .icon {
   width: 30px;
-}
+}*/
 
 #search-results #view-button {
   margin-top: 10px;
@@ -202,8 +205,8 @@
     font-size: 1.2em;
 }
 #show-user-page {
-  margin-top: 40px;
-  margin-bottom: 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
   border: 1px solid #666;
   border-radius: 5px;
   background-color: lightsteelblue;
@@ -338,5 +341,5 @@
   margin-top: 0;
 }
 #review-hidden-div {
-  height: 33%;
+  height: 27%;
 }

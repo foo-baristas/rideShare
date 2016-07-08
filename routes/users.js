@@ -94,9 +94,9 @@ function canEditProfile(data, req){
 router.get('/:id/reviews', function(req, res) {
 
   knex.select('*').from('users').fullOuterJoin('reviews', 'users.id', 'reviews.reviewed_id').where('users.id', req.params.id).then(function(data) {
-    console.log(data[0]);
+    console.log(data);
     res.status(200).render('usersReviews', {
-      review: data[0],
+      review: data
       //creation_date: cleanDate(JSON.stringify(data[0].creation_date))
     });
   }).catch(function(err){
@@ -355,7 +355,7 @@ router.post('/:id/new-review', function(req, res) {
   console.log(req.session.user_id);
   var post = req.body;
   knex('reviews').insert({
-    reviewer_id: req.session.user_id[0],
+    reviewer_id: req.session.user_id,
     reviewed_id: req.params.id,
     rating: post.rating,
     comment: post.comment,
@@ -372,7 +372,7 @@ router.post('/:id/new-review', function(req, res) {
 router.delete('/:id', function(req, res){
   knex('users').where('id', req.params.id).del().then(function(data){
     req.session = {};
-    res.redirect('/index');
+    res.redirect('/');
   }).catch(function(err){
     console.error(err);
     res.sendStatus(500);
