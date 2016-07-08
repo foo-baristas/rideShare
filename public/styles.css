@@ -35,6 +35,11 @@ footer {
   background-image: 'car.jpeg';
 }
 
+#index .main {
+  position: relative;
+  left: 7em;
+}
+
 #index img {
   position: relative;
   left: 21em;
@@ -67,7 +72,7 @@ footer {
 #index #all-trips {
   text-align: center;
   position: relative;
-  left: 15em;
+  left: 19em;
   top: em;
   font-size: large;
 }
