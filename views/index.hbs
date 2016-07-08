@@ -4,22 +4,33 @@
     <img src="https://d30y9cdsu7xlg0.cloudfront.net/png/49796-200.png" alt="" />
     <form class="landing-search form-inline" action="/index" method="post">
       <div class="form-group">
-        <label for="origin">Origin</label>
+        <label for="origin">Origin</label></br>
         <input type="text" name="origin" id="origin" value="{{info.origin}}">
-        {{#if info.error.origin}}
+        <!-- {{#if info.error.origin}}
         <small class="text-muted"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>{{info.error.origin}}</small>
-        {{/if}}
+        {{/if}} -->
         <label for="destination">Destination</label>
         <input type="text" name="destination" id="destination" value="{{info.destination}}">
-        {{#if info.error.destination}}
+        <!-- {{#if info.error.destination}}
         <small class="text-muted"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>{{info.error.destination}}</small>
-        {{/if}}
+        {{/if}} -->
         <!-- VY'S ORIGINAL DATE-PICKER CODE -->
         <label for="date">Date</label>
         <input type="date" name="date" value="{{info.date}}">
+        <!-- {{#if info.error.date}}
+        <small class="text-muted"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>{{info.error.date}}</small>
+        {{/if}} -->
+        <div class="row">
+        {{#if info.error.origin}}
+        <small class="text-muted"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>{{info.error.origin}}</small>
+        {{/if}}
+        {{#if info.error.destination}}
+        <small class="text-muted"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>{{info.error.destination}}</small>
+        {{/if}}
         {{#if info.error.date}}
         <small class="text-muted"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>{{info.error.date}}</small>
         {{/if}}
+        </div>
 
         <div class="row input-group">
           <!-- <div class="col-md-6"> -->
