@@ -94,9 +94,9 @@ function canEditProfile(data, req){
 router.get('/:id/reviews', function(req, res) {
 
   knex.select('*').from('users').fullOuterJoin('reviews', 'users.id', 'reviews.reviewed_id').where('users.id', req.params.id).then(function(data) {
-    console.log(data[0]);
+    console.log(data);
     res.status(200).render('usersReviews', {
-      review: data[0],
+      review: data
       //creation_date: cleanDate(JSON.stringify(data[0].creation_date))
     });
   }).catch(function(err){
