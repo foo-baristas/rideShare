@@ -105,20 +105,3 @@
       </div>
     </form>
   </div>
-
-  <script type="text/javascript">
-  google.load("maps", "3.x", {callback: initialize, other_params:'v=3.exp&libraries=places&key=AIzaSyD2gxzAGO1he66elVkh6TLdYXhCYVc3o8E'});
-  function initialize() {
-
-    var input = document.getElementById('origin');
-    var autocomplete = new google.maps.places.Autocomplete(input, { types: ['(cities)'], region:'US' });
-
-    var inputDest = document.getElementById('destination');
-    var autocomplete2 = new google.maps.places.Autocomplete(inputDest, { types: ['(cities)'], region:'US' });
-
-    google.maps.event.addDomListener(window, 'load', initialize);
-  }
-  </script>
-</body>
-
-</html>
