@@ -1,81 +1,6 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-  <meta charset="utf-8">
-  <title>RideShare</title>
-  <!-- jQuery 2.2.4 minified -->
-  <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
-  <!-- Latest compiled and minified CSS -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-  <!-- Optional theme -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
-  <!-- Latest compiled and minified JavaScript -->
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-  <!-- DATE-PICKER BOOTSTRAPCDN -->
-  <!-- <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap-combined.min.css" rel="stylesheet"> -->
-  <!-- <link rel="stylesheet" type="text/css" media="screen" -->
-  <!-- href="http://tarruda.github.com/bootstrap-datetimepicker/assets/css/bootstrap-datetimepicker.min.css"> -->
-
-  <script type="text/javascript" src="http://www.google.com/jsapi?key=AIzaSyCsVqhn3Mi-rV82PbqFinMtoIS7mhMy3Xs"></script>
-  <style>
-  body {
-    background-color: #ebebeb;
-  }
 
 
-  .trip {
-
-    border-top: 1px solid black;
-    border-bottom: 1px solid black;
-    padding-top: 25px;
-    margin-bottom: 25px;
-  }
-
-  .trip:hover {
-
-    background-color: #d6d6d6;
-    cursor: pointer;
-  }
-
-  .cost {
-
-    color: green;
-  }
-
-  .profile {
-
-    border-radius: 50px;
-  }
-
-  .name {
-
-    font-size: 20px;
-    font-weight: bold;
-  }
-
-  .vertInfo {
-
-    position: inherit;
-    top: 50%;
-    transform: translateY(50%);
-  }
-
-  .vertPic {
-
-    position: inherit;
-    top: 50%;
-    transform: translateY(10%);
-  }
-
-  .icon {
-
-    width: 20px;
-  }
-  </style>
-</head>
-
-<body class="container-fluid">
+<body class="container-fluid" id="search-results">
   <form class="landing-search form-inline" action="/index" method="post">
     <div class="form-group">
       <label for="origin">Origin</label>
@@ -94,10 +19,9 @@
       <small class="text-muted"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>{{info.error.date}}</small>
       {{/if}}
 
-      <div class="input-group">
-        <button type="submit" class="btn btn-primary input-group-addon" style="color: white;">
-          <span class="glyphicon glyphicon-search"></span> Find my ride
-        </button>
+      <div class="row input-group">
+        <!-- <div class="col-md-6"> -->
+        <button type="submit" class="btn btn-primary input-group-addon">Find my ride</button>
         <a href="/trip/advanced" class="input-group-addon">Advanced Search</a>
       </div>
     </div>
@@ -116,75 +40,83 @@
     <div class="row trip">
       <span onclick="window.location.href = '/trip/{{id}}';">
         <div class="form-group col-sm-4">
-          <img class="col-md-6" src="{{profile_pic_url}}">
+          <img id="profile-pic" class="col-md-6" src="{{profile_pic_url}}">
           <label class="col-md-6 form-control-label">
-            {{name_first}} {{name_last}} <br />
+            <span id="name">{{name_first}} {{name_last}}</span> <br />
             Age: {{age}}<br />
-            Rating: ?<br />
+            <!-- Rating: ?<br /> -->
             <a href="/user/{{user_id}}">View Profile</a>
           </label>
           <label class="col-md-12">
             <br />
             {{#if isSmoking}}
-            <img class="icon" src="/images/smoking.png">
+            <img class="icon" src="https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSHpMOdjrWhTLqIGWzTHCbylToB_7ywe1n-hTiFHWbgOobDGxHUBg">
             {{else}}
-            <img class="icon" src="/images/no_smoking.png">
+            <img class="icon" src="http://www.designofsignage.com/application/symbol/hands/image/600x600/hand-smoking.jpg">
             {{/if}}
 
             {{#if isFood}}
-            <img class="icon" src="/images/eating.png">
+            <img class="icon" src="http://www.clipartbest.com/cliparts/LiK/kqb/LiKkqbyaT.jpeg">
             {{else}}
-            <img class="icon" src="/images/no_eating.png">
+            <img class="icon" src="https://image.freepik.com/free-icon/restaurant-eating-tools-set-of-three-pieces_318-61020.png">
             {{/if}}
 
             {{#if isPets}}
-            <img class="icon" src="/images/pets.png">
+            <img class="icon" src="http://free-icon-download.com/modules/PDdownloads/images/screenshots/free-image-download-no-pets-allowed-sign.png">
             {{else}}
-            <img class="icon" src="/images/no_pets.png">
+            <img class="icon" src="https://image.freepik.com/free-icon/pet-hotel-sign-with-a-dog-and-a-cat-under-a-roof-line_318-51335.png">
             {{/if}}
 
             {{#if isMusic}}
-            <img class="icon" src="/images/music.png">
+            <img class="icon" src="http://previews.123rf.com/images/shadowalice/shadowalice1502/shadowalice150200216/36857840-No-music-icon-great-for-any-use-Vector-EPS10--Stock-Vector.jpg">
             {{else}}
-            <img class="icon" src="/images/no_music.png">
+            <img class="icon" src="http://downloadicons.net/sites/default/files/music-icon-61648.png">
             {{/if}}
 
             {{#if isTalking}}
-            <img class="icon" src="/images/talking.png">
+            <img class="icon" src="https://smalltalkbigresults.files.wordpress.com/2011/03/no_talking1.gif">
             {{else}}
-            <img class="icon" src="/images/no_talking.png">
+            <img class="icon" src="http://martalozanomolano.com/wordpress/wp-content/uploads/2014/03/iconmonstr-speech-bubble-15-icon.png">
             {{/if}}
           </label>
         </div>
         <div class="form-group col-sm-6">
           <div class="row">
             <label class="col-md-12">
-              {{start_location}} - {{end_location}}<br />
+              <span id="start-end-location">{{start_location}} - {{end_location}}</span><br />
               {{formatDate date_of}} @ {{formatTime date_of}}
             </label>
           </div>
           <br />
           <div class="row">
             <label class="col-md-12">
-              Car Description: {{car_description}}<br />
-              <img width="50" src="{{car_img_url}}">
+              <span id="car-description">Car Description:</span> <br>{{car_description}}<br />
+              <img id="car-image" src="{{car_img_url}}">
             </label>
           </div>
         </div>
 
         <div class="form-group col-sm-2">
           <label class="col-md-12">
-            ${{trip_cost}} per seat<br />
+            <span>${{trip_cost}}</span> per seat<br />
             {{num_seats}} seat(s) left
             <hr>
+            {{#if session.user_id}}
             <form method="post" action="/trip/reserve/{{id}}">
               <button type="submit" class="btn btn-default col-sm-12">
                 <span class="glyphicon glyphicon-pushpin"></span> Reserve
               </button>
             </form>
+            {{else}}
+            <form method="get" action="/index/login">
+              <button style="font-size: 10px;" type="submit" class="btn btn-default col-sm-12">
+                Login to <br>Reserve
+              </button>
+            </form>
+            {{/if}}
             <br />
             <br />
-            <form method="get" action="/trip/{{id}}">
+            <form id="view-button" method="get" action="/trip/{{id}}">
               <button type="submit" class="btn btn-default col-sm-12">
                 <span class="glyphicon glyphicon-option-vertical"></span> View
               </button>
@@ -193,7 +125,9 @@
         </div>
       </span>
     </div>
+
     {{/each}}
+
   </div>
 
   <script type="text/javascript">

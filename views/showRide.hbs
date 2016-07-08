@@ -58,9 +58,10 @@
         <div class="trip-info">{{num_seats}} seat(s) available</div><br />
         <div class="trip-info">${{trip_cost}} per passenger</div><br />
         {{#if session.user_id}}
-        <div class="trip-info"><a href="">Book Now!</a></div>
+        <form id="book" action="/trip/reserve/{{id}}" method="post"></form>
+        <div class="trip-info"><a href="#" onclick="document.getElementById('book').submit();">Book Now!</a></div>
         {{else}}
-        <div class="trip-info"><a href="">Login to Book!</a></div>
+        <div class="trip-info"><a href="/index/login">Login to Book!</a></div>
         {{/if}}
       </div>
     </div>

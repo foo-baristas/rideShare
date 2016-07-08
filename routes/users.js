@@ -21,8 +21,13 @@ router.get('/new', function(req, res, next) {
 
   //res.render('newUser');
 
+  //CHANGED: THIS IS WHERE I FIXED FB LOGIN!
   fbUserExistsInOurDatabase(req.session).then(function(a){
     if(a){
+      console.log('I HATE FB', a);
+      req.session = {};
+      req.session.user_name = a[0].username;
+      req.session.user_id = a[0].id;
       res.redirect('/trip/search');
     } else if (req.session && req.session.passport) {
       var name = req.session.passport.user.displayName;
@@ -44,7 +49,7 @@ function fbUserExistsInOurDatabase(data) {
       var name = data.passport.user.displayName;
       exists(name).then(function(result) {
         if(result.length === 1) {
-          resolve(true);
+          resolve(result); //CHANGED: instead of resolving true, I resolve with the results object
         } else {
           resolve(false);
         }
@@ -78,7 +83,7 @@ router.get('/:id', function(req, res) {
 });
 
 function canEditProfile(data, req){
-  if(data[0].username == req.session.user_name) {
+  if(data[0].username === req.session.user_name) { //CHANGED == to ===
     console.log('This user is authorized to edit this profile');
     return true;
   } else {
@@ -270,7 +275,7 @@ router.post('/fb', function(req, res) {
         }).returning('user_id')
       .then(function(id) {
           req.session = {};
-          req.session.user_id = id;
+          req.session.user_id = id[0];
           req.session.user_name = post.username;
           console.log(req.session);
           res.redirect('/user/' + id);
@@ -366,7 +371,7 @@ router.post('/:id/new-review', function(req, res) {
 //DELETE USER WORKS
 router.delete('/:id', function(req, res){
   knex('users').where('id', req.params.id).del().then(function(data){
-    req.session = null; 
+    req.session = {};
     res.redirect('/index');
   }).catch(function(err){
     console.error(err);

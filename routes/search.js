@@ -149,8 +149,14 @@ router.get('/:id', function(req, res, next) {
   .where('trips.id', '=', req.params.id)
   .then(function(data) {
 
+    // knex('passengers')
+    // .select()
+    // .where('passengers.trips.id', '=', req.params.id)
+    // .then(function(thePassengers) {
+
     console.log('QUERY', data);
     res.render('showRide', data[0]);
+    // });
   });
 });
 
@@ -167,6 +173,7 @@ router.post('/reserve/:id', function(req, res, next) {
     .where('id', '=', req.params.id)
     .decrement('num_seats', 1)
     .then(function(data) {
+      console.log('MEMEMEMMEMEM', data);
       res.redirect('/trip/' + req.params.id);
     });
   });

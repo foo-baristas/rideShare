@@ -14,9 +14,15 @@
     margin-left: 3.5em;
 }
 
-footer {
-  position: relative;
-  top: 10em;
+.footer {
+    bottom: 0;
+    width: 100%;
+    margin-top: 50px;
+    height: 40px;
+    background-color: lightsteelblue;
+    color: gray;
+    text-align: center;
+    font-family: 'Lato', serif;
 }
 
 /*index*/
@@ -106,6 +112,75 @@ footer {
 
 #login form {
   margin-top: 10em;
+/*style for search-results*/
+
+#search-results .form {
+  text-align: center;
+  position: relative;
+  margin-top: 20px;
+}
+
+#search-results .form-group .input-group {
+  margin: 2em;
+}
+
+#search-results label {
+  padding: 1em;
+}
+
+#search-results .input-group button {
+  color: lightsteelblue;
+  background-color: mediumblue;
+}
+
+#search-results .input-group a {
+  background-color: lightsteelblue;
+  color: black;
+}
+
+#search-results .trip {
+  border-top: 1px solid lightsteelblue;
+  /*border-bottom: 1px solid black;*/
+  padding-top: 25px;
+  margin-bottom: 25px;
+}
+
+#search-results .trip:hover {
+
+  background-color: #d6d6d6;
+  cursor: pointer;
+}
+
+#search-results #profile-pic {
+
+  /*border: 1px solid lightgray;*/
+  border-radius: 50%;
+}
+
+#search-results #name {
+  font-size: 1.3em;
+  font-weight: bold;
+}
+
+#search-results #start-end-location {
+  font-size: 1.3em;
+  font-weight: bold;
+  color: steelblue;
+}
+
+#search-results .icon {
+  width: 30px;
+}
+
+#search-results #view-button {
+  margin-top: 10px;
+}
+#search-results #car-image {
+  width: 50px;
+  border-radius: 50%;
+}
+#search-results #car-description {
+  font-weight: bold;
 }
 
 /*style for showUser page*/
