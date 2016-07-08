@@ -14,9 +14,15 @@
     margin-left: 3.5em;
 }
 
-footer {
-  position: relative;
-  top: 10em;
+.footer {
+    bottom: 0;
+    width: 100%;
+    margin-top: 50px;
+    height: 40px;
+    background-color: lightsteelblue;
+    color: gray;
+    text-align: center;
+    font-family: 'Lato', serif;
 }
 
 /*index*/
