@@ -15,23 +15,38 @@ function othersClicked() {
   document.getElementById('any').checked = false;
 }
 </script>
-<form method="get" action="/trip/search">
-  <label name="origin"> Origin:
-    <input type="text" name="origin" id="origin">
-  </label>
-  <label name="destination"> Destination:
-    <input type="text" name="destination" id="destination">
-  </label>
-  <label name="date"> Date:
-    <input type="date" name="date" id="date">
-  </label>
+<form class="form-horizontal" method="get" action="/trip/search">
+  <div class="row">
+    <h3>Search Options</h3><br /><br />
+    <div class="form-group row">
+      <label class="col-sm-2 form-control-label" for="origin">Origin</label>
+      <input type="text" name="origin" id="origin" value="">
+    </div>
+    <div class="form-group row">
+      <label class="col-sm-2 form-control-label"  for="destination">Destination</label>
+      <input type="text" name="destination" id="destination" value="">
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 form-control-label" for="date">Date:</label>
+      <input class="form-control col-sm-4" type="date" name="date" id="time" value="{{info.date}}">
+    </div>
+  </div>
   <br />
-  <label name="seats"> Number of Seats:
-    <input type="number" name="seats" id="seats" value="1">
-  </label>
-  <label name="maxprice"> Max Price:
-    $<input type="number" name="maxprice" id="maxprice" value="15">
-  </label>
+  <div class="form-group row">
+    <label class="col-sm-2 form-control-label" name="seats"> Number of Seats:</label>
+    <input class="form-control" type="number" name="seats" id="seats" value="1">
+  </div>
+  <div class="row">
+    <div class="form-group row">
+      <label class="col-sm-2 form-control-label"  for="maxprice">Price per Seat</label>
+      <div class="input-group">
+        <div class="input-group-addon">$</div>
+        <input type="text" class="form-control" name="maxprice" value="" value="15">
+        <div class="input-group-addon">.00</div>
+      </div>
+    </div>
+  </div>
+  <hr>
   <h3>Preferences</h3>
   <label name="any"> Any:
     <input type="checkbox" checked="true" name="any" id="any" value="any" onchange="anyClicked();">
