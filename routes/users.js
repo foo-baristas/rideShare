@@ -268,7 +268,6 @@ router.post('/fb', function(req, res) {
         knex('fbIDs').insert({
           fb_id: (String(req.session.passport.user.id)).slice(12),
           user_id: id[0]
-
         }).returning('user_id')
       .then(function(id) {
           req.session = {};
@@ -352,13 +351,8 @@ router.post('/:id/new-review', function(req, res) {
   console.log(req.session.user_id);
   var post = req.body;
   knex('reviews').insert({
-
     reviewer_id: req.session.user_id[0],
     reviewed_id: req.params.id,
-
-    // reviewer_id: 21,
-    // reviewed_id: 20,
-
     rating: post.rating,
     comment: post.comment,
     creation_date: new Date()
