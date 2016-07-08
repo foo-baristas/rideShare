@@ -1,30 +1,15 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-    <meta charset="utf-8">
-    <title>rideShare</title>
-    <meta charset="utf-8">
-    <title>rideShare</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
-    <link rel="stylesheet" type="text/css" href="/styles.css" />
-</head>
-
-<body>
-    <div class="container-fluid">
+<div id="login">
+  <div class="container-fluid">
         <div class="row">
-            <form class="" action="/index/auth" method="post">
+            <form class="form-inline" action="/index/auth" method="post">
                 <fieldset class="form-group">
-                    <div class="col-md-3">
+                    <div class="col-md-6 username">
                         <label for="username">Username</label>
-                        <input type="text" name="username" value="">
-
+                        <input type="text" name="username" value=""></br>
                     <!-- <div class="row"> -->
-                    {{#if info.noMatch}}
+                    <!-- {{#if info.noMatch}}
                         <small class="text-muted"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>oops. password and username don't match.</small>
-                    {{/if}}
+                    {{/if}} -->
                     <!-- </div> -->
                     {{#if info.noUser}}
                         <!-- <div class="col-md-4"> -->
@@ -32,10 +17,13 @@
                         <!-- </div> -->
                     {{/if}}
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <label for="password">Password</label>
                         <input type="password" name="password" value="">
                     </div>
+                    {{#if info.noMatch}}
+                        <small class="text-muted"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>oops. password and username don't match.</small>
+                    {{/if}}
                     <div class="col-md-4">
                         <button type="submit" class="btn btn-primary">Login</button>
                     </div>
@@ -43,6 +31,4 @@
             </form>
         </div>
     </div>
-</body>
-
-</html>
+</div>
