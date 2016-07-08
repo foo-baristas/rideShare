@@ -99,10 +99,6 @@
 }
 
 /*style for login*/
-#login small {
-  position: relative;
-  right: -2em;
-}
 
 #login button {
   position: relative;
@@ -112,9 +108,11 @@
 
 #login form {
   margin-top: 10em;
+}
+
 /*style for search-results*/
 
-#search-results .form {
+#search-results .form-group {
   text-align: center;
   position: relative;
   margin-top: 20px;
