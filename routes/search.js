@@ -151,13 +151,23 @@ router.get('/:id', function(req, res, next) {
   .where('trips.id', '=', req.params.id)
   .then(function(data) {
 
-    knex('passengers')
-    .select()
-    .where('passengers.trip_id', '=', req.params.id)
-    .then(function(thePassengers) {
+    knex('reviews')
+    .avg('rating')
+    .where('reviews.reviewed_id', '=', data[0].user_id)
+    .then(function(averageReview) {
+      console.log('REVIEW', averageReview[0].avg);
+      knex('passengers')
+      .select()
+      .where('passengers.trip_id', '=', req.params.id)
+      .then(function(thePassengers) {
 
-      console.log('QUERY', data, thePassengers);
-      res.render('showRide', {data: data[0], passengers: thePassengers.length});
+        console.log('QUERY', data, thePassengers);
+        res.render('showRide', {
+          data: data[0],
+          passengers: thePassengers.length,
+          rating: (averageReview[0].avg | 'No Reviews')
+        });
+      });
     });
   });
 });
