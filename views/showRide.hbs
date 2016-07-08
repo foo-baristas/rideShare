@@ -49,21 +49,53 @@
 <body class="container-fluid">
   <div class="row">
     <div class="form-group col-sm-8">
-      <h2>{{start_location}} -- {{end_location}}</h2>
-      <h4>Trip Scheduled For: {{formatDate date_of}} @ {{formatTime date_of}}</h4><br />
-      <h5>Description:<br />
-        {{details}}</h5>
+      <h1>{{start_location}} -- {{end_location}}</h1>
+      <h3>Trip Scheduled For: {{formatDate date_of}} @ {{formatTime date_of}}</h3><br />
+      <h4>Description:<br /><br />
+        {{details}}</h4>
       </div>
       <div class="form-group col-sm-4">
         <div class="trip-info">{{num_seats}} seat(s) available</div><br />
         <div class="trip-info">${{trip_cost}} per passenger</div><br />
+        {{#if session.user_id}}
         <div class="trip-info"><a href="">Book Now!</a></div>
+        {{else}}
+        <div class="trip-info"><a href="">Login to Book!</a></div>
+        {{/if}}
       </div>
     </div>
-    <hr>
     <div class="row">
       <div class="form-group col-sm-12">
         <h4>Trip Preferences</h4>
+        {{#if isSmoking}}
+        <img class="icon" src="/images/smoking.png">
+        {{else}}
+        <img class="icon" src="/images/no_smoking.png">
+        {{/if}}
+
+        {{#if isFood}}
+        <img class="icon" src="/images/eating.png">
+        {{else}}
+        <img class="icon" src="/images/no_eating.png">
+        {{/if}}
+
+        {{#if isPets}}
+        <img class="icon" src="/images/pets.png">
+        {{else}}
+        <img class="icon" src="/images/no_pets.png">
+        {{/if}}
+
+        {{#if isMusic}}
+        <img class="icon" src="/images/music.png">
+        {{else}}
+        <img class="icon" src="/images/no_music.png">
+        {{/if}}
+
+        {{#if isTalking}}
+        <img class="icon" src="/images/talking.png">
+        {{else}}
+        <img class="icon" src="/images/no_talking.png">
+        {{/if}}
       </div>
     </div>
     <hr>
