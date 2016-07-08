@@ -242,7 +242,7 @@ router.post('/fb', function(req, res) {
     isFB_verified: true
   };
 
-  if (req.body.password !== req.body.password_confirm) {
+  if (req.body.password !== req.body.password_confirm) { //change
      console.log('passwords don\'t match');
      user.password_error = true;
      res.render('newFBUser', {user : user});
