@@ -87,7 +87,7 @@ app.use(function(req, res, next) {
 });
 
 
-app.use('/index', index);
+app.use('/', index);
 app.use('/user', user);
 app.use('/trip', search);
 

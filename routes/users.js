@@ -372,7 +372,7 @@ router.post('/:id/new-review', function(req, res) {
 router.delete('/:id', function(req, res){
   knex('users').where('id', req.params.id).del().then(function(data){
     req.session = {};
-    res.redirect('/index');
+    res.redirect('/');
   }).catch(function(err){
     console.error(err);
     res.sendStatus(500);
