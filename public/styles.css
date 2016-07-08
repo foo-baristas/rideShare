@@ -23,6 +23,7 @@
     color: gray;
     text-align: center;
     font-family: 'Lato', serif;
+    position: absolute;
 }
 
 /*index*/
@@ -159,9 +160,11 @@
 /*style for showUser page*/
 
 #show-user-page #profile img {
-    width: 100%;
+    width: 80%;
+    margin-left: 10%;
+    margin-top: 40px;
     border: 2px solid gray;
-    border-radius: 50%;
+    border-radius: 5px;
 }
 #show-user-page h2 {
     margin-top: 35px;
@@ -173,6 +176,7 @@
     font-size: 1.2em;
 }
 #show-user-page {
+  margin-top: 40px;
   border: 1px solid #666;
   border-radius: 5px;
   background-color: lightsteelblue;
@@ -183,11 +187,11 @@
     border: 1px solid #666;
     border-radius: 5px;
     background-color: white;
-    width: 115%;
-    margin-left: -7.5%;
+    width: 75%;
+    margin-left: 12.5%;
 }
 #show-user-page #preferences img {
-    width: 11%;
+    width: 8%;
 }
 #show-user-page #preferences h2, #reviews h2 {
     text-align: center;
