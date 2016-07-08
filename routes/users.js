@@ -171,7 +171,7 @@ router.post('/', function(req, res) {
     music: post.music,
     talking: post.talking,
     is_driver: is_driver,
-    isFB_verified: post.isFB_verified
+    isFB_verified: false
   };
 
   if (req.body.password !== req.body.password_confirm) {
@@ -197,7 +197,7 @@ router.post('/', function(req, res) {
           music: post.music,
           talking: post.talking,
           is_driver: is_driver,
-          isFB_verified: post.isFB_verified
+          isFB_verified: false
       }).returning('id')
         .then(function(id) {
           req.session = {};
@@ -239,7 +239,7 @@ router.post('/fb', function(req, res) {
     music: post.music,
     talking: post.talking,
     is_driver: is_driver,
-    isFB_verified: post.isFB_verified
+    isFB_verified: true
   };
 
   if (req.body.password !== req.body.password_confirm) {
@@ -264,7 +264,7 @@ router.post('/fb', function(req, res) {
           music: post.music,
           talking: post.talking,
           is_driver: is_driver,
-          isFB_verified: post.isFB_verified
+          isFB_verified: true
       })
       .returning('id')
       .then(function(id){
