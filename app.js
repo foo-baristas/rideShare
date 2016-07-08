@@ -55,6 +55,9 @@ app.engine('.hbs', handlebars({
     formatTime: function(date) {
 
       return new Date(date).toLocaleTimeString().replace(/:\d+ /, ' ');
+    },
+    isZeroBig: function(value, success, failure) {
+      return (parseInt(value) > 0) ? '' : '';
     }
   }
 }));
