@@ -2,7 +2,7 @@ module.exports = {
 
   development: {
     client: 'postgresql',
-    connection: 'postgres://localhost/ride_share',
+    connection: 'postgres://localhost/jeremy_rideshare',
     pool: {
       min: 1,
       max: 1
@@ -11,7 +11,7 @@ module.exports = {
 
   test: {
     client: 'postgres',
-    connection: 'postgres://postgres@localhost/ride_share',
+    connection: 'postgres://postgres@localhost/jeremy_rideshare',
     pool: {
       min: 1,
       max: 1

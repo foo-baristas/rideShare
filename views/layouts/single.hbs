@@ -17,13 +17,8 @@
         <li><a href="/trip/newRide">Create Trip</a></li>
         <li><a href="/logout">Logout</a></li>
 
-        <!-- ADD ADDITIONAL CONDITION FOR FACEBOOK LOGIN -->
-        {{else if session.passport}}
-        <li><p class="navbar-text">Welcome <a class="navbar-link" href="/user/{{session.passport.user.id}}">{{session.passport.user.displayName}}</a></p></li>
-        <li><a href="/trip/newRide">Create Trip</a></li>
-        <li><a href="/logout">Logout</a></li>
-
         {{else}}
+        
         <li><a href="/login">Login</a></li>
         <li><a href="/login/facebook">Login with Facebook</a></li>
         <li><a href="/user/new">Register</a></li>

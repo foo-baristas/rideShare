@@ -27,46 +27,14 @@ app.engine('.hbs', handlebars({
   defaultLayout: 'single',
   extname: '.hbs',
   helpers: {
-    formatDate: function(date) {
-      var months = [
-        'January',
-        'February',
-        'March',
-        'April',
-        'May',
-        'June',
-        'July',
-        'August',
-        'September',
-        'October',
-        'November',
-        'December'
-      ];
 
-      function getOrdinal(n) {
-        var s=["th","st","nd","rd"],
-        v=n%100;
-        return n+(s[(v-20)%10]||s[v]||s[0]);
-      }
-
-      var curDay = new Date(date);
-      return months[curDay.getMonth()] + ' ' + getOrdinal(curDay.getDay());
-    },
-    formatTime: function(date) {
-
-      return new Date(date).toLocaleTimeString().replace(/:\d+ /, ' ');
-    },
-    isZeroBig: function(value, success, failure) {
-      return (parseInt(value) > 0) ? '' : '';
-    }
   }
 }));
 
 app.set('view engine', '.hbs');
 app.use(express.static(path.join(__dirname, '/public/')));
 
-// uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(methodOverride('_method'));
 app.use(bodyParser.json());
@@ -87,93 +55,9 @@ app.use(function(req, res, next) {
 });
 
 
-app.use('/', index);
+app.use('/index', index);
 app.use('/user', user);
 app.use('/trip', search);
-
-
-// app.use(cookieParser());
-
-// START FACEBOOK LOGIN
-
-passport.use(new Strategy({
-  clientID: process.env.CLIENT_ID,
-  clientSecret: process.env.CLIENT_SECRET,
-  callbackURL: '/login/facebook/return'
-},
-function(accessToken, refreshToken, profile, cb) {
-  // In this example, the user's Facebook profile is supplied as the user
-  // record.  In a production-quality application, the Facebook profile should
-  // be associated with a user record in the application's database, which
-  // allows for account linking and authentication with other identity
-  // providers.
-  return cb(null, profile);
-}));
-
-// Configure Passport authenticated session persistence.
-//
-// In order to restore authentication state across HTTP requests, Passport needs
-// to serialize users into and deserialize users out of the session.  In a
-// production-quality application, this would typically be as simple as
-// supplying the user ID when serializing, and querying the user record by ID
-// from the database when deserializing.  However, due to the fact that this
-// example does not have a database, the complete Facebook profile is serialized
-// and deserialized.
-passport.serializeUser(function(user, cb) {
-  cb(null, user);
-});
-
-passport.deserializeUser(function(obj, cb) {
-  cb(null, obj);
-});
-
-// Initialize Passport and restore authentication state, if any, from the
-// session.
-app.use(passport.initialize());
-app.use(passport.session());
-
-app.get('/login/facebook',
-passport.authenticate('facebook'));
-
-
-
-/// WORKING HERE ////
-app.get('/login/facebook/return',
-passport.authenticate('facebook', { successRedirect: '/user/new', failureRedirect: '/login' }));
-
-
-
-// function getRedirectURL(name){
-//   console.log(name);
-//   console.log('entered redirect function');
-//   exists(name).then(function(result) {
-//     console.log('entered promise function');
-//     if(result.length === 1) {
-//       return '/index';
-//     } else {
-//       return '/user/new';
-//     }
-//   });
-// }
-//
-// function exists(name) {
-//   var nameArray = name.split(' ');
-//   return knex.select('*').from('users').where({name_first: nameArray[0], name_last: nameArray[1]});
-// }
-
-
-
-/// WORKING HERE END////
-
-
-
-
-
-
-
-// END FACEBOOK LOGIN
-
-// error handlers
 
 // development error handler
 // will print stacktrace
@@ -200,7 +84,7 @@ app.use(function(err, req, res, next) {
 
 var port = process.env.PORT || 3000;
 app.listen(port, function() {
-  console.log("Listening on port " + port);
+  console.log('Listening on port ' + port);
 });
 
 module.exports = app;
