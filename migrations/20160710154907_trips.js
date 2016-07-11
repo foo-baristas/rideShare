@@ -8,7 +8,7 @@ exports.up = function(knex, Promise) {
     table.string('destination');
     table.string('zip_code');
     table.string('date');
-    table.sting('time');
+    table.string('time');
     table.string('description');
     table.string('car_make');
     table.string('car_model');
@@ -19,4 +19,5 @@ exports.up = function(knex, Promise) {
 
 exports.down = function(knex, Promise) {
 
+  return knex.schema.dropTableIfExists('trips');
 };

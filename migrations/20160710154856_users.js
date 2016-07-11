@@ -10,6 +10,8 @@ exports.up = function(knex, Promise) {
     table.string('phone_number');
     table.string('email');
     table.string('profile_picture');
+    table.string('first_name');
+    table.string('last_name');
 
     table.boolean('isAdmin');
   });

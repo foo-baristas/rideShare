@@ -5,8 +5,9 @@ router = express.Router(),
 knex = require('../db/knex'),
 bcrypt = require('bcrypt');
 
-router.get('/new', function(req, res, next) {
+router.get('/new', function(req, res) {
 
+  res.render('new');
 });
 
 router.get('/:id', function(req, res) {
@@ -25,11 +26,16 @@ router.get('/:id/edit', function(req, res) {
 
 });
 
-router.post('/', function(req, res) {
+router.post('/new', function(req, res) {
 
+  if (req.query.usingfacebook) {
+
+  } else {
+
+  }
 });
 
-router.put('/:id', function(req, res) {
+router.post('/:id', function(req, res) {
 
 });
 
@@ -37,7 +43,7 @@ router.post('/:id/new-review', function(req, res) {
 
 });
 
-router.delete('/:id', function(req, res){
+router.post('/:id', function(req, res){
 
 });
 
