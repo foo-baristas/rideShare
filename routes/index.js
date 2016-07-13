@@ -35,7 +35,7 @@ function fbUserExistsInOurDatabase(data, req, res) {
       if(result.length >= 1) { // CHANGED TO >= to encapsulate more cases
         console.log('3. The user exists in our database! Hooray!');
         console.log('TADA', result);
-        req.session = {};
+        //req.session = {};
         req.session.user_name = result.username;
         req.session.user_id = result.id;
 
@@ -126,7 +126,7 @@ router.post('/auth', function(req, res, next) {
     if (data.length === 1) {
       bcrypt.compare(req.body.password, data[0].password, function(err, result) {
         if (result) {
-          req.session = {};
+          //req.session = {};
           req.session.user_id = data[0].id;
           req.session.user_name = data[0].username;
           console.log(req.session);
