@@ -25,7 +25,7 @@ router.get('/new', function(req, res, next) {
   fbUserExistsInOurDatabase(req.session).then(function(a){
     if(a){
       console.log('I HATE FB', a);
-      req.session = {};
+      //req.session = {};
       req.session.user_name = a[0].username;
       req.session.user_id = a[0].id;
       res.redirect('/trip/search');
@@ -200,7 +200,7 @@ router.post('/', function(req, res) {
           isFB_verified: false
       }).returning('id')
         .then(function(id) {
-          req.session = {};
+          //req.session = {};
           req.session.user_id = id;
           req.session.user_name = post.username;
           console.log(req.session);
@@ -274,7 +274,7 @@ router.post('/fb', function(req, res) {
           user_id: id[0]
         }).returning('user_id')
       .then(function(id) {
-          req.session = {};
+          //req.session = {};
           req.session.user_id = id[0];
           req.session.user_name = post.username;
           console.log(req.session);
@@ -371,7 +371,7 @@ router.post('/:id/new-review', function(req, res) {
 //DELETE USER WORKS
 router.delete('/:id', function(req, res){
   knex('users').where('id', req.params.id).del().then(function(data){
-    req.session = {};
+    req.session = null;
     res.redirect('/');
   }).catch(function(err){
     console.error(err);
