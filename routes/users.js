@@ -153,7 +153,7 @@ router.post('/', function(req, res) {
           isFB_verified: false
       }).returning('id')
         .then(function(id) {
-          req.session = null;
+          req.session = {};
           req.session.user_id = id;
           req.session.user_name = post.username;
           console.log(req.session);
@@ -227,7 +227,7 @@ router.post('/fb', function(req, res) {
           user_id: id[0]
         }).returning('user_id')
       .then(function(id) {
-          req.session = null;
+          req.session = {};
           req.session.user_id = id[0];
           req.session.user_name = post.username;
           console.log(req.session);
