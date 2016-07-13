@@ -27,8 +27,8 @@ router.get('/search', function(req, res, next) {
     'start_location', 'end_location', 'date_of', 'details', 'car_img_url', 'car_description', 'trip_cost', 'num_seats',
     'isSmoking', 'isPets', 'isTalking', 'isFood', 'isMusic')
     .where(!query.any ? {
-      start_location: query.origin.split(',')[0],
-      end_location: query.destination.split(',')[0],
+      start_location: query.origin,
+      end_location: query.destination,
       isSmoking: (query.smoking ? true : false) | false,
       isPets: (query.pets ? true : false) | false,
       isTalking: (query.talking ? true : false) | false,
@@ -36,8 +36,8 @@ router.get('/search', function(req, res, next) {
       isMusic: (query.music ? true : false) | false
     } : {
 
-      start_location: query.origin.split(',')[0],
-      end_location: query.destination.split(',')[0]
+      start_location: query.origin,
+      end_location: query.destination
     })
     .whereRaw('CAST(date_of AS DATE) = ?', [query.date])
     .where('trip_cost', '<=', query.maxprice || 9999)
@@ -54,10 +54,10 @@ router.get('/search', function(req, res, next) {
     'start_location', 'end_location', 'date_of', 'details', 'car_img_url', 'car_description', 'trip_cost', 'num_seats',
     'isSmoking', 'isPets', 'isTalking', 'isFood', 'isMusic')
     .where({
-      start_location: query.origin.split(',')[0],
-      end_location: query.destination.split(',')[0]
+      start_location: query.origin,
+      end_location: query.destination
     })
-    .whereRaw('CAST(date_of AS DATE) <= ?', [query.date])
+    .whereRaw('CAST(date_of AS DATE) = ?', [query.date])
     .where('trip_cost', '<=', query.maxprice || 9999)
     .where('num_seats', '>=', query.seats || 1)
     .then(function(data) {
