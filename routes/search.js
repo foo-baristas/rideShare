@@ -57,7 +57,7 @@ router.get('/search', function(req, res, next) {
       start_location: query.origin.split(',')[0],
       end_location: query.destination.split(',')[0]
     })
-    .whereRaw('CAST(date_of AS DATE) = ?', [query.date])
+    .whereRaw('CAST(date_of AS DATE) <= ?', [query.date])
     .where('trip_cost', '<=', query.maxprice || 9999)
     .where('num_seats', '>=', query.seats || 1)
     .then(function(data) {
