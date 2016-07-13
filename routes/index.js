@@ -98,7 +98,7 @@ router.post('/auth', function(req, res, next) {
           });
         }
       });
-    } //TODO: output on same page with same message in error format
+    } 
     else {
       info.noUser = true;
       res.render('login', {

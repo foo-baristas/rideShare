@@ -348,3 +348,26 @@ width: 30px;
 #review-hidden-div {
   height: 27%;
 }
+
+/*showRide styles*/
+
+#showRide .trip-info {
+  border: 1px solid #bdbdbd;
+  border-radius: 15px;
+  padding: 10px;
+  text-align: center;
+}
+
+#showRide .bordered {
+
+  border: 2px solid #dedede;
+  border-radius: 20px;
+  padding: 10px;
+  color: white;
+  background-color: #c9c9c9;
+}
+
+#showRide .profile {
+
+  border-radius: 50px;
+}
