@@ -153,8 +153,8 @@ router.post('/', function(req, res) {
           isFB_verified: false
       }).returning('id')
         .then(function(id) {
-          req.session = {};
-          req.session.user_id = id;
+          //req.session = {};
+          req.session.user_id = id[0];
           req.session.user_name = post.username;
           console.log(req.session);
           res.redirect('/user/' + id);
