@@ -18,55 +18,8 @@ bcrypt = require('bcrypt');
 // });
 var nameArray = [];
 router.get('/new', function(req, res, next) {
-
-  //res.render('newUser');
-
-  //CHANGED: THIS IS WHERE I FIXED FB LOGIN!
-  fbUserExistsInOurDatabase(req.session).then(function(a){
-    if(a){
-      console.log('I HATE FB', a);
-      //req.session = {};
-      req.session.user_name = a[0].username;
-      req.session.user_id = a[0].id;
-      res.redirect('/trip/search');
-    } else if (req.session && req.session.passport) {
-      var name = req.session.passport.user.displayName;
-      nameArray.push(name.split(' '));
-      console.log(nameArray);
-      res.render('newFBUser', {first_name : nameArray[0][0], last_name : nameArray[0][1]});
-    } else {
-      res.render('newUser');
-    }
-  }).catch(function(err){
-    console.log(err);
-    //next(err);
-  });
+  res.render('newUser');
 });
-
-function fbUserExistsInOurDatabase(data) {
-  return new Promise(function(resolve, reject){
-    if (data.passport) {
-      var name = data.passport.user.displayName;
-      exists(name).then(function(result) {
-        if(result.length === 1) {
-          resolve(result); //CHANGED: instead of resolving true, I resolve with the results object
-        } else {
-          resolve(false);
-        }
-      })
-      .catch(function(err){
-        reject(err);
-      });
-    } else {
-      resolve(false);
-    }
-  });
-}
-
-function exists(name) {
-  var nameArray = name.split(' ');
-  return knex.select('*').from('users').where({name_first: nameArray[0], name_last: nameArray[1]});
-}
 
 router.get('/:id', function(req, res) {
   knex.select('*').from('users').where('users.id', req.params.id).then(function(data) {
