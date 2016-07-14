@@ -1,11 +1,8 @@
 # rideShare
 
-# rideShare
+![App ScreenShot](/public/appScreenShot.png)
 
-**INCLUDE SCREENSHOT**
-![App ScreenShot](./appScreenShot.png)
-
-[Check out the app online here]https://gschool-rideshare.herokuapp.com/ || [Watch A Video About The App](https://www.youtube.com/watch?v=b_8yTG0VTQc&feature=youtu.be)
+[Check out the app online here] https://gschool-rideshare.herokuapp.com/ || [Watch A Video About The App](https://www.youtube.com/watch?v=b_8yTG0VTQc&feature=youtu.be)
 
 ##### App description
 ------
